@@ -1,0 +1,37 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Listar Cursos{% endblock %}
+
+{% block content %}
+    <h1 class="well">Listado de Cursos</h1>
+
+    {% if cursos %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Familia</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for curso in cursos %}
+                <tr>
+                    <td>{{ curso.descripcion }}</td>
+                    <td>{{ curso.familia }}</td>
+                    <td>
+                        <a href="{{ path('curso_modificar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-pencil"></i> Modificar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay Cursos para mostrar</h2>
+    {% endif %}
+
+    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('curso_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Curso</a>
+{% endblock %}

@@ -88,4 +88,243 @@ class Usuario
      */
     protected $esCoordinador;
 
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Usuario
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set apellidos
+     *
+     * @param string $apellidos
+     * @return Usuario
+     */
+    public function setApellidos($apellidos)
+    {
+        $this->apellidos = $apellidos;
+
+        return $this;
+    }
+
+    /**
+     * Get apellidos
+     *
+     * @return string 
+     */
+    public function getApellidos()
+    {
+        return $this->apellidos;
+    }
+
+    /**
+     * Set fechaNacimiento
+     *
+     * @param \DateTime $fechaNacimiento
+     * @return Usuario
+     */
+    public function setFechaNacimiento($fechaNacimiento)
+    {
+        $this->fechaNacimiento = $fechaNacimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaNacimiento
+     *
+     * @return \DateTime 
+     */
+    public function getFechaNacimiento()
+    {
+        return $this->fechaNacimiento;
+    }
+
+    /**
+     * Set correoElectronico
+     *
+     * @param string $correoElectronico
+     * @return Usuario
+     */
+    public function setCorreoElectronico($correoElectronico)
+    {
+        $this->correoElectronico = $correoElectronico;
+
+        return $this;
+    }
+
+    /**
+     * Get correoElectronico
+     *
+     * @return string 
+     */
+    public function getCorreoElectronico()
+    {
+        return $this->correoElectronico;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Usuario
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     * @return Usuario
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string 
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set foto
+     *
+     * @param string $foto
+     * @return Usuario
+     */
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
+    /**
+     * Get foto
+     *
+     * @return string 
+     */
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    /**
+     * Set esActivo
+     *
+     * @param boolean $esActivo
+     * @return Usuario
+     */
+    public function setEsActivo($esActivo)
+    {
+        $this->esActivo = $esActivo;
+
+        return $this;
+    }
+
+    /**
+     * Get esActivo
+     *
+     * @return boolean 
+     */
+    public function getEsActivo()
+    {
+        return $this->esActivo;
+    }
+
+    /**
+     * Set esAdministrador
+     *
+     * @param boolean $esAdministrador
+     * @return Usuario
+     */
+    public function setEsAdministrador($esAdministrador)
+    {
+        $this->esAdministrador = $esAdministrador;
+
+        return $this;
+    }
+
+    /**
+     * Get esAdministrador
+     *
+     * @return boolean 
+     */
+    public function getEsAdministrador()
+    {
+        return $this->esAdministrador;
+    }
+
+    /**
+     * Set esCoordinador
+     *
+     * @param boolean $esCoordinador
+     * @return Usuario
+     */
+    public function setEsCoordinador($esCoordinador)
+    {
+        $this->esCoordinador = $esCoordinador;
+
+        return $this;
+    }
+
+    /**
+     * Get esCoordinador
+     *
+     * @return boolean 
+     */
+    public function getEsCoordinador()
+    {
+        return $this->esCoordinador;
+    }
 }

@@ -1,0 +1,11 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Nuevo Curso{% endblock %}
+
+{% block content %}
+    <h1 class="well">Crear un nuevo Curso</h1>
+
+    {{ form(formulario) }}
+
+    <a href="{{ path('cursos_listar') }}" class="btn btn-info">Volver al listado de Cursos</a>
+{% endblock %}
