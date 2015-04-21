@@ -1,0 +1,41 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Listar Centros{% endblock %}
+
+{% block content %}
+    <h1 class="well">Listado de Centros</h1>
+
+    {% if centros %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Ciudad</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for centro in centros %}
+                <tr>
+                    <td>{{ centro.nombre }}</td>
+                    <td>{{ centro.ciudad }}</td>
+                    <td>{{ centro.direccion }}</td>
+                    <td>{{ centro.telefono }}</td>
+                    <td>
+                        <a href="{{ path('centro_modificar', { 'centro': centro.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-pencil"></i> Modificar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay Centros para mostrar</h2>
+    {% endif %}
+
+    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('centro_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo centro</a>
+{% endblock %}
