@@ -1,0 +1,51 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Listar Usuarios{% endblock %}
+
+{% block content %}
+    <h1 class="well">Listado de Usuarios</h1>
+
+    {% if usuarios %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Apellidos</th>
+                <th>Nombre</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Teléfono</th>
+                <th>Correo Electrónico</th>
+                <th>Imágen</th>
+                <th>Activo</th>
+                <th>Administrador</th>
+                <th>Coordinador</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.apellidos }}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.fechaNacimiento|date("d/m/Y") }}</td>
+                    <td>{{ usuario.telefono }}</td>
+                    <td>{{ usuario.correoElectronico }}</td>
+                    <td>{{ usuario.foto }}</td>
+                    <td>{{ usuario.esActivo ? 'Sí' : 'No' }}</td>
+                    <td>{{ usuario.esAdministrador ? 'Sí' : 'No' }}</td>
+                    <td>{{ usuario.esCoordinador ? 'Sí' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-pencil"></i> Modificar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay Usuarios para mostrar</h2>
+    {% endif %}
+
+    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('usuario_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Usuario </a>
+{% endblock %}

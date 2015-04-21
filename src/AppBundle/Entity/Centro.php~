@@ -124,4 +124,27 @@ class Centro
     {
         return $this->telefono;
     }
+
+    /**
+     * Set ciudad
+     *
+     * @param string $ciudad
+     * @return Centro
+     */
+    public function setCiudad($ciudad)
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudad
+     *
+     * @return string 
+     */
+    public function getCiudad()
+    {
+        return $this->ciudad;
+    }
 }

@@ -1,0 +1,91 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ */
+class Usuario
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     *
+     * @var integer
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $nombre;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $apellidos;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $fechaNacimiento;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $correoElectronico;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $telefono;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    protected $foto;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var boolean
+     */
+    protected $esActivo;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var boolean
+     */
+    protected $esAdministrador;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var boolean
+     */
+    protected $esCoordinador;
+
+}
