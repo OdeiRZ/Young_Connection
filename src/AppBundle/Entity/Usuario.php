@@ -327,4 +327,10 @@ class Usuario
     {
         return $this->esCoordinador;
     }
+
+    public function __toString()
+    {
+        return $this->getApellidos()
+        . ' ' . $this->getNombre();
+    }
 }

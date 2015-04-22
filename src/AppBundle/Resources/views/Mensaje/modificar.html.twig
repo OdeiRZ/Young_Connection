@@ -1,0 +1,11 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Modificar Mensaje {{ mensaje.usuarioDestino }}{% endblock %}
+
+{% block content %}
+    <h1 class="well"> Modificar Mensaje {{ mensaje.usuarioDestino }}</h1>
+
+    {{ form(formulario) }}
+
+    <a href="{{ path('mensajes_listar') }}" class="btn btn-info">Volver al listado de Mensajes</a>
+{% endblock %}

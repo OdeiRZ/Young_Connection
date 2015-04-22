@@ -1,0 +1,43 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Listar Mensajes{% endblock %}
+
+{% block content %}
+    <h1 class="well">Listado de Mensajes</h1>
+
+    {% if mensajes %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Orígen</th>
+                <th>Destinatario/a</th>
+                <th>Fecha Envio</th>
+                <th>Fecha Recepción</th>
+                <th>Contenido</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for mensaje in mensajes %}
+                <tr>
+                    <td>{{ mensaje.usuarioOrigen }}</td>
+                    <td>{{ mensaje.usuarioDestino }}</td>
+                    <td>{{ mensaje.fechaEnvio|date("d/m/Y") }}</td>
+                    <td>{{ mensaje.fechaRecepcion|date("d/m/Y") }}</td>
+                    <td>{{ mensaje.contenido }}</td>
+                    <td>
+                        <a href="{{ path('mensaje_modificar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-pencil"></i> Modificar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay Mensajes para mostrar</h2>
+    {% endif %}
+
+    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('mensaje_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Mensaje</a>
+{% endblock %}
