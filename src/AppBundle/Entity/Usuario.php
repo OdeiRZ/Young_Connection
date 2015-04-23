@@ -344,6 +344,7 @@ class Usuario
         return $this->getApellidos()
         . ' ' . $this->getNombre();
     }
+
     /**
      * Constructor
      */

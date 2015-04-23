@@ -1,0 +1,11 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Modificar Alumno {{ alumno.usuario }}{% endblock %}
+
+{% block content %}
+    <h1 class="well"> Modificar Alumno {{ alumno.usuario }}</h1>
+
+    {{ form(formulario) }}
+
+    <a href="{{ path('alumnos_listar') }}" class="btn btn-info">Volver al listado de Alumnos</a>
+{% endblock %}

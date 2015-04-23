@@ -1,0 +1,11 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Nuevo Alumno{% endblock %}
+
+{% block content %}
+    <h1 class="well">Añadir un nuevo Alumno</h1>
+
+    {{ form(formulario) }}
+
+    <a href="{{ path('usuarios_listar') }}" class="btn btn-info">Volver al listado de Alumnos</a>
+{% endblock %}

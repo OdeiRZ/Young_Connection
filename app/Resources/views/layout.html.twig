@@ -36,6 +36,13 @@
                             <li><a href="{{ path('curso_nuevo') }}">Crear Curso{% if ruta == 'curso_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
                         </ul>
                     </li>
+                    <li class="{{ 'alumno' in ruta ? 'active dropdown' : 'dropdown' }}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> Alumnos <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ path('alumnos_listar') }}">Listar Alumnos{% if ruta == 'alumnos_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                            <li><a href="{{ path('alumno_nuevo') }}">Crear Alumno{% if ruta == 'alumno_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                        </ul>
+                    </li>
                     <li class="{{ 'mensaje' in ruta ? 'active dropdown' : 'dropdown' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-envelope"></i> Mensajes <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
