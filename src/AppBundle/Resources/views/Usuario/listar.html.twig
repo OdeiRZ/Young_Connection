@@ -9,9 +9,8 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
-                <th>Apellidos</th>
                 <th>Nombre</th>
-                <th>Fecha de Nacimiento</th>
+                <th>F. Nacimiento</th>
                 <th>Teléfono</th>
                 <th>Correo Electrónico</th>
                 <th>Imágen</th>
@@ -24,8 +23,7 @@
             <tbody>
             {% for usuario in usuarios %}
                 <tr>
-                    <td>{{ usuario.apellidos }}</td>
-                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.apellidos }} {{ usuario.nombre }}</td>
                     <td>{{ usuario.fechaNacimiento|date("d/m/Y") }}</td>
                     <td>{{ usuario.telefono }}</td>
                     <td>{{ usuario.correoElectronico }}</td>

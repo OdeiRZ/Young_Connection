@@ -18,9 +18,9 @@
             <tbody>
             {% for curso in cursos %}
                 <tr>
-                    <td>{{ curso.centro }}</td>
                     <td>{{ curso.descripcion }}</td>
                     <td>{{ curso.familia }}</td>
+                    <td>{{ curso.centro }}</td>
                     <td>
                         <a href="{{ path('curso_modificar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i> Modificar

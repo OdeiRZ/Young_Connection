@@ -10,6 +10,14 @@ class AlumnoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('usuario', null, [
+                'label' => 'Usuario',
+                'required' => true
+            ])
+            ->add('curso', null, [
+                'label' => 'Curso',
+                'required' => true
+            ])
             ->add('tieneProblemasSalud', null, [
                 'label' => 'Problemas de Salud',
                 'required' => false
@@ -41,10 +49,6 @@ class AlumnoType extends AbstractType
             ->add('descripcion', 'textarea', [
                 'label' => 'Descripción',
                 'required' => false
-            ])
-            ->add('usuario', null, [
-                'label' => 'Usuario',
-                'required' => true
             ])
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',

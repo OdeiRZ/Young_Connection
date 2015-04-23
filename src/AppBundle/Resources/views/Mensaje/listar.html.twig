@@ -9,7 +9,6 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
-                <th>Orígen</th>
                 <th>Destinatario/a</th>
                 <th>Fecha Envio</th>
                 <th>Fecha Recepción</th>
@@ -20,10 +19,9 @@
             <tbody>
             {% for mensaje in mensajes %}
                 <tr>
-                    <td>{{ mensaje.usuarioOrigen }}</td>
                     <td>{{ mensaje.usuarioDestino }}</td>
-                    <td>{{ mensaje.fechaEnvio|date("d/m/Y") }}</td>
-                    <td>{{ mensaje.fechaRecepcion|date("d/m/Y") }}</td>
+                    <td>{{ mensaje.fechaEnvio|date("d/m/Y H:i") }}</td>
+                    <td>{{ mensaje.fechaRecepcion|date("d/m/Y H:i") }}</td>
                     <td>{{ mensaje.contenido }}</td>
                     <td>
                         <a href="{{ path('mensaje_modificar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">

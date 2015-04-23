@@ -10,6 +10,7 @@
             <thead>
             <tr>
                 <th>Usuario</th>
+                <th>Curso</th>
                 <th>Problemas de Salud</th>
                 <th>Detalles Problemas de Salud</th>
                 <th>Fumador</th>
@@ -25,6 +26,7 @@
             {% for alumno in alumnos %}
                 <tr>
                     <td><a href="#">{{ alumno.usuario }}</a></td>
+                    <td><a href="#">{{ alumno.curso }}</a></td>
                     <td>{{ alumno.tieneProblemasSalud ? 'Sí' : 'No' }}</td>
                     <td>{{ alumno.detallesProblemasSalud }}</td>
                     <td>{{ alumno.esFumador ? 'Sí' : 'No' }}</td>

@@ -18,6 +18,10 @@ class CentroType extends AbstractType
                 'label' => 'Ciudad',
                 'required' => true
             ])
+            ->add('provincia', null, [
+                'label' => 'Provincia',
+                'required' => false
+            ])
             ->add('direccion', null, [
                 'label' => 'Dirección',
                 'required' => false

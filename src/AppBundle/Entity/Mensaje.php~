@@ -19,14 +19,14 @@ class Mensaje
     protected $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      *
      * @var \DateTime
      */
     protected $fechaEnvio;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      *
      * @var \DateTime
      */

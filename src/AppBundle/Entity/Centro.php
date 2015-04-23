@@ -33,8 +33,14 @@ class Centro
     protected $ciudad;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $provincia;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
-     * @ORM\JoinColumn(nullable=false)
      *
      * @var string
      */
@@ -164,6 +170,7 @@ class Centro
     {
         return $this->getNombre();
     }
+
     /**
      * Constructor
      */
@@ -203,5 +210,28 @@ class Centro
     public function getCursos()
     {
         return $this->cursos;
+    }
+
+    /**
+     * Set provincia
+     *
+     * @param string $provincia
+     * @return Centro
+     */
+    public function setProvincia($provincia)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get provincia
+     *
+     * @return string 
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
     }
 }

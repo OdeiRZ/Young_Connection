@@ -42,6 +42,14 @@ class Curso
     protected $centro;
 
     /**
+     * @ORM\OneToMany(targetEntity="Alumno", mappedBy="curso")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Alumno
+     */
+    protected $alumnos;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -119,4 +127,53 @@ class Curso
     {
         return $this->centro;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add alumnos
+     *
+     * @param \AppBundle\Entity\Alumno $alumnos
+     * @return Curso
+     */
+    public function addAlumno(\AppBundle\Entity\Alumno $alumnos)
+    {
+        $this->alumnos[] = $alumnos;
+
+        return $this;
+    }
+
+    /**
+     * Remove alumnos
+     *
+     * @param \AppBundle\Entity\Alumno $alumnos
+     */
+    public function removeAlumno(\AppBundle\Entity\Alumno $alumnos)
+    {
+        $this->alumnos->removeElement($alumnos);
+    }
+
+    /**
+     * Get alumnos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAlumnos()
+    {
+        return $this->alumnos;
+    }
+
+    /**
+     *
+     */
+    public function __toString()
+    {
+        return $this->getDescripcion();
+    }
+
 }

@@ -84,6 +84,14 @@ class Alumno
     protected $usuario;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Curso", inversedBy="alumnos")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Curso
+     */
+    protected $curso;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -338,5 +346,84 @@ class Alumno
     public function removePreferenciaCompanero(\AppBundle\Entity\Alumno $preferenciaCompanero)
     {
         $this->preferenciaCompanero->removeElement($preferenciaCompanero);
+    }
+
+    /**
+     * Add alumnos
+     *
+     * @param \AppBundle\Entity\Curso $alumnos
+     * @return Alumno
+     */
+    public function addAlumno(\AppBundle\Entity\Curso $alumnos)
+    {
+        $this->alumnos[] = $alumnos;
+
+        return $this;
+    }
+
+    /**
+     * Remove alumnos
+     *
+     * @param \AppBundle\Entity\Curso $alumnos
+     */
+    public function removeAlumno(\AppBundle\Entity\Curso $alumnos)
+    {
+        $this->alumnos->removeElement($alumnos);
+    }
+
+    /**
+     * Get alumnos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAlumnos()
+    {
+        return $this->alumnos;
+    }
+
+    /**
+     * Add curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     * @return Alumno
+     */
+    public function addCurso(\AppBundle\Entity\Curso $curso)
+    {
+        $this->curso[] = $curso;
+
+        return $this;
+    }
+
+    /**
+     * Remove curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     */
+    public function removeCurso(\AppBundle\Entity\Curso $curso)
+    {
+        $this->curso->removeElement($curso);
+    }
+
+    /**
+     * Get curso
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCurso()
+    {
+        return $this->curso;
+    }
+
+    /**
+     * Set curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     * @return Alumno
+     */
+    public function setCurso(\AppBundle\Entity\Curso $curso)
+    {
+        $this->curso = $curso;
+
+        return $this;
     }
 }
