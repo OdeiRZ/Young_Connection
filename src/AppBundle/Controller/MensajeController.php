@@ -24,7 +24,8 @@ class MensajeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $mensajes = $em->getRepository('AppBundle:Mensaje')
             ->createQueryBuilder('m')
-            ->orderBy('m.fechaEnvio', 'DESC')
+            ->orderBy('m.usuarioDestino', 'DESC')
+            ->addOrderBy('m.fechaEnvio')
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Mensaje:listar.html.twig', [

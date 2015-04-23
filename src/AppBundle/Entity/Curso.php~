@@ -33,6 +33,15 @@ class Curso
     protected $familia;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Centro", inversedBy="cursos")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Centro
+     *
+     */
+    protected $centro;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -86,5 +95,28 @@ class Curso
     public function getFamilia()
     {
         return $this->familia;
+    }
+
+    /**
+     * Set centro
+     *
+     * @param \AppBundle\Entity\Centro $centro
+     * @return Curso
+     */
+    public function setCentro(\AppBundle\Entity\Centro $centro)
+    {
+        $this->centro = $centro;
+
+        return $this;
+    }
+
+    /**
+     * Get centro
+     *
+     * @return \AppBundle\Entity\Centro 
+     */
+    public function getCentro()
+    {
+        return $this->centro;
     }
 }

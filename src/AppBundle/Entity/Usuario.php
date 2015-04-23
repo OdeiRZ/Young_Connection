@@ -89,6 +89,14 @@ class Usuario
     protected $esCoordinador;
 
     /**
+     * @ORM\OneToMany(targetEntity="Mensaje", mappedBy="usuario")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Mensaje
+     */
+    protected $mensajes;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -328,9 +336,52 @@ class Usuario
         return $this->esCoordinador;
     }
 
+    /**
+     *
+     */
     public function __toString()
     {
         return $this->getApellidos()
         . ' ' . $this->getNombre();
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mensajes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add mensajes
+     *
+     * @param \AppBundle\Entity\Mensaje $mensajes
+     * @return Usuario
+     */
+    public function addMensaje(\AppBundle\Entity\Mensaje $mensajes)
+    {
+        $this->mensajes[] = $mensajes;
+
+        return $this;
+    }
+
+    /**
+     * Remove mensajes
+     *
+     * @param \AppBundle\Entity\Mensaje $mensajes
+     */
+    public function removeMensaje(\AppBundle\Entity\Mensaje $mensajes)
+    {
+        $this->mensajes->removeElement($mensajes);
+    }
+
+    /**
+     * Get mensajes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMensajes()
+    {
+        return $this->mensajes;
     }
 }

@@ -89,6 +89,14 @@ class Usuario
     protected $esCoordinador;
 
     /**
+     * @ORM\OneToMany(targetEntity="Mensaje", mappedBy="usuario")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Mensaje
+     */
+    protected $mensajes;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -328,6 +336,9 @@ class Usuario
         return $this->esCoordinador;
     }
 
+    /**
+     *
+     */
     public function __toString()
     {
         return $this->getApellidos()

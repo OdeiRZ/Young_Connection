@@ -10,6 +10,10 @@ class CursoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('centro', null, [
+                'label' => 'Centro',
+                'required' => true
+            ])
             ->add('descripcion', null, [
                 'label' => 'Descripción',
                 'required' => true

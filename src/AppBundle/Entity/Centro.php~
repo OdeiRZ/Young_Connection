@@ -34,6 +34,7 @@ class Centro
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      *
      * @var string
      */
@@ -45,6 +46,14 @@ class Centro
      * @var string
      */
     protected $telefono;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Curso", mappedBy="centro")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Curso
+     */
+    protected $cursos;
 
     /**
      * Get id
@@ -146,5 +155,53 @@ class Centro
     public function getCiudad()
     {
         return $this->ciudad;
+    }
+
+    /**
+     *
+     */
+    public function __toString()
+    {
+        return $this->getNombre();
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cursos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add cursos
+     *
+     * @param \AppBundle\Entity\Curso $cursos
+     * @return Centro
+     */
+    public function addCurso(\AppBundle\Entity\Curso $cursos)
+    {
+        $this->cursos[] = $cursos;
+
+        return $this;
+    }
+
+    /**
+     * Remove cursos
+     *
+     * @param \AppBundle\Entity\Curso $cursos
+     */
+    public function removeCurso(\AppBundle\Entity\Curso $cursos)
+    {
+        $this->cursos->removeElement($cursos);
+    }
+
+    /**
+     * Get cursos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCursos()
+    {
+        return $this->cursos;
     }
 }
