@@ -108,6 +108,15 @@ class Alumno
     protected $aficiones;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Familia", inversedBy="alumnos")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Familia
+     *
+     */
+    protected $familia;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -507,5 +516,28 @@ class Alumno
     public function getAficiones()
     {
         return $this->aficiones;
+    }
+
+    /**
+     * Set familia
+     *
+     * @param \AppBundle\Entity\Familia $familia
+     * @return Alumno
+     */
+    public function setFamilia(\AppBundle\Entity\Familia $familia)
+    {
+        $this->familia = $familia;
+
+        return $this;
+    }
+
+    /**
+     * Get familia
+     *
+     * @return \AppBundle\Entity\Familia 
+     */
+    public function getFamilia()
+    {
+        return $this->familia;
     }
 }

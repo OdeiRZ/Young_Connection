@@ -1,0 +1,11 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Modificar Familia{% endblock %}
+
+{% block content %}
+    <h1 class="well"> Modificar Familia</h1>
+
+    {{ form(formulario) }}
+
+    <a href="{{ path('familias_listar') }}" class="btn btn-info">Volver al listado de Familias</a>
+{% endblock %}
