@@ -19,6 +19,8 @@
                 <th>Detalles Viaje Extranjero</th>
                 <th>Preferencia de Compañero/a</th>
                 <th>Descripción</th>
+                <th>Idioma/s</th>
+                <th>Afición/es</th>
                 <th></th>
             </tr>
             </thead>
@@ -41,6 +43,8 @@
                         </ul>
                     </td>
                     <td>{{ alumno.descripcion }}</td>
+                    <td></td>
+                    <td></td>
                     <td>
                         <a href="{{ path('alumno_modificar', { 'alumno': alumno.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i> Modificar

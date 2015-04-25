@@ -50,6 +50,10 @@ class AlumnoType extends AbstractType
                 'label' => 'Descripción',
                 'required' => false
             ])
+            ->add('idiomas', null, [
+                'label' => 'Idioma/s',
+                'required' => false,
+            ])
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',
                 'attr' => [

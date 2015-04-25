@@ -92,6 +92,22 @@ class Alumno
     protected $curso;
 
     /**
+     * @ORM\OneToMany(targetEntity="Idioma", mappedBy="alumno")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Idioma
+     */
+    protected $idiomas;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Aficion", mappedBy="alumno")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Aficion
+     */
+    protected $aficiones;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -425,5 +441,38 @@ class Alumno
         $this->curso = $curso;
 
         return $this;
+    }
+
+    /**
+     * Add idiomas
+     *
+     * @param \AppBundle\Entity\Idioma $idiomas
+     * @return Alumno
+     */
+    public function addIdioma(\AppBundle\Entity\Idioma $idiomas)
+    {
+        $this->idiomas[] = $idiomas;
+
+        return $this;
+    }
+
+    /**
+     * Remove idiomas
+     *
+     * @param \AppBundle\Entity\Idioma $idiomas
+     */
+    public function removeIdioma(\AppBundle\Entity\Idioma $idiomas)
+    {
+        $this->idiomas->removeElement($idiomas);
+    }
+
+    /**
+     * Get idiomas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdiomas()
+    {
+        return $this->idiomas;
     }
 }
