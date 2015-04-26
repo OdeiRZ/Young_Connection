@@ -10,10 +10,6 @@ class FamiliaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('alumnos', null, [
-                'label' => 'Alumno/s',
-                'required' => true
-            ])
             ->add('direccion', null, [
                 'label' => 'Dirección',
                 'required' => true

@@ -90,6 +90,14 @@ class Familia
     protected $alumnos;
 
     /**
+     * @ORM\OneToMany(targetEntity="Miembro", mappedBy="familia")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Miembro
+     */
+    protected $miembros;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -345,5 +353,47 @@ class Familia
     public function getAlumnos()
     {
         return $this->alumnos;
+    }
+
+    /**
+     *
+     */
+    public function __toString()
+    {
+        return $this->getDireccion();
+    }
+
+
+    /**
+     * Add miembros
+     *
+     * @param \AppBundle\Entity\Miembro $miembros
+     * @return Familia
+     */
+    public function addMiembro(\AppBundle\Entity\Miembro $miembros)
+    {
+        $this->miembros[] = $miembros;
+
+        return $this;
+    }
+
+    /**
+     * Remove miembros
+     *
+     * @param \AppBundle\Entity\Miembro $miembros
+     */
+    public function removeMiembro(\AppBundle\Entity\Miembro $miembros)
+    {
+        $this->miembros->removeElement($miembros);
+    }
+
+    /**
+     * Get miembros
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMiembros()
+    {
+        return $this->miembros;
     }
 }

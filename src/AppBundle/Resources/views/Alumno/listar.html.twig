@@ -21,6 +21,7 @@
                 <th>Descripción</th>
                 <th>Idioma/s</th>
                 <th>Afición/es</th>
+                <th>Dirección Familiar</th>
                 <th></th>
             </tr>
             </thead>
@@ -45,6 +46,7 @@
                     <td>{{ alumno.descripcion }}</td>
                     <td></td>
                     <td></td>
+                    <td>{{ alumno.familia }}</td>
                     <td>
                         <a href="{{ path('alumno_modificar', { 'alumno': alumno.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i> Modificar
