@@ -35,6 +35,9 @@
                         <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i> Modificar
                         </a>
+                        <a href="{{ path('usuario_eliminar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-trash"></i> Eliminar
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

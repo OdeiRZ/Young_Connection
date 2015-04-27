@@ -25,6 +25,9 @@
                         <a href="{{ path('curso_modificar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i> Modificar
                         </a>
+                        <a href="{{ path('curso_eliminar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-trash"></i> Eliminar
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

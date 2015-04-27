@@ -86,4 +86,17 @@ class UsuarioController extends Controller
             'formulario' => $formulario->createView()
         ]);
     }
+
+    /**
+     * @Route("/eliminar/{usuario}", name="usuario_eliminar"), methods={'GET', 'POST'}
+     */
+    public function eliminarAction(Usuario $usuario, Request $peticion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($usuario);
+        $em->flush();
+        return new RedirectResponse(
+            $this->generateUrl('usuarios_listar')
+        );
+    }
 }

@@ -92,4 +92,17 @@ class MensajeController extends Controller
             'formulario' => $formulario->createView()
         ]);
     }
+
+    /**
+     * @Route("/eliminar/{mensaje}", name="mensaje_eliminar"), methods={'GET', 'POST'}
+     */
+    public function eliminarAction(Mensaje $mensaje, Request $peticion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($mensaje);
+        $em->flush();
+        return new RedirectResponse(
+            $this->generateUrl('mensajes_listar')
+        );
+    }
 }

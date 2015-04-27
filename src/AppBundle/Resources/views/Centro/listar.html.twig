@@ -29,6 +29,9 @@
                         <a href="{{ path('centro_modificar', { 'centro': centro.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i> Modificar
                         </a>
+                        <a href="{{ path('centro_eliminar', { 'centro': centro.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-trash"></i> Eliminar
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

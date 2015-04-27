@@ -53,6 +53,9 @@
                         <a href="{{ path('familia_modificar', { 'familia': familia.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i> Modificar
                         </a>
+                        <a href="{{ path('familia_eliminar', { 'familia': familia.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-trash"></i> Eliminar
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

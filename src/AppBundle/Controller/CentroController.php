@@ -85,4 +85,17 @@ class CentroController extends Controller
             'formulario' => $formulario->createView()
         ]);
     }
+
+    /**
+     * @Route("/eliminar/{centro}", name="centro_eliminar"), methods={'GET', 'POST'}
+     */
+    public function eliminarAction(Centro $centro, Request $peticion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($centro);
+        $em->flush();
+        return new RedirectResponse(
+            $this->generateUrl('centros_listar')
+        );
+    }
 }

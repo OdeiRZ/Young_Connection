@@ -85,4 +85,17 @@ class CursoController extends Controller
             'formulario' => $formulario->createView()
         ]);
     }
+
+    /**
+     * @Route("/eliminar/{curso}", name="curso_eliminar"), methods={'GET', 'POST'}
+     */
+    public function eliminarAction(Curso $curso, Request $peticion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($curso);
+        $em->flush();
+        return new RedirectResponse(
+            $this->generateUrl('cursos_listar')
+        );
+    }
 }

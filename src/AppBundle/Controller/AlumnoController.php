@@ -86,4 +86,17 @@ class AlumnoController extends Controller
             'formulario' => $formulario->createView()
         ]);
     }
+
+    /**
+     * @Route("/eliminar/{alumno}", name="alumno_eliminar"), methods={'GET', 'POST'}
+     */
+    public function eliminarAction(Alumno $alumno, Request $peticion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($alumno);
+        $em->flush();
+        return new RedirectResponse(
+            $this->generateUrl('alumnos_listar')
+        );
+    }
 }

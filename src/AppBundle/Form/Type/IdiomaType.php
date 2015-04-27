@@ -25,12 +25,6 @@ class IdiomaType extends AbstractType
             ->add('speaking', null, [
                 'label' => 'Nivel Speaking',
                 'required' => true
-            ])
-            ->add('enviar', 'submit', [
-                'label' => 'Guardar cambios',
-                'attr' => [
-                    'class' => 'btn btn-success'
-                ]
             ]);
     }
 

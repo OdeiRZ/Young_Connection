@@ -163,4 +163,17 @@ class FamiliaController extends Controller
             'formulario' => $formulario->createView()
         ]);
     }
+
+    /**
+     * @Route("/eliminar/{familia}", name="familia_eliminar"), methods={'GET', 'POST'}
+     */
+    public function eliminarAction(Familia $familia, Request $peticion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($familia);
+        $em->flush();
+        return new RedirectResponse(
+            $this->generateUrl('familias_listar')
+        );
+    }
 }
