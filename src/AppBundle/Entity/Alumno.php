@@ -100,8 +100,9 @@ class Alumno
     protected $idiomas;
 
     /**
-     * @ORM\OneToMany(targetEntity="Aficion", mappedBy="alumno")
+     * @ORM\ManyToMany(targetEntity="Aficion", inversedBy="alumnos")
      * @ORM\JoinColumn(nullable=true)
+     * @ORM\OrderBy({"descripcion" = "ASC"})
      *
      * @var Aficion
      */

@@ -45,7 +45,13 @@
                     </td>
                     <td>{{ alumno.descripcion }}</td>
                     <td></td>
-                    <td></td>
+                    <td>
+                        <ul>
+                            {% for aficion in alumno.aficiones %}
+                                <li>{{ aficion }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
                     <td>{{ alumno.familia }}</td>
                     <td>
                         <a href="{{ path('alumno_modificar', { 'alumno': alumno.id }) }}" class="btn btn-default btn-xs">

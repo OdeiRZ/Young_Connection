@@ -14,10 +14,6 @@ class AficionType extends AbstractType
                 'label' => 'Descripción',
                 'required' => true
             ])
-            ->add('tipo', null, [
-                'label' => 'Tipo',
-                'required' => true
-            ])
             ->add('validada', null, [
                 'label' => 'Validada',
                 'required' => false

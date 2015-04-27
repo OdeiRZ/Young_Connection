@@ -1,0 +1,11 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Modificar Afición {{ aficion.descripcion }}{% endblock %}
+
+{% block content %}
+    <h1 class="well"> Modificar Afición {{ aficion.descripcion }}</h1>
+
+    {{ form(formulario) }}
+
+    <a href="{{ path('aficiones_listar') }}" class="btn btn-info">Volver al listado de Aficiones</a>
+{% endblock %}

@@ -44,7 +44,7 @@ class AlumnoType extends AbstractType
             ])
             ->add('preferenciaCompanero', null, [
                 'label' => 'Preferencia de Compañero/a',
-                'required' => false,
+                'required' => false
             ])
             ->add('descripcion', 'textarea', [
                 'label' => 'Descripción',
@@ -52,11 +52,19 @@ class AlumnoType extends AbstractType
             ])
             ->add('idiomas', null, [
                 'label' => 'Idioma/s',
+                'required' => false
+            ])
+            ->add('aficiones', null, [
+                'label' => 'Afición/es',
                 'required' => false,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'toggle'
+                ]
             ])
             ->add('familia', null, [
                 'label' => 'Familia',
-                'required' => false,
+                'required' => false
             ])
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',

@@ -1,0 +1,40 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Listar Aficiones{% endblock %}
+
+{% block content %}
+    <h1 class="well">Listado de Aficiones</h1>
+
+    {% if aficiones %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Validada</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for aficion in aficiones %}
+                <tr>
+                    <td>{{ aficion.descripcion }}</td>
+                    <td>{{ aficion.validada ? 'Sí' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('aficion_modificar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-pencil"></i> Modificar
+                        </a>
+                        <a href="{{ path('aficion_eliminar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay Aficiones para mostrar</h2>
+    {% endif %}
+
+    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('aficion_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Afición</a>
+{% endblock %}
