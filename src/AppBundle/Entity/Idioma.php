@@ -47,13 +47,13 @@ class Idioma
     protected $speaking;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="idiomas")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity="Alumno", inversedBy="idiomas")
+     * @ORM\JoinColumn(nullable=true)
      *
      * @var Alumno
      *
      */
-    protected $alumno;
+    protected $alumnos;
 
     /**
      * Get id
@@ -178,5 +178,44 @@ class Idioma
     public function getAlumno()
     {
         return $this->alumno;
+    }
+
+    /**
+     * Add alumno
+     *
+     * @param Alumno $alumno
+     */
+    public function addAlumno(Alumno $alumno)
+    {
+        if (!$this->alumnos->contains($alumno)) {
+            $this->alumnos->add($alumno);
+        }
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Remove alumnos
+     *
+     * @param \AppBundle\Entity\Alumno $alumnos
+     */
+    public function removeAlumno(\AppBundle\Entity\Alumno $alumnos)
+    {
+        $this->alumnos->removeElement($alumnos);
+    }
+
+    /**
+     * Get alumnos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAlumnos()
+    {
+        return $this->alumnos;
     }
 }

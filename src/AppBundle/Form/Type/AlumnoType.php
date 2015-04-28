@@ -50,9 +50,13 @@ class AlumnoType extends AbstractType
                 'label' => 'Descripción',
                 'required' => false
             ])
-            ->add('idiomas', null, [
+            ->add('idiomas', 'collection', [
+                'type'  => new IdiomaType(),
                 'label' => 'Idioma/s',
-                'required' => false
+                'required' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
             ->add('aficiones', null, [
                 'label' => 'Afición/es',

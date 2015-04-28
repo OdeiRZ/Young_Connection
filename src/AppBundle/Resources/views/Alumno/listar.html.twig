@@ -44,7 +44,15 @@
                         </ul>
                     </td>
                     <td>{{ alumno.descripcion }}</td>
-                    <td></td>
+                    <td>
+                        {% for idioma in alumno.idiomas %}
+                            <ul>{{ idioma.descripcion }}
+                                <li>{{ idioma.reading }}</li>
+                                <li>{{ idioma.writing }}</li>
+                                <li>{{ idioma.speaking }}</li>
+                            </ul>
+                        {% endfor %}
+                    </td>
                     <td>
                         <ul>
                             {% for aficion in alumno.aficiones %}

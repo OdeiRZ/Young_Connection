@@ -3,11 +3,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alumno;
+use AppBundle\Entity\Idioma;
 use AppBundle\Form\Type\AlumnoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * @Route("/alumno")
@@ -22,8 +25,7 @@ class AlumnoController extends Controller
         $em = $this->getDoctrine()->getManager();
         $alumnos = $em->getRepository('AppBundle:Alumno')
             ->createQueryBuilder('a')
-            //->orderBy('a.alumno,apellidos', 'DESC')
-            //->addOrderBy('a.alumno,nombre', 'DESC')
+            ->orderBy('a.usuario')
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Alumno:listar.html.twig', [

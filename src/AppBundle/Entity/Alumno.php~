@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * @ORM\Entity
@@ -92,7 +93,7 @@ class Alumno
     protected $curso;
 
     /**
-     * @ORM\OneToMany(targetEntity="Idioma", mappedBy="alumno")
+     * @ORM\ManyToMany(targetEntity="Idioma", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      *
      * @var Idioma
@@ -102,6 +103,7 @@ class Alumno
     /**
      * @ORM\ManyToMany(targetEntity="Aficion", inversedBy="alumnos")
      * @ORM\JoinColumn(nullable=true)
+     * @ORM\OrderBy({"descripcion" = "ASC"})
      *
      * @var Aficion
      */
@@ -115,6 +117,17 @@ class Alumno
      *
      */
     protected $familia;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->preferenciaCompanero = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idiomas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->aficiones = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -265,29 +278,6 @@ class Alumno
     }
 
     /**
-     * Set preferenciaCompanero
-     *
-     * @param \Alumno $preferenciaCompanero
-     * @return Alumno
-     */
-    public function setPreferenciaCompanero(\Alumno $preferenciaCompanero)
-    {
-        $this->preferenciaCompanero = $preferenciaCompanero;
-
-        return $this;
-    }
-
-    /**
-     * Get preferenciaCompanero
-     *
-     * @return \Alumno 
-     */
-    public function getPreferenciaCompanero()
-    {
-        return $this->preferenciaCompanero;
-    }
-
-    /**
      * Set descripcion
      *
      * @param string $descripcion
@@ -308,46 +298,6 @@ class Alumno
     public function getDescripcion()
     {
         return $this->descripcion;
-    }
-
-    /**
-     * Set usuario
-     *
-     * @param \AppBundle\Entity\Usuario $usuario
-     * @return Alumno
-     */
-    public function setUsuario(\AppBundle\Entity\Usuario $usuario)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return \AppBundle\Entity\Usuario 
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
-    }
-
-    /**
-     *
-     */
-    public function __toString()
-    {
-        return $this->getUsuario()->getApellidos()
-        . ' ' . $this->getUsuario()->getNombre();
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->preferenciaCompanero = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -374,69 +324,36 @@ class Alumno
     }
 
     /**
-     * Add alumnos
+     * Get preferenciaCompanero
      *
-     * @param \AppBundle\Entity\Curso $alumnos
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPreferenciaCompanero()
+    {
+        return $this->preferenciaCompanero;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
      * @return Alumno
      */
-    public function addAlumno(\AppBundle\Entity\Curso $alumnos)
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario)
     {
-        $this->alumnos[] = $alumnos;
+        $this->usuario = $usuario;
 
         return $this;
     }
 
     /**
-     * Remove alumnos
+     * Get usuario
      *
-     * @param \AppBundle\Entity\Curso $alumnos
+     * @return \AppBundle\Entity\Usuario 
      */
-    public function removeAlumno(\AppBundle\Entity\Curso $alumnos)
+    public function getUsuario()
     {
-        $this->alumnos->removeElement($alumnos);
-    }
-
-    /**
-     * Get alumnos
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAlumnos()
-    {
-        return $this->alumnos;
-    }
-
-    /**
-     * Add curso
-     *
-     * @param \AppBundle\Entity\Curso $curso
-     * @return Alumno
-     */
-    public function addCurso(\AppBundle\Entity\Curso $curso)
-    {
-        $this->curso[] = $curso;
-
-        return $this;
-    }
-
-    /**
-     * Remove curso
-     *
-     * @param \AppBundle\Entity\Curso $curso
-     */
-    public function removeCurso(\AppBundle\Entity\Curso $curso)
-    {
-        $this->curso->removeElement($curso);
-    }
-
-    /**
-     * Get curso
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCurso()
-    {
-        return $this->curso;
+        return $this->usuario;
     }
 
     /**
@@ -453,16 +370,24 @@ class Alumno
     }
 
     /**
-     * Add idiomas
+     * Get curso
      *
-     * @param \AppBundle\Entity\Idioma $idiomas
-     * @return Alumno
+     * @return \AppBundle\Entity\Curso 
      */
-    public function addIdioma(\AppBundle\Entity\Idioma $idiomas)
+    public function getCurso()
     {
-        $this->idiomas[] = $idiomas;
+        return $this->curso;
+    }
 
-        return $this;
+    /**
+     * Add idioma
+     *
+     * @param \AppBundle\Entity\Idioma $idioma
+     */
+    public function addIdioma(\AppBundle\Entity\Idioma $idioma)
+    {
+        $idioma->addAlumno($this);
+        $this->idiomas->add($idioma);
     }
 
     /**
@@ -470,9 +395,9 @@ class Alumno
      *
      * @param \AppBundle\Entity\Idioma $idiomas
      */
-    public function removeIdioma(\AppBundle\Entity\Idioma $idiomas)
+    public function removeIdioma(\AppBundle\Entity\Idioma $idioma)
     {
-        $this->idiomas->removeElement($idiomas);
+        $this->idiomas->removeElement($idioma);
     }
 
     /**
@@ -499,16 +424,6 @@ class Alumno
     }
 
     /**
-     * Remove aficiones
-     *
-     * @param \AppBundle\Entity\Aficion $aficiones
-     */
-    public function removeAficione(\AppBundle\Entity\Aficion $aficiones)
-    {
-        $this->aficiones->removeElement($aficiones);
-    }
-
-    /**
      * Get aficiones
      *
      * @return \Doctrine\Common\Collections\Collection 
@@ -524,7 +439,7 @@ class Alumno
      * @param \AppBundle\Entity\Familia $familia
      * @return Alumno
      */
-    public function setFamilia(\AppBundle\Entity\Familia $familia)
+    public function setFamilia(\AppBundle\Entity\Familia $familia = null)
     {
         $this->familia = $familia;
 
@@ -539,5 +454,24 @@ class Alumno
     public function getFamilia()
     {
         return $this->familia;
+    }
+
+    /**
+     *
+     */
+    public function __toString()
+    {
+        return $this->getUsuario()->getApellidos()
+        . ' ' . $this->getUsuario()->getNombre();
+    }
+
+    /**
+     * Remove aficiones
+     *
+     * @param \AppBundle\Entity\Aficion $aficiones
+     */
+    public function removeAficione(\AppBundle\Entity\Aficion $aficiones)
+    {
+        $this->aficiones->removeElement($aficiones);
     }
 }
