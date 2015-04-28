@@ -21,12 +21,14 @@
     <div class="form-group">
         <label class="col-sm-2 control-label">Idioma/s</label>
         <div class="col-sm-10">
-            <ul class="idiomas" style="padding-top: 10px; list-style: none;" data-prototype="{{ form_widget(formulario.idiomas.vars.prototype)|e }}">
+            <ul class="idiomas" style="padding-top: 10px; list-style: none;"
+                data-prototype="{{ form_widget(formulario.idiomas.vars.prototype)|e }}">
                 {% for idioma in formulario.idiomas %}
                     <li>{{ form_row(idioma.descripcion) }}</li>
                     <li>{{ form_row(idioma.reading) }}</li>
                     <li>{{ form_row(idioma.writing) }}</li>
                     <li>{{ form_row(idioma.speaking) }}</li>
+                    <hr />
                 {% endfor %}
             </ul>
         </div>

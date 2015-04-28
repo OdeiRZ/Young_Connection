@@ -3,9 +3,11 @@ var $newLinkLi = $('<li></li>').append($addTagLink);
 
 jQuery(document).ready(function() {
     $collectionHolder = $('ul.idiomas');
-    $collectionHolder.each(function() {//$collectionHolder.find('li').each(function() {
-        addTagFormDeleteLink($(this));
-    });
+    if(!$(location).attr('href').contains('/nuevo')) {
+        addTagFormDeleteLink($collectionHolder);//$('a.eliminar-idioma:first').remove();
+    } else {
+        $('div.form-group').eq(-2).remove();    //eliminamos penultima etiqueta con el label idioma
+    }
     $collectionHolder.append($newLinkLi);
     $collectionHolder.data('index', $collectionHolder.find(':input').length);
     $addTagLink.on('click', function(e) {
@@ -20,7 +22,8 @@ function addTagForm($collectionHolder, $newLinkLi) {
     var newForm = prototype.replace(/__name__/g, index);
     $collectionHolder.data('index', index + 1);
     var $newFormLi = $('<li></li>').append(newForm);
-    $newFormLi.append('<a href="#" class="eliminar-idioma" style="position: absolute; margin-top: -195px; margin-left: 0px;" ><i class="glyphicon glyphicon-minus"></a>');
+    $newFormLi.append('<a href="#" class="eliminar-idioma" style="position: absolute; margin-top: -195px; margin-left: 0px;" >' +
+        '<i class="glyphicon glyphicon-minus"></a><hr />');
     $newLinkLi.before($newFormLi);
     $('.eliminar-idioma').click(function(e) {
         e.preventDefault();
@@ -31,7 +34,8 @@ function addTagForm($collectionHolder, $newLinkLi) {
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#" class="eliminar-idioma" style="position: absolute; top: 10px; margin-left: -35px;"><i class="glyphicon glyphicon-trash"></i></a>');
+    var $removeFormA = $('<a href="#" class="eliminar-idioma" style="position: absolute; top: 10px; margin-left: -35px;">' +
+        '<i class="glyphicon glyphicon-trash"></i></a>');
     $tagFormLi.append($removeFormA);
     $removeFormA.on('click', function(e) {
         e.preventDefault();
