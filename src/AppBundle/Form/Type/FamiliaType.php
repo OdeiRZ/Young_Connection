@@ -42,6 +42,14 @@ class FamiliaType extends AbstractType
                 'label' => 'Habitación extra',
                 'required' => false
             ])
+            ->add('miembros', 'collection', [
+                'type'  => new MiembroType(),
+                'label' => 'Miembro/s',
+                'required' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ])
             ->add('observaciones', 'textarea', [
                 'label' => 'Descripcion',
                 'required' => false

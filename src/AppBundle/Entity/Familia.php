@@ -90,7 +90,7 @@ class Familia
     protected $alumnos;
 
     /**
-     * @ORM\OneToMany(targetEntity="Miembro", mappedBy="familia")
+     * @ORM\OneToMany(targetEntity="Miembro", mappedBy="familia", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Miembro
@@ -103,6 +103,7 @@ class Familia
     public function __construct()
     {
         $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->miembros = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -363,28 +364,17 @@ class Familia
         return $this->getDireccion();
     }
 
-
     /**
      * Add miembros
      *
      * @param \AppBundle\Entity\Miembro $miembros
-     * @return Familia
      */
     public function addMiembro(\AppBundle\Entity\Miembro $miembros)
     {
+        //$miembro->setFamilia($this);
+        //$this->miembros->setFamilia($miembro);
         $this->miembros[] = $miembros;
-
-        return $this;
-    }
-
-    /**
-     * Remove miembros
-     *
-     * @param \AppBundle\Entity\Miembro $miembros
-     */
-    public function removeMiembro(\AppBundle\Entity\Miembro $miembros)
-    {
-        $this->miembros->removeElement($miembros);
+        $miembros->setFamilia($this);
     }
 
     /**
@@ -395,5 +385,15 @@ class Familia
     public function getMiembros()
     {
         return $this->miembros;
+    }
+
+    /**
+     * Remove miembros
+     *
+     * @param \AppBundle\Entity\Miembro $miembros
+     */
+    public function removeMiembro(\AppBundle\Entity\Miembro $miembros)
+    {
+        $this->miembros->removeElement($miembros);
     }
 }

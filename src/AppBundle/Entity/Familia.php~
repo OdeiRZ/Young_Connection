@@ -363,28 +363,18 @@ class Familia
         return $this->getDireccion();
     }
 
-
     /**
      * Add miembros
      *
-     * @param \AppBundle\Entity\Miembro $miembros
-     * @return Familia
+     * @param \AppBundle\Entity\Miembro $miembro
      */
-    public function addMiembro(\AppBundle\Entity\Miembro $miembros)
+    public function addMiembro(\AppBundle\Entity\Miembro $miembro)
     {
-        $this->miembros[] = $miembros;
-
-        return $this;
-    }
-
-    /**
-     * Remove miembros
-     *
-     * @param \AppBundle\Entity\Miembro $miembros
-     */
-    public function removeMiembro(\AppBundle\Entity\Miembro $miembros)
-    {
-        $this->miembros->removeElement($miembros);
+        //$miembro->setFamilia($this);
+        //$miembro->setFamilia($this);
+        //$this->miembros->setFamilia($miembro);
+        $this->miembros = $miembro;
+        $miembro->setFamilia($this);
     }
 
     /**
@@ -395,5 +385,15 @@ class Familia
     public function getMiembros()
     {
         return $this->miembros;
+    }
+
+    /**
+     * Remove miembros
+     *
+     * @param \AppBundle\Entity\Miembro $miembros
+     */
+    public function removeMiembro(\AppBundle\Entity\Miembro $miembro)
+    {
+        $this->miembros->removeElement($miembro);
     }
 }

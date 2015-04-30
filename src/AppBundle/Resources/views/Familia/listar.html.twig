@@ -36,7 +36,13 @@
                     <td>
                         <ul>
                             {% for miembro in familia.miembros %}
-                                <li><a href="#">{{ miembro.nombre }}</a></li>
+                                <li>{{ miembro.nombre }} {{ miembro.apellidos }}</li>
+                                <li>{{ miembro.fechaNacimiento|date("d/m/Y") }}</li>
+                                <li>{{ miembro.correoElectronico }}</li>
+                                <li>{{ miembro.telefono }}</li>
+                                <li>{{ miembro.sexo }}</li>
+                                <li>{{ miembro.tipo }}</li>
+                                <hr/>
                             {% endfor %}
                         </ul>
                     </td>
@@ -67,5 +73,4 @@
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
     <a href="{{ path('familia_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Familia </a>
-    <a href="{{ path('miembro_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Miembro </a>
 {% endblock %}

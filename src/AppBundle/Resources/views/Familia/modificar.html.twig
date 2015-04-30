@@ -5,7 +5,45 @@
 {% block content %}
     <h1 class="well"> Modificar Familia</h1>
 
-    {{ form(formulario) }}
+    {{ form_start(formulario) }}
+
+    {{ form_row(formulario.direccion) }}
+    {{ form_row(formulario.telefono) }}
+    {{ form_row(formulario.tieneMascota) }}
+    {{ form_row(formulario.detallesMascota) }}
+    {{ form_row(formulario.puedeMultiAlumno) }}
+    {{ form_row(formulario.puedeCompartirAlumno) }}
+    {{ form_row(formulario.detallesCompartirAlumno) }}
+    {{ form_row(formulario.tieneHabitacionExtra) }}
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Miembro/s</label>
+        <div class="col-sm-10">
+            <ul class="coleccion" style="padding-top: 10px; list-style: none;"
+                data-prototype="{{ form_widget(formulario.miembros.vars.prototype)|e }}">
+                {% for miembro in formulario.miembros %}
+                    <li>{{ form_row(miembro.apellidos) }}</li>
+                    <li>{{ form_row(miembro.fechaNacimiento) }}</li>
+                    <li>{{ form_row(miembro.correoElectronico) }}</li>
+                    <li>{{ form_row(miembro.sexo) }}</li>
+                    <li>{{ form_row(miembro.tipo) }}</li>
+                    <li>{{ form_row(miembro.familia) }}</li>
+                    <li>{{ form_row(miembro.usuario) }}</li>
+                    <hr />
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {{ form_row(formulario.observaciones) }}
+
+    {{ form_end(formulario) }}
 
     <a href="{{ path('familias_listar') }}" class="btn btn-info">Volver al listado de Familias</a>
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/*'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

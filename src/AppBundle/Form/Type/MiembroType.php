@@ -4,6 +4,7 @@ namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MiembroType extends AbstractType
 {
@@ -45,20 +46,16 @@ class MiembroType extends AbstractType
             ->add('usuario', null, [
                 'label' => 'Usuario',
                 'required' => false
-            ])
-            ->add('enviar', 'submit', [
-                'label' => 'Guardar cambios',
-                'attr' => [
-                    'class' => 'btn btn-success'
-                ]
             ]);
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'AppBundle\Entity\Miembro'
+        ));
+    }
+
     public function getName()
     {
         return 'miembro';

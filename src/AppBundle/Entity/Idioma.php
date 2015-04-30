@@ -181,6 +181,14 @@ class Idioma
     }
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Add alumno
      *
      * @param Alumno $alumno
@@ -190,13 +198,6 @@ class Idioma
         if (!$this->alumnos->contains($alumno)) {
             $this->alumnos->add($alumno);
         }
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

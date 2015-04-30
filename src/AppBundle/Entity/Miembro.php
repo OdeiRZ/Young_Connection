@@ -257,29 +257,6 @@ class Miembro
     }
 
     /**
-     * Set familia
-     *
-     * @param \AppBundle\Entity\Familia $familia
-     * @return Miembro
-     */
-    public function setFamilia(\AppBundle\Entity\Familia $familia)
-    {
-        $this->familia = $familia;
-
-        return $this;
-    }
-
-    /**
-     * Get familia
-     *
-     * @return \AppBundle\Entity\Familia 
-     */
-    public function getFamilia()
-    {
-        return $this->familia;
-    }
-
-    /**
      * Set usuario
      *
      * @param \AppBundle\Entity\Usuario $usuario
@@ -295,10 +272,32 @@ class Miembro
     /**
      * Get usuario
      *
-     * @return \AppBundle\Entity\Usuario 
+     * @return \AppBundle\Entity\Usuario
      */
     public function getUsuario()
     {
         return $this->usuario;
     }
+
+    /**
+     * Set familia
+     *
+     * @param \AppBundle\Entity\Miembro $miembro
+     */
+    public function setFamilia(\AppBundle\Entity\Familia $familia = null)
+    {
+
+        $this->familia = $familia;
+    }
+
+    /**
+     * Get familia
+     *
+     * @return \AppBundle\Entity\Familia 
+     */
+    public function getFamilia()
+    {
+        return $this->familia;
+    }
+
 }
