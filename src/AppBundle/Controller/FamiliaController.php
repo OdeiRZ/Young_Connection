@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Route("/familia")
@@ -36,6 +37,15 @@ class FamiliaController extends Controller
      */
     public function modificarAction(Familia $familia, Request $peticion)
     {
+        $em = $this->getDoctrine()->getManager();
+        if (!$familia) {
+            throw $this->createNotFoundException('No hay familias disponibles'.$familia);
+        }
+        $miembros = new ArrayCollection();
+        foreach ($familia->getMiembros() as $miembro) {
+            $miembros->add($miembro);
+        }
+
         $formulario = $this->createForm(new FamiliaType(), $familia);
         $formulario
             ->add('eliminar', 'submit', [
@@ -47,13 +57,16 @@ class FamiliaController extends Controller
         $formulario->handleRequest($peticion);
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            foreach ($miembros as $miembro) {
+                if (false === $familia->getMiembros()->contains($miembro)) {
+                    $em->remove($miembro); //$miembro->setFamilia(null);
+                    //$familia->removeElement($miembro); //$em->persist($miembro);
+                }
+            }
             if ($formulario->get('eliminar')->isClicked()) {
                 $em->remove($familia);
             }
-
             $em->flush();
-
             return new RedirectResponse(
                 $this->generateUrl('familias_listar')
             );
@@ -63,7 +76,6 @@ class FamiliaController extends Controller
             'formulario' => $formulario->createView()
         ]);
     }
-
 
     /**
      * @Route("/nuevo", name="familia_nuevo"), methods={'GET', 'POST'}

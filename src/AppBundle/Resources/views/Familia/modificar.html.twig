@@ -21,8 +21,10 @@
             <ul class="coleccion" style="padding-top: 10px; list-style: none;"
                 data-prototype="{{ form_widget(formulario.miembros.vars.prototype)|e }}">
                 {% for miembro in formulario.miembros %}
+                    <li>{{ form_row(miembro.nombre) }}</li>
                     <li>{{ form_row(miembro.apellidos) }}</li>
                     <li>{{ form_row(miembro.fechaNacimiento) }}</li>
+                    <li>{{ form_row(miembro.telefono) }}</li>
                     <li>{{ form_row(miembro.correoElectronico) }}</li>
                     <li>{{ form_row(miembro.sexo) }}</li>
                     <li>{{ form_row(miembro.tipo) }}</li>

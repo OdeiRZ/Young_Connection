@@ -282,11 +282,12 @@ class Miembro
     /**
      * Set familia
      *
-     * @param \AppBundle\Entity\Familia $familia
+     * @param \AppBundle\Entity\Miembro $miembro
      */
-    public function setFamilia(\AppBundle\Entity\Miembro $miembro)
+    public function setFamilia(\AppBundle\Entity\Familia $familia = null)
     {
-        $this->familia->addMiembro($miembro);
+
+        $this->familia = $familia;
     }
 
     /**

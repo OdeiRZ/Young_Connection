@@ -91,7 +91,7 @@ class Familia
 
     /**
      * @ORM\OneToMany(targetEntity="Miembro", mappedBy="familia", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      *
      * @var Miembro
      */
