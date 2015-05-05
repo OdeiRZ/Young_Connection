@@ -40,6 +40,13 @@ class Usuario
     protected $fechaNacimiento;
 
     /**
+     * @ORM\Column(type="string", length=2, options={"fixed" = true})
+     *
+     * @var string
+     */
+    protected $sexo;
+
+    /**
      * @ORM\Column(type="string")
      *
      * @var string

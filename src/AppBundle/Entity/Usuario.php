@@ -40,6 +40,13 @@ class Usuario
     protected $fechaNacimiento;
 
     /**
+     * @ORM\Column(type="string", length=2, options={"fixed" = true})
+     *
+     * @var string
+     */
+    protected $sexo;
+
+    /**
      * @ORM\Column(type="string")
      *
      * @var string
@@ -384,5 +391,28 @@ class Usuario
     public function getMensajes()
     {
         return $this->mensajes;
+    }
+
+    /**
+     * Set sexo
+     *
+     * @param string $sexo
+     * @return Usuario
+     */
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
+
+        return $this;
+    }
+
+    /**
+     * Get sexo
+     *
+     * @return string 
+     */
+    public function getSexo()
+    {
+        return $this->sexo;
     }
 }

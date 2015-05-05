@@ -54,7 +54,7 @@ class Miembro
     protected $telefono;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=2, options={"fixed" = true})
      *
      * @var string
      */

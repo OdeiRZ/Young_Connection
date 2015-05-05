@@ -30,6 +30,27 @@ class Familia
      *
      * @var string
      */
+    protected $ciudad;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $provincia;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $pais;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
     protected $telefono;
 
     /**
@@ -395,5 +416,74 @@ class Familia
     public function removeMiembro(\AppBundle\Entity\Miembro $miembros)
     {
         $this->miembros->removeElement($miembros);
+    }
+
+    /**
+     * Set ciudad
+     *
+     * @param string $ciudad
+     * @return Familia
+     */
+    public function setCiudad($ciudad)
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudad
+     *
+     * @return string 
+     */
+    public function getCiudad()
+    {
+        return $this->ciudad;
+    }
+
+    /**
+     * Set provincia
+     *
+     * @param string $provincia
+     * @return Familia
+     */
+    public function setProvincia($provincia)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get provincia
+     *
+     * @return string 
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * Set pais
+     *
+     * @param string $pais
+     * @return Familia
+     */
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    /**
+     * Get pais
+     *
+     * @return string 
+     */
+    public function getPais()
+    {
+        return $this->pais;
     }
 }

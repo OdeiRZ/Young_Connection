@@ -30,6 +30,27 @@ class Familia
      *
      * @var string
      */
+    protected $ciudad;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $provincia;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $pais;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
     protected $telefono;
 
     /**
@@ -373,7 +394,7 @@ class Familia
     {
         //$miembro->setFamilia($this);
         //$this->miembros->setFamilia($miembro);
-        $this->miembros = $miembros;
+        $this->miembros[] = $miembros;
         $miembros->setFamilia($this);
     }
 

@@ -14,6 +14,18 @@ class FamiliaType extends AbstractType
                 'label' => 'Dirección',
                 'required' => true
             ])
+            ->add('ciudad', null, [
+                'label' => 'Ciudad',
+                'required' => true
+            ])
+            ->add('provincia', null, [
+                'label' => 'Provincia',
+                'required' => true
+            ])
+            ->add('pais', null, [
+                'label' => 'Pais',
+                'required' => true
+            ])
             ->add('telefono', null, [
                 'label' => 'Teléfono',
                 'required' => true

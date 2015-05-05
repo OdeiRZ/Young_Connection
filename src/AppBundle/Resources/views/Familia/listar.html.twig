@@ -12,6 +12,8 @@
                 <th>Alumno/s</th>
                 <th>Miembro/s</th>
                 <th>Dirección</th>
+                <th>Ciudad</th>
+                <th>Pais</th>
                 <th>Téléfono</th>
                 <th>Tiene Mascota/s</th>
                 <th>Detalles Mascota/s</th>
@@ -40,13 +42,15 @@
                                 <li>{{ miembro.fechaNacimiento|date("d/m/Y") }}</li>
                                 <li>{{ miembro.correoElectronico }}</li>
                                 <li>{{ miembro.telefono }}</li>
-                                <li>{{ miembro.sexo }}</li>
+                                <li>{{ (miembro.sexo == 'M' ? 'Masculino' : 'Femenino') }}</li>
                                 <li>{{ miembro.tipo }}</li>
                                 <hr/>
                             {% endfor %}
                         </ul>
                     </td>
                     <td>{{ familia.direccion }}</td>
+                    <td>{{ familia.ciudad }} ({{ familia.provincia }})</td>
+                    <td>{{ familia.pais }}</td>
                     <td>{{ familia.telefono }}</td>
                     <td>{{ familia.tieneMascota ? 'Sí' : 'No' }}</td>
                     <td>{{ familia.detallesMascota }}</td>

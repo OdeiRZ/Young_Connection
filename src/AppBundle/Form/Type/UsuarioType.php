@@ -9,6 +9,10 @@ class UsuarioType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $sexos = array(
+            'M' => 'Masculino',
+            'F' => 'Femenino'
+        );
         $builder
             ->add('nombre', null, [
                 'label' => 'Nombre',
@@ -21,6 +25,13 @@ class UsuarioType extends AbstractType
             ->add('fechaNacimiento', null, [
                 'label' => 'Fecha de Nacimiento',
                 'required' => false
+            ])
+            ->add('sexo', 'choice', [
+                'choices' => $sexos,
+                'label' => 'Sexo',
+                'expanded' => true,
+                'multiple' => false,
+                'required' => true, //'data' => 'valor por defecto'
             ])
             ->add('telefono', null, [
                 'label' => 'Teléfono',
