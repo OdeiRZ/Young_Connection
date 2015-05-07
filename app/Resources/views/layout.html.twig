@@ -71,6 +71,13 @@
                             <li><a href="{{ path('usuario_nuevo') }}">Crear Usuario{% if ruta == 'usuario_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
                         </ul>
                     </li>
+                    <li class="{{ 'intercambios' in ruta ? 'active dropdown' : 'dropdown' }}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-plane"></i> Intercambios <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ path('intercambios_listar') }}">Listar Intercambios{% if ruta == 'intercambios_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                            <li><a href="{{ path('intercambio_nuevo') }}">Crear Intercambio{% if ruta == 'intercambio_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

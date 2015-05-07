@@ -9,3 +9,11 @@
 
     <a href="{{ path('usuarios_listar') }}" class="btn btn-info">Volver al listado de Usuarios</a>
 {% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/*'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

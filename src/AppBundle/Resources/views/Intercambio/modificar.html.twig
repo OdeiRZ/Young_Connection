@@ -1,13 +1,13 @@
 {% extends '::layout.html.twig' %}
 
-{% block title %}Modificar Usuario {{ usuario.correoElectronico }}{% endblock %}
+{% block title %}Modificar Intercambio {% endblock %}
 
 {% block content %}
-    <h1 class="well"> Modificar Usuario {{ usuario.correoElectronico }}</h1>
+    <h1 class="well"> Modificar Intercambio</h1>
 
     {{ form(formulario) }}
 
-    <a href="{{ path('usuarios_listar') }}" class="btn btn-info">Volver al listado de Usuarios</a>
+    <a href="{{ path('intercambios_listar') }}" class="btn btn-info">Volver al listado de Intercambios</a>
 {% endblock %}
 
 {% block javascripts %}

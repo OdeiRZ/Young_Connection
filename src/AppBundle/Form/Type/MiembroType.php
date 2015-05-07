@@ -23,8 +23,11 @@ class MiembroType extends AbstractType
                 'label' => 'Apellidos',
                 'required' => true
             ])
-            ->add('fechaNacimiento', null, [
+            ->add('fechaNacimiento', 'date', [
                 'label' => 'Fecha de Nacimiento',
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'attr' => array('class' => 'date'),
                 'required' => false
             ])
             ->add('telefono', null, [

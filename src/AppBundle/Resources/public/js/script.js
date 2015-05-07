@@ -3,6 +3,7 @@ var $addTagLink = $('<a href="#" class="agregar_link">Agregar</a>');
 var $newLinkLi = $('<li></li>').append($addTagLink);
 
 jQuery(document).ready(function() {
+    asignarCalendario();
     $collectionHolder = $('ul.coleccion');
     $collectionHolder.append($newLinkLi);
     if ($('ul.coleccion li').length > 1) {  //if(!$(location).attr('href').contains('/nuevo'))
@@ -29,6 +30,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
         $(this).parent().remove();
         return false;
     });
+    asignarCalendario();
     addTagFormDeleteLink($newFormLi);
 }
 
@@ -46,5 +48,14 @@ function addTagFormDeleteLink($tagFormLi) {
             e.preventDefault();
             addTagForm($collectionHolder, $newLinkLi);
         }); //$('a.eliminar-coleccion').empty();
+    });
+}
+
+function asignarCalendario() {
+    $('.date').datepicker({
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true
     });
 }
