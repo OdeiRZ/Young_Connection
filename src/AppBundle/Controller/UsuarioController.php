@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,12 +49,12 @@ class UsuarioController extends Controller
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $helper =  $password = $this->container->get('security.password_encoder');
+            $usuario->setPassword($helper->encodePassword($usuario, $usuario->getPassword()));
             if ($formulario->get('eliminar')->isClicked()) {
                 $em->remove($usuario);
             }
-
             $em->flush();
-
             return new RedirectResponse(
                 $this->generateUrl('usuarios_listar')
             );
@@ -75,6 +76,8 @@ class UsuarioController extends Controller
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $helper =  $password = $this->container->get('security.password_encoder');
+            $usuario->setPassword($helper->encodePassword($usuario, $usuario->getPassword()));
             $em->persist($usuario);
             $em->flush();
             return new RedirectResponse(

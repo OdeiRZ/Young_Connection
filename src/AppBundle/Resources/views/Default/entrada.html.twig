@@ -1,0 +1,39 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}
+    Entrar en la aplicación
+{% endblock %}
+
+{% block content %}
+    <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Acceso a la aplicación &mdash; Young Connection</div>
+            <div class="panel-body">
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissable">
+                        {{ error.message | trans }}
+                    </div>
+                {% endif %}
+                <form method="post" action="{{ path('usuario_comprobar') }}">
+                    <fieldset>
+                        <legend>Introduzca los datos de acceso</legend>
+                        <div class="form-group">
+                            <label for="username">Coreo electrónico</label>
+                            <input type="text" class="form-control" name="_username"
+                                   {% if not ultimo_usuario %}autofocus="1" {% endif %} autocorrect="off"
+                                   autocapitalize="off" placeholder="Correo con el que se registró"
+                                   value="{{ ultimo_usuario }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control" name="_password"
+                                   {% if ultimo_usuario %}autofocus="1" {% endif %}
+                                   placeholder="Contraseña de acceso">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Entrar en la aplicación</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

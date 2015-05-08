@@ -18,7 +18,7 @@
                 </button>
                 <a class="navbar-brand" href="{{ path('inicio') }}">Young Connection</a>
             </div>
-
+            {% if app.user %}
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li{% if ruta == 'inicio' %} class="active"{% endif %}><a href="{{ path('inicio') }}"><i class="glyphicon glyphicon-home"></i> Inicio </a></li>
@@ -78,8 +78,12 @@
                             <li><a href="{{ path('intercambio_nuevo') }}">Crear Intercambio{% if ruta == 'intercambio_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="{{ path('usuario_salir') }}"><i class="glyphicon glyphicon-off"></i> Salir</a>
+                    </li>
                 </ul>
             </div>
+            {% endif %}
         </div>
     </nav>
 
