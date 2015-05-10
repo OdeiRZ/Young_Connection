@@ -17,6 +17,7 @@ class UsuarioController extends Controller
 {
     /**
      * @Route("/listar", name="usuarios_listar")
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function listarAction()
     {
@@ -34,6 +35,7 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/modificar/{usuario}", name="usuario_modificar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function modificarAction(Usuario $usuario, Request $peticion)
     {
@@ -67,6 +69,7 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/nuevo", name="usuario_nuevo"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function nuevoAction(Request $peticion)
     {
@@ -92,6 +95,7 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/eliminar/{usuario}", name="usuario_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function eliminarAction(Usuario $usuario, Request $peticion)
     {
