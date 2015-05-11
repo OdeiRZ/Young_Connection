@@ -22,12 +22,14 @@
                     <td>{{ curso.familia }}</td>
                     <td>{{ curso.centro }}</td>
                     <td>
-                        <a href="{{ path('curso_modificar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-pencil"></i> Modificar
-                        </a>
-                        <a href="{{ path('curso_eliminar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-trash"></i> Eliminar
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('curso_modificar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-pencil"></i> Modificar
+                            </a>
+                            <a href="{{ path('curso_eliminar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-trash"></i> Eliminar
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
@@ -38,5 +40,7 @@
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
-    <a href="{{ path('curso_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Curso</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('curso_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Curso</a>
+    {% endif %}
 {% endblock %}

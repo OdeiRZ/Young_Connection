@@ -7,7 +7,7 @@
 {% block content %}
     <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-primary">
-            <div class="panel-heading">Acceso a la aplicación &mdash; Young Connection</div>
+            <div class="panel-heading">Acceso a la plataforma &mdash; Young Connection</div>
             <div class="panel-body">
                 {% if error %}
                     <div class="alert alert-danger alert-dismissable">
@@ -18,7 +18,7 @@
                     <fieldset>
                         <legend>Introduzca los datos de acceso</legend>
                         <div class="form-group">
-                            <label for="username">Coreo electrónico</label>
+                            <label for="username">Correo electrónico</label>
                             <input type="text" class="form-control" name="_username"
                                    {% if not ultimo_usuario %}autofocus="1" {% endif %} autocorrect="off"
                                    autocapitalize="off" placeholder="Correo con el que se registró"
@@ -31,6 +31,7 @@
                                    placeholder="Contraseña de acceso">
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Entrar en la aplicación</button>
+                        <!--<a href="{{ path('usuario_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-user"></i> Registrarse</a>-->
                     </fieldset>
                 </form>
             </div>

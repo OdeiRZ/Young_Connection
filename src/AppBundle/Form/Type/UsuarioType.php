@@ -4,6 +4,7 @@ namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UsuarioType extends AbstractType
 {
@@ -51,25 +52,42 @@ class UsuarioType extends AbstractType
             ->add('foto', null, [
                 'label' => 'Imágen',
                 'required' => false
-            ])
-            ->add('esActivo', null, [
-                'label' => 'Está Activo',
-                'required' => false
-            ])
-            ->add('esAdministrador', null, [
-                'label' => 'Es un Administrador',
-                'required' => false
-            ])
-            ->add('esCoordinador', null, [
-                'label' => 'Es un Coordinador',
-                'required' => false
-            ])
+            ]);
+        if ($options['admin']) {
+            $builder
+                ->add('esActivo', null, [
+                    'label' => 'Está Activo',
+                    'required' => false,
+                ])
+                ->add('esAdministrador', null, [
+                    'label' => 'Es un Administrador',
+                    'required' => false,
+                ])
+                ->add('esCoordinador', null, [
+                    'label' => 'Es un Coordinador',
+                    'required' => false,
+                ]);
+        }
+        $builder
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
             ]);
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => 'AppBundle\Entity\Usuario',
+            'cascade_validation' => true,
+            'admin' => false,
+            'coordinador' => false
+        ]);
     }
 
     /**

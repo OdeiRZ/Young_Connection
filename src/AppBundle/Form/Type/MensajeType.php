@@ -10,10 +10,6 @@ class MensajeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('usuarioOrigen', null, [
-                'label' => 'Orígen',
-                'required' => true
-            ])
             ->add('usuarioDestino', null, [
                 'label' => 'Destinatario/a',
                 'required' => true

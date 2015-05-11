@@ -35,18 +35,13 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/modificar/{usuario}", name="usuario_modificar"), methods={'GET', 'POST'}
-     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function modificarAction(Usuario $usuario, Request $peticion)
     {
-        $formulario = $this->createForm(new UsuarioType(), $usuario);
-        $formulario
-            ->add('eliminar', 'submit', [
-                'label' => 'Eliminar Usuario',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
-            ]);
+        $formulario = $this->createForm(new UsuarioType(), $usuario, [
+            'admin' => $this->isGranted('ROLE_ADMIN'),
+            'coordinador' => $this->isGranted('ROLE_COORDINADOR')
+        ]);
         $formulario->handleRequest($peticion);
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
@@ -69,12 +64,14 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/nuevo", name="usuario_nuevo"), methods={'GET', 'POST'}
-     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function nuevoAction(Request $peticion)
     {
         $usuario = new Usuario();
-        $formulario = $this->createForm(new UsuarioType(), $usuario);
+        $formulario = $this->createForm(new UsuarioType(), $usuario, [
+            'admin' => $this->isGranted('ROLE_ADMIN'),
+            'coordinador' => $this->isGranted('ROLE_COORDINADOR')
+        ]);
         $formulario->handleRequest($peticion);
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {

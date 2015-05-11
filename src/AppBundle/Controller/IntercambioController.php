@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Intercambio;
 use AppBundle\Form\Type\IntercambioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,8 @@ class IntercambioController extends Controller
 
     /**
      * @Route("/modificar/{intercambio}", name="intercambio_modificar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
+     * @Security(expression="has_role('ROLE_COORDINADOR')")
      */
     public function modificarAction(Intercambio $intercambio, Request $peticion)
     {
@@ -65,6 +68,8 @@ class IntercambioController extends Controller
 
     /**
      * @Route("/nuevo", name="intercambio_nuevo"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
+     * @Security(expression="has_role('ROLE_COORDINADOR')")
      */
     public function nuevoAction(Request $peticion)
     {
@@ -88,6 +93,8 @@ class IntercambioController extends Controller
 
     /**
      * @Route("/eliminar/{intercambio}", name="intercambio_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
+     * @Security(expression="has_role('ROLE_COORDINADOR')")
      */
     public function eliminarAction(Intercambio $intercambio, Request $peticion)
     {

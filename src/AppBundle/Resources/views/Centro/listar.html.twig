@@ -26,12 +26,14 @@
                     <td>{{ centro.direccion }}</td>
                     <td>{{ centro.telefono }}</td>
                     <td>
-                        <a href="{{ path('centro_modificar', { 'centro': centro.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-pencil"></i> Modificar
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('centro_modificar', { 'centro': centro.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-pencil"></i> Modificar
+                            </a>
+                            <a href="{{ path('centro_eliminar', { 'centro': centro.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-trash"></i> Eliminar
                         </a>
-                        <a href="{{ path('centro_eliminar', { 'centro': centro.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-trash"></i> Eliminar
-                        </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
@@ -42,5 +44,7 @@
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
-    <a href="{{ path('centro_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Centro</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('centro_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Centro</a>
+    {% endif %}
 {% endblock %}

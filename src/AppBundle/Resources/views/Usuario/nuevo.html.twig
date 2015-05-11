@@ -7,7 +7,11 @@
 
     {{ form(formulario) }}
 
-    <a href="{{ path('usuarios_listar') }}" class="btn btn-info">Volver al listado de Usuarios</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('usuarios_listar') }}" class="btn btn-info">Volver al listado de Usuarios</a>
+    {% else %}
+        <a href="{{ path('inicio') }}" class="btn btn-info">Volver al inicio</a>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}

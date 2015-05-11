@@ -29,10 +29,6 @@ security:
             pattern:  ^/entrar$
             security: false
 
-        ayuda:
-            pattern:  ^/ayuda
-            security: false
-
         # secures part of the application
         area_protegida:
             pattern:    ^/

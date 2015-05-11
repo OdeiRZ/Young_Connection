@@ -20,12 +20,14 @@
                     <td>{{ aficion.descripcion }}</td>
                     <td>{{ aficion.validada ? 'Sí' : 'No' }}</td>
                     <td>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('aficion_modificar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i> Modificar
                         </a>
                         <a href="{{ path('aficion_eliminar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-trash"></i> Eliminar
                         </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

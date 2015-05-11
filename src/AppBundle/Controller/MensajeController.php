@@ -71,11 +71,9 @@ class MensajeController extends Controller
      */
     public function nuevoAction(Request $peticion)
     {
-        //$em = $this->getDoctrine()->getManager();
-        //$usuario = $em->getRepository('Usuario')->findOneById(1);
         $mensaje = new Mensaje();
-        $mensaje->setFechaEnvio(new \DateTime());
-                //->setUsuarioOrigen($usuario);
+        $mensaje->setFechaEnvio(new \DateTime())
+                ->setUsuarioOrigen($this->get('security.token_storage')->getToken()->getUser());
         $formulario = $this->createForm(new MensajeType(), $mensaje);
         $formulario->handleRequest($peticion);
 
