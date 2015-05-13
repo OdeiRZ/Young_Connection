@@ -11,14 +11,14 @@ class IntercambioType extends AbstractType
     {
         $builder
             ->add('fechaInicio', 'date', [
-                'label' => 'Fecha de Inicio',
+                'label' => 'Fecha de Inicio*',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'attr' => array('class' => 'date'),
                 'required' => true
             ])
             ->add('fechaFin', 'date', [
-                'label' => 'Fecha Fin',
+                'label' => 'Fecha Fin*',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'attr' => array('class' => 'date'),

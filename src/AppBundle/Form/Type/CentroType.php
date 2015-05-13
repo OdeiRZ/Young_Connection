@@ -11,11 +11,11 @@ class CentroType extends AbstractType
     {
         $builder
             ->add('nombre', null, [
-                'label' => 'Nombre',
+                'label' => 'Nombre*',
                 'required' => true
             ])
             ->add('ciudad', null, [
-                'label' => 'Ciudad',
+                'label' => 'Ciudad*',
                 'required' => true
             ])
             ->add('provincia', null, [

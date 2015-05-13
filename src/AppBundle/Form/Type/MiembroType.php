@@ -16,11 +16,11 @@ class MiembroType extends AbstractType
         );
         $builder
             ->add('nombre', null, [
-                'label' => 'Nombre',
+                'label' => 'Nombre*',
                 'required' => true
             ])
             ->add('apellidos', null, [
-                'label' => 'Apellidos',
+                'label' => 'Apellidos*',
                 'required' => true
             ])
             ->add('fechaNacimiento', 'date', [
@@ -40,17 +40,17 @@ class MiembroType extends AbstractType
             ])
             ->add('sexo', 'choice', [
                 'choices' => $sexos,
-                'label' => 'Sexo',
+                'label' => 'Sexo*',
                 'expanded' => true,
                 'multiple' => false,
                 'required' => true, //'data' => 'valor por defecto'
             ])
             ->add('tipo', null, [
-                'label' => 'Tipo de Miembro',
+                'label' => 'Tipo de Miembro*',
                 'required' => true
             ])
             ->add('familia', null, [
-                'label' => 'Familia',
+                'label' => 'Familia*',
                 'required' => true
             ])
             ->add('usuario', null, [

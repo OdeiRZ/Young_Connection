@@ -5,9 +5,16 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class UsuarioType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $sexos = array(
@@ -16,11 +23,11 @@ class UsuarioType extends AbstractType
         );
         $builder
             ->add('nombre', null, [
-                'label' => 'Nombre',
+                'label' => 'Nombre*',
                 'required' => true
             ])
             ->add('apellidos', null, [
-                'label' => 'Apellidos',
+                'label' => 'Apellidos*',
                 'required' => true
             ])
             ->add('fechaNacimiento', 'date', [
@@ -32,21 +39,17 @@ class UsuarioType extends AbstractType
             ])
             ->add('sexo', 'choice', [
                 'choices' => $sexos,
-                'label' => 'Sexo',
+                'label' => 'Sexo*',
                 'expanded' => true,
                 'multiple' => false,
                 'required' => true, //'data' => 'valor por defecto'
             ])
             ->add('telefono', null, [
-                'label' => 'Teléfono',
+                'label' => 'Teléfono*',
                 'required' => true
             ])
             ->add('correoElectronico', 'email', [
-                'label' => 'Correo electrónico',
-                'required' => true
-            ])
-            ->add('password', 'password', [
-                'label' => 'Contraseña',
+                'label' => 'Correo electrónico*',
                 'required' => true
             ])
             ->add('foto', null, [
@@ -68,13 +71,52 @@ class UsuarioType extends AbstractType
                     'required' => false,
                 ]);
         }
+        if (!$options['nuevo']) {
+            $builder
+                ->add('enviar', 'submit', array(
+                    'label' => 'Guardar cambios',
+                    'attr' => array('class' => 'btn btn-success')
+                ));
+            if (!$options['admin']) {
+                $builder
+                    ->add('oldPassword', 'password', array(
+                        'label' => 'Contraseña antigua',
+                        'required' => false,
+                        'mapped' => false,
+                        'constraints' => new UserPassword(array(
+                            'groups' => array('password')
+                        ))
+                    ));
+            }
+        }
         $builder
-            ->add('enviar', 'submit', [
-                'label' => 'Guardar cambios',
-                'attr' => [
-                    'class' => 'btn btn-success'
-                ]
-            ]);
+            ->add('newPassword', 'repeated', array(
+                'required' => false,
+                'type' => 'password',
+                'mapped' => false,
+                'invalid_message' => 'password.no_match',
+                'first_options' => array(
+                    'label' => 'Nueva contraseña*',
+                    'constraints' => array(
+                        new Length(array(
+                            'min' => 6,
+                            'minMessage' => 'password.min_length',
+                            'groups' => array('password')
+                        )),
+                        new NotNull(array(
+                            'groups' => array('password')
+                        ))
+                    )
+                ),
+                'second_options' => array(
+                    'label' => 'Repita nueva contraseña*'
+                )
+            ))
+            ->add('cambiarPassword', 'submit', array(
+                'label' => 'Guardar los cambios y cambiar la contraseña',
+                'attr' => array('class' => 'btn btn-success'),
+                'validation_groups' => array('Default', 'password')
+            ));
     }
 
     /**
@@ -86,14 +128,13 @@ class UsuarioType extends AbstractType
             'data_class' => 'AppBundle\Entity\Usuario',
             'cascade_validation' => true,
             'admin' => false,
-            'coordinador' => false
+            'coordinador' => false,
+            'nuevo' => false
         ]);
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @return string
      */
     public function getName()
     {

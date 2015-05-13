@@ -11,7 +11,7 @@ class AficionType extends AbstractType
     {
         $builder
             ->add('descripcion', null, [
-                'label' => 'Descripción',
+                'label' => 'Descripción*',
                 'required' => true
             ])
             ->add('validada', null, [

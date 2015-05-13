@@ -47,15 +47,13 @@ class IntercambioController extends Controller
                 ]
             ]);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
                 $em->remove($intercambio);
             }
-
             $em->flush();
-
+            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('intercambios_listar')
             );
@@ -81,6 +79,7 @@ class IntercambioController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($intercambio);
             $em->flush();
+            $this->addFlash('success', 'Intercambio creado correctamente');
             return new RedirectResponse(
                 $this->generateUrl('intercambios_listar')
             );

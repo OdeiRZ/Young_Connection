@@ -7,6 +7,7 @@ use AppBundle\Form\Type\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,18 +39,28 @@ class UsuarioController extends Controller
      */
     public function modificarAction(Usuario $usuario, Request $peticion)
     {
+        $usuarioActivo = $this->getUser();
+        if ($usuario->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->createAccessDeniedException();
+        }
         $formulario = $this->createForm(new UsuarioType(), $usuario, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'coordinador' => $this->isGranted('ROLE_COORDINADOR')
         ]);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $helper =  $password = $this->container->get('security.password_encoder');
             $usuario->setPassword($helper->encodePassword($usuario, $usuario->getPassword()));
-            if ($formulario->get('eliminar')->isClicked()) {
-                $em->remove($usuario);
+            $passwordSubmit = $formulario->get('cambiarPassword');
+            if (($passwordSubmit instanceof SubmitButton) && $passwordSubmit->isClicked()) {
+                $password = $this->container->get('security.password_encoder')
+                    ->encodePassword($usuario, $formulario->get('newPassword')->get('first')->getData());
+                $usuario->setPassword($password);
+                $this->addFlash('success', 'Datos guardados correctamente y contraseña cambiada');
+            }
+            else {
+                $this->addFlash('success', 'Datos guardados correctamente');
             }
             $em->flush();
             return new RedirectResponse(
@@ -68,18 +79,21 @@ class UsuarioController extends Controller
     public function nuevoAction(Request $peticion)
     {
         $usuario = new Usuario();
-        $formulario = $this->createForm(new UsuarioType(), $usuario, [
-            'admin' => $this->isGranted('ROLE_ADMIN'),
-            'coordinador' => $this->isGranted('ROLE_COORDINADOR')
-        ]);
+        $usuario
+            ->setEsActivo(true);
+        $formulario = $this->createForm(new UsuarioType(), $usuario, array(
+            'admin' => true,
+            'coordinador' => false,
+            'nuevo' => true
+        ));
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $helper =  $password = $this->container->get('security.password_encoder');
-            $usuario->setPassword($helper->encodePassword($usuario, $usuario->getPassword()));
+            $usuario->setPassword($helper->encodePassword($usuario, $formulario->get('newPassword')->get('first')->getData()));
             $em->persist($usuario);
             $em->flush();
+            $this->addFlash('success', 'Usuario creado correctamente');
             return new RedirectResponse(
                 $this->generateUrl('usuarios_listar')
             );

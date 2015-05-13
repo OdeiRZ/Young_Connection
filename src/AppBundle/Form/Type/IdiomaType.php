@@ -12,19 +12,19 @@ class IdiomaType extends AbstractType
     {
         $builder
             ->add('descripcion', null, [
-                'label' => 'Descripción',
+                'label' => 'Descripción*',
                 'required' => true
             ])
             ->add('reading', null, [
-                'label' => 'Nivel Reading',
+                'label' => 'Nivel Reading*',
                 'required' => true
             ])
             ->add('writing', null, [
-                'label' => 'Nivel Writing',
+                'label' => 'Nivel Writing*',
                 'required' => true
             ])
             ->add('speaking', null, [
-                'label' => 'Nivel Speaking',
+                'label' => 'Nivel Speaking*',
                 'required' => true
             ]);
     }

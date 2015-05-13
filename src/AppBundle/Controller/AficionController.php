@@ -45,15 +45,13 @@ class AficionController extends Controller
                 ]
             ]);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
                 $em->remove($aficion);
             }
-
             $em->flush();
-
+            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('aficiones_listar')
             );
@@ -72,11 +70,11 @@ class AficionController extends Controller
         $aficion = new Aficion();
         $formulario = $this->createForm(new AficionType(), $aficion);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($aficion);
             $em->flush();
+            $this->addFlash('success', 'Afición creada correctamente');
             return new RedirectResponse(
                 $this->generateUrl('aficiones_listar')
             );

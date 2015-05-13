@@ -11,23 +11,23 @@ class FamiliaType extends AbstractType
     {
         $builder
             ->add('direccion', null, [
-                'label' => 'Dirección',
+                'label' => 'Dirección*',
                 'required' => true
             ])
             ->add('ciudad', null, [
-                'label' => 'Ciudad',
+                'label' => 'Ciudad*',
                 'required' => true
             ])
             ->add('provincia', null, [
-                'label' => 'Provincia',
+                'label' => 'Provincia*',
                 'required' => true
             ])
             ->add('pais', null, [
-                'label' => 'Pais',
+                'label' => 'Pais*',
                 'required' => true
             ])
             ->add('telefono', null, [
-                'label' => 'Teléfono',
+                'label' => 'Teléfono*',
                 'required' => true
             ])
             ->add('tieneMascota', null, [

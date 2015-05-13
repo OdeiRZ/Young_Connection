@@ -11,11 +11,11 @@ class MensajeType extends AbstractType
     {
         $builder
             ->add('usuarioDestino', null, [
-                'label' => 'Destinatario/a',
+                'label' => 'Destinatario/a*',
                 'required' => true
             ])
             ->add('contenido', 'textarea', [
-                'label' => 'Mensaje',
+                'label' => 'Mensaje*',
                 'attr' => ['rows' => '8'],
                 'required' => true
             ])

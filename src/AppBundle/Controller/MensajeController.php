@@ -47,15 +47,13 @@ class MensajeController extends Controller
                 ]
             ]);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
                 $em->remove($mensaje);
             }
-
             $em->flush();
-
+            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('mensajes_listar')
             );
@@ -76,11 +74,11 @@ class MensajeController extends Controller
                 ->setUsuarioOrigen($this->get('security.token_storage')->getToken()->getUser());
         $formulario = $this->createForm(new MensajeType(), $mensaje);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($mensaje);
             $em->flush();
+            $this->addFlash('success', 'Mensaje creado correctamente');
             return new RedirectResponse(
                 $this->generateUrl('mensajes_listar')
             );

@@ -11,11 +11,11 @@ class AlumnoType extends AbstractType
     {
         $builder
             ->add('usuario', null, [
-                'label' => 'Usuario',
+                'label' => 'Usuario*',
                 'required' => true
             ])
             ->add('curso', null, [
-                'label' => 'Curso',
+                'label' => 'Curso*',
                 'required' => true
             ])
             ->add('tieneProblemasSalud', null, [

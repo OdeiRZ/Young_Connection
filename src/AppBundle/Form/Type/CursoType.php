@@ -11,15 +11,15 @@ class CursoType extends AbstractType
     {
         $builder
             ->add('centro', null, [
-                'label' => 'Centro',
+                'label' => 'Centro*',
                 'required' => true
             ])
             ->add('descripcion', null, [
-                'label' => 'Descripción',
+                'label' => 'Descripción*',
                 'required' => true
             ])
             ->add('familia', null, [
-                'label' => 'Familia',
+                'label' => 'Familia*',
                 'required' => true
             ])
             ->add('enviar', 'submit', [

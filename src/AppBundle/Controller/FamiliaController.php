@@ -45,7 +45,6 @@ class FamiliaController extends Controller
         foreach ($familia->getMiembros() as $miembro) {
             $miembros->add($miembro);
         }
-
         $formulario = $this->createForm(new FamiliaType(), $familia);
         $formulario
             ->add('eliminar', 'submit', [
@@ -55,7 +54,6 @@ class FamiliaController extends Controller
                 ]
             ]);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             foreach ($miembros as $miembro) {
                 if (false === $familia->getMiembros()->contains($miembro)) {
@@ -67,6 +65,7 @@ class FamiliaController extends Controller
                 $em->remove($familia);
             }
             $em->flush();
+            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('familias_listar')
             );
@@ -90,6 +89,7 @@ class FamiliaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($familia);
             $em->flush();
+            $this->addFlash('success', 'Familia creada correctamente');
             return new RedirectResponse(
                 $this->generateUrl('familias_listar')
             );

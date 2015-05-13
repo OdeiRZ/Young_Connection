@@ -44,15 +44,13 @@ class CursoController extends Controller
                 ]
             ]);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
                 $em->remove($curso);
             }
-
             $em->flush();
-
+            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('cursos_listar')
             );
@@ -76,6 +74,7 @@ class CursoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($curso);
             $em->flush();
+            $this->addFlash('success', 'Curso creado correctamente');
             return new RedirectResponse(
                 $this->generateUrl('cursos_listar')
             );

@@ -45,15 +45,13 @@ class AlumnoController extends Controller
                 ]
             ]);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
                 $em->remove($alumno);
             }
-
             $em->flush();
-
+            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('alumnos_listar')
             );
@@ -72,11 +70,11 @@ class AlumnoController extends Controller
         $alumno = new Alumno();
         $formulario = $this->createForm(new AlumnoType(), $alumno);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($alumno);
             $em->flush();
+            $this->addFlash('success', 'Alumno creado correctamente');
             return new RedirectResponse(
                 $this->generateUrl('alumnos_listar')
             );
