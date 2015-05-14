@@ -28,7 +28,7 @@
 
 # Assets and user uploads
 /web/bundles/
-/web/uploads/
+/Young_Connection/web/bundles/app/uploads/
 
 # PHPUnit
 /app/phpunit.xml

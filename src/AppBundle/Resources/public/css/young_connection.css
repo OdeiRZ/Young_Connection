@@ -41,3 +41,17 @@ code {
 .navbar-brand, .navbar-nav a {
     font-size: 12.5px;
 }
+
+nav li {
+    float:left;
+}
+
+nav li.menu:last-child {
+    position:fixed;
+    right:60px;
+}
+
+nav li.menu:nth-last-child(2) {
+    position:fixed;
+    right:100px;
+}

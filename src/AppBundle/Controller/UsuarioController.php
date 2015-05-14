@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
+use AppBundle\Entity\Imagen;
 use AppBundle\Form\Type\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -64,7 +66,7 @@ class UsuarioController extends Controller
             }
             $em->flush();
             return new RedirectResponse(
-                $this->generateUrl('usuarios_listar')
+                $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'usuarios_listar' : 'inicio')
             );
         }
         return $this->render('AppBundle:Usuario:modificar.html.twig', [
@@ -78,11 +80,25 @@ class UsuarioController extends Controller
      */
     public function nuevoAction(Request $peticion)
     {
+        $document = new Imagen();
+        $form = $this->createFormBuilder($document)
+            ->add('name')
+            ->add('file')
+            ->getForm();
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($document);
+                $em->flush();
+                return $this->redirect('');
+            }
+        }
         $usuario = new Usuario();
         $usuario
             ->setEsActivo(true);
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
-            'admin' => true,
+            'admin' => false,
             'coordinador' => false,
             'nuevo' => true
         ));

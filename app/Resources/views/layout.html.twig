@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('bundles/app/css/young_connection.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap-fileupload.min.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -81,10 +82,19 @@
                             </ul>
                         </li>
                     {% endif %}
-                    <li>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COORDINADOR') %}
+                        <li class="{{ 'imagenes' in ruta ? 'active dropdown' : 'dropdown' }}">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-camera"></i> Imágenes <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ path('imagenes_listar') }}">Listar Imágen{% if ruta == 'imagenes_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                                <li><a href="{{ path('imagen_nuevo') }}">Crear Imágen{% if ruta == 'imagen_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    <li class="menu">
                         <a href="{{ path('usuario_modificar', { 'usuario': app.user.id }) }}"><i class="glyphicon glyphicon-cog"></i></a>
                     </li>
-                    <li>
+                    <li class="menu">
                         <a href="{{ path('usuario_salir') }}"><i class="glyphicon glyphicon-off"></i></a>
                     </li>
                 </ul>

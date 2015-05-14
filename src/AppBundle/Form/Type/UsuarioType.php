@@ -80,7 +80,7 @@ class UsuarioType extends AbstractType
             if (!$options['admin']) {
                 $builder
                     ->add('oldPassword', 'password', array(
-                        'label' => 'Contraseña antigua',
+                        'label' => 'Contraseña antigua*',
                         'required' => false,
                         'mapped' => false,
                         'constraints' => new UserPassword(array(
