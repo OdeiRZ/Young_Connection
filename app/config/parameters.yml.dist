@@ -9,6 +9,9 @@ parameters:
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 
+    # En el caso de usar una cuenta de GMail para enviar notificaciones,
+    # cambia "smtp" por "gmail", "127.0.0.1" por "~"; en mailer_user coloca
+    # la cuenta de correo completa y en mailer_password la contraseña de acceso
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
     mailer_user:       ~
@@ -18,3 +21,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # Prefijo de las notificaciones
+    prefijo_notificacion: "[Young_Connection]"
+    remite_notificacion: young.connection.soporte@gmail.com

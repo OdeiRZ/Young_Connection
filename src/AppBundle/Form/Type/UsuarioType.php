@@ -50,12 +50,13 @@ class UsuarioType extends AbstractType
             ])
             ->add('correoElectronico', 'email', [
                 'label' => 'Correo electrónico*',
-                'required' => true
+                'required' => true,
+                //'attr' => array('disabled' => ($options['nuevo']) ? false : true)
             ])
             ->add('imagen', 'file', [
                 'label' => 'Fotografía',
                 'data_class' => null,
-                'required' => false
+                'required' => false,
                 //'required' => ($options['nuevo']) ? true : false
             ]);
         if ($options['admin']) {

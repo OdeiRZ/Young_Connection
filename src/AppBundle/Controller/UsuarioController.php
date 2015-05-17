@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\ImagenType;
 use AppBundle\Form\Type\UsuarioType;
+use AppBundle\Utils\Notificaciones;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/usuario")
@@ -87,7 +89,7 @@ class UsuarioController extends Controller
             ->setEsAdministrador(false)
             ->setEsCoordinador(false);
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
-            'admin' => $sesion->getToken() != null ? $this->isGranted('ROLE_ADMIN') : false,
+            'admin' => $sesion->getToken() != null  ? $this->isGranted('ROLE_ADMIN') : false,
             'coordinador' => $sesion->getToken() != null ? $this->isGranted('ROLE_COORDINADOR') : false,
             'nuevo' => true
         ));
@@ -98,8 +100,12 @@ class UsuarioController extends Controller
             $usuario->setPassword($helper->encodePassword($usuario, $formulario->get('newPassword')->get('first')->getData()));
             $em->persist($usuario);
             $em->flush();
+            $this->addFlash('success', 'Usuario creado correctamente');
             $user = $sesion->getToken() != null ? $this->isGranted('ROLE_ADMIN'): false;
-            $this->addFlash('success', $user ? 'Usuario creado correctamente' : 'Usuario creado, se le ha enviado un correo a su email');
+            if (!$user) {
+                $this->addFlash('success', 'Se ha enviado un correo a su email');
+                Notificaciones::notificarRegistro($this, $this->get('mailer'), $this->container, $usuario);
+            }
             return new RedirectResponse(
                 $this->generateUrl('usuarios_listar')
             );
