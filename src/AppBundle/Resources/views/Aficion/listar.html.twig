@@ -10,25 +10,27 @@
             <thead>
             <tr>
                 <th>Descripción</th>
+                {% if is_granted('ROLE_ADMIN') %}
                 <th>Validada</th>
                 <th></th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
             {% for aficion in aficiones %}
                 <tr>
                     <td>{{ aficion.descripcion }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <td>{{ aficion.validada ? 'Sí' : 'No' }}</td>
                     <td>
-                        {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('aficion_modificar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i> Modificar
                         </a>
                         <a href="{{ path('aficion_eliminar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-trash"></i> Eliminar
                         </a>
-                        {% endif %}
                     </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

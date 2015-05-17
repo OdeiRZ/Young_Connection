@@ -15,16 +15,10 @@ class ImagenType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('file', 'file', [
-                'label' => 'Fichero*',
+            ->add('fichero', 'file', [
+                'label' => 'Fotografía',
                 'data_class' => null,
-                'required' => true
-            ])
-            ->add('enviar', 'submit', [
-                'label' => 'Guardar cambios',
-                'attr' => [
-                    'class' => 'btn btn-success'
-                ]
+                'required' => ($options['nuevo']) ? true : false
             ]);
     }
 
@@ -35,6 +29,7 @@ class ImagenType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Imagen',
+            'nuevo' => false
         ]);
     }
 

@@ -29,6 +29,10 @@ security:
             pattern:  ^/entrar$
             security: false
 
+        registro:
+            pattern:  ^/usuario/nuevo$
+            security: false
+
         # secures part of the application
         area_protegida:
             pattern:    ^/

@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -10,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields="correoElectronico", message="El Email ya está registrado")
  */
 class Usuario implements UserInterface
 {
@@ -72,11 +75,22 @@ class Usuario implements UserInterface
     protected $telefono;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", length=255, nullable=true)
      *
      * @var string
      */
-    protected $foto;
+    protected $ruta;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var File
+     * @Assert\File(    maxSize = "2M",
+     *                  mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff"},
+     *                  maxSizeMessage = "El tamaño máximo de imágen es de 2MB.",
+     *                  mimeTypesMessage = "Solo se aceptan archivos de tipo Imágen.")
+     */
+    protected $imagen;
 
     /**
      * @ORM\Column(type="boolean")
@@ -106,36 +120,6 @@ class Usuario implements UserInterface
      * @var Mensaje
      */
     protected $mensajes;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     */
-    public $name;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    public $path;
-
-    /**
-     *
-     */
-    private $temp;
-
-    /**
-     * Image file
-     *
-     * @var File
-     *
-     * @Assert\File(
-     *     maxSize = "5M",
-     *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff"},
-     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
-     *     mimeTypesMessage = "Only the filetypes image are allowed."
-     * )
-     */
-    private $file;
 
     /**
      * Get id
@@ -283,29 +267,6 @@ class Usuario implements UserInterface
     public function getTelefono()
     {
         return $this->telefono;
-    }
-
-    /**
-     * Set foto
-     *
-     * @param string $foto
-     * @return Usuario
-     */
-    public function setFoto($foto)
-    {
-        $this->foto = $foto;
-
-        return $this;
-    }
-
-    /**
-     * Get foto
-     *
-     * @return string 
-     */
-    public function getFoto()
-    {
-        return $this->foto;
     }
 
     /**
@@ -510,160 +471,118 @@ class Usuario implements UserInterface
     {
     }
 
-    public function getAbsolutePath()
-    {
-        return null === $this->path
-            ? null : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
-    }
-
-    public function getWebPath()
-    {
-        return null === $this->path
-            ? null : $this->getUploadDir().'/'.$this->path;
-    }
-
-    protected function getUploadRootDir()
-    {
-        // la ruta absoluta del directorio donde se deben
-        // guardar los archivos cargados
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
-    protected function getUploadDir()
-    {
-        // se deshace del __DIR__ para no meter la pata
-        // al mostrar el documento/imagen cargada en la vista.
-        return 'uploads/documents';
-    }
 
     /**
-     * Sets file.
-     *
-     * @param UploadedFile $file
+     * @param string $ruta
+     * @return Imagen
      */
-    public function setFile(UploadedFile $file = null)
+    public function setRuta($ruta)
     {
-        $this->file = $file;
-        // check if we have an old image path
-        if (is_file($this->getAbsolutePath())) {
-            // store the old name to delete after the update
-            $this->temp = $this->getAbsolutePath();
-        } else {
-            $this->path = 'initial';
-        }
+        $this->ruta = $ruta;
+
+        return $this;
     }
 
     /**
-     * Get file.
-     *
-     * @return UploadedFile
+     * @return string
      */
-    public function getFile()
+    public function getRuta()
     {
-        return $this->file;
+        return $this->ruta;
     }
 
     /**
+     * Called before saving the entity
+     *
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
     public function preUpload()
     {
-        if (null !== $this->getFile()) {
-            $this->path = $this->getFile()->guessExtension();
+        if (null !== $this->imagen) {
+            $imagen = sha1(uniqid(mt_rand(), true));
+            $this->ruta = $imagen.'.'.$this->imagen->guessExtension();
         }
     }
 
     /**
+     * Called before entity removal
+     *
+     * @ORM\PreRemove()
+     */
+    public function removeUpload()
+    {
+        if ($imagen = $this->getAbsolutePath()) {
+            unlink($imagen);
+        }
+    }
+
+    /**
+     * Called after entity persistence
+     *
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
     public function upload()
     {
-        if (null === $this->getFile()) {
+        if (null === $this->imagen) {
             return;
         }
-
-        // check if we have an old image
-        if (isset($this->temp)) {
-            // delete the old image
-            unlink($this->temp);
-            // clear the temp image path
-            $this->temp = null;
-        }
-
-        // you must throw an exception here if the file cannot be moved
-        // so that the entity is not persisted to the database
-        // which the UploadedFile move() method does
-        $this->getFile()->move(
+        $this->imagen->move(
             $this->getUploadRootDir(),
-            $this->id.'.'.$this->getFile()->guessExtension()
+            $this->ruta
         );
-
-        $this->setFile(null);
+        $this->imagen = null;
     }
 
     /**
-     * @ORM\PreRemove()
-     */
-    public function storeFilenameForRemove()
-    {
-        $this->temp = $this->getAbsolutePath();
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload()
-    {
-        if (isset($this->temp)) {
-            unlink($this->temp);
-        }
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Imagen
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
      * @return string
      */
-    public function getName()
+    public function getUploadDir()
     {
-        return $this->name;
+        return 'uploads/img';
     }
 
     /**
-     * Set path
-     *
-     * @param string $path
-     * @return Imagen
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
      * @return string
      */
-    public function getPath()
+    protected function getUploadRootDir()
     {
-        return $this->path;
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
     }
+
+    /**
+     * @return string
+     */
+    public function getAbsolutePath()
+    {
+        return null === $this->ruta
+            ? null : $this->getUploadRootDir() . DIRECTORY_SEPARATOR . $this->ruta;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return null === $this->ruta
+            ? null : $this->getUploadDir() . DIRECTORY_SEPARATOR . $this->ruta;
+    }
+
+    /**
+     * @param UploadedFile $imagen
+     */
+    public function setImagen(UploadedFile $imagen = null)
+    {
+        $this->imagen = $imagen;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getImagen()
+    {
+        return $this->imagen;
+    }
+
 }

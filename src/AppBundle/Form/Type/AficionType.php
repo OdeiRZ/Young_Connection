@@ -4,26 +4,47 @@ namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AficionType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('descripcion', null, [
                 'label' => 'Descripción*',
                 'required' => true
-            ])
-            ->add('validada', null, [
-                'label' => 'Validada',
-                'required' => false
-            ])
+            ]);
+
+        if ($options['admin']) {
+            $builder
+                ->add('validada', null, [
+                    'label' => 'Validada',
+                    'required' => false
+                ]);
+        }
+        $builder
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
             ]);
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => 'AppBundle\Entity\Aficion',
+            'admin' => false,
+        ]);
     }
 
     /**

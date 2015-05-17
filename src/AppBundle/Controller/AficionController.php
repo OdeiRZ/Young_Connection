@@ -24,6 +24,7 @@ class AficionController extends Controller
         $aficiones = $em->getRepository('AppBundle:Aficion')
             ->createQueryBuilder('a')
             ->orderBy('a.descripcion')
+            //->Where('a.validada = true')
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Aficion:listar.html.twig', [
@@ -68,13 +69,17 @@ class AficionController extends Controller
     public function nuevoAction(Request $peticion)
     {
         $aficion = new Aficion();
-        $formulario = $this->createForm(new AficionType(), $aficion);
+        $aficion
+            ->setValidada(false);
+        $formulario = $this->createForm(new AficionType(), $aficion, [
+            'admin' => $this->isGranted('ROLE_ADMIN'),
+        ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($aficion);
             $em->flush();
-            $this->addFlash('success', 'Afición creada correctamente');
+            $this->addFlash('success', $this->isGranted('ROLE_ADMIN') ? 'Afición creada correctamente' : 'Afición creada, no podrá seleccionarla hasta que sea validada');
             return new RedirectResponse(
                 $this->generateUrl('aficiones_listar')
             );

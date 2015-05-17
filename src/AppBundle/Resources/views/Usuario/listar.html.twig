@@ -14,7 +14,7 @@
                 <th>Sexo</th>
                 <th>Teléfono</th>
                 <th>Correo Electrónico</th>
-                <th>Imágen</th>
+                <th>Fotografía</th>
                 <th>Activo</th>
                 <th>Administrador</th>
                 <th>Coordinador</th>
@@ -29,7 +29,9 @@
                     <td>{{ (usuario.sexo == 'M' ? 'Masculino' : 'Femenino') }}</td>
                     <td>{{ usuario.telefono }}</td>
                     <td>{{ usuario.correoElectronico }}</td>
-                    <td>{{ usuario.foto }}</td>
+                    <td>
+                        <img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}" class="img-circle" height="100" width="100" />
+                    </td>
                     <td>{{ usuario.esActivo ? 'Sí' : 'No' }}</td>
                     <td>{{ usuario.esAdministrador ? 'Sí' : 'No' }}</td>
                     <td>{{ usuario.esCoordinador ? 'Sí' : 'No' }}</td>

@@ -3,7 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
-use AppBundle\Entity\Imagen;
+use AppBundle\Form\Type\ImagenType;
 use AppBundle\Form\Type\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -80,26 +80,15 @@ class UsuarioController extends Controller
      */
     public function nuevoAction(Request $peticion)
     {
-        $document = new Imagen();
-        $form = $this->createFormBuilder($document)
-            ->add('name')
-            ->add('file')
-            ->getForm();
-        if ($this->getRequest()->isMethod('POST')) {
-            $form->bind($this->getRequest());
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($document);
-                $em->flush();
-                return $this->redirect('');
-            }
-        }
+        $sesion = $this->container->get('security.context');
         $usuario = new Usuario();
         $usuario
-            ->setEsActivo(true);
+            ->setEsActivo(true)
+            ->setEsAdministrador(false)
+            ->setEsCoordinador(false);
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
-            'admin' => false,
-            'coordinador' => false,
+            'admin' => $sesion->getToken() != null ? $this->isGranted('ROLE_ADMIN') : false,
+            'coordinador' => $sesion->getToken() != null ? $this->isGranted('ROLE_COORDINADOR') : false,
             'nuevo' => true
         ));
         $formulario->handleRequest($peticion);
@@ -109,7 +98,8 @@ class UsuarioController extends Controller
             $usuario->setPassword($helper->encodePassword($usuario, $formulario->get('newPassword')->get('first')->getData()));
             $em->persist($usuario);
             $em->flush();
-            $this->addFlash('success', 'Usuario creado correctamente');
+            $user = $sesion->getToken() != null ? $this->isGranted('ROLE_ADMIN'): false;
+            $this->addFlash('success', $user ? 'Usuario creado correctamente' : 'Usuario creado, se le ha enviado un correo a su email');
             return new RedirectResponse(
                 $this->generateUrl('usuarios_listar')
             );

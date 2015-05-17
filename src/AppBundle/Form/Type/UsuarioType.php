@@ -52,9 +52,11 @@ class UsuarioType extends AbstractType
                 'label' => 'Correo electrónico*',
                 'required' => true
             ])
-            ->add('foto', null, [
-                'label' => 'Imágen',
+            ->add('imagen', 'file', [
+                'label' => 'Fotografía',
+                'data_class' => null,
                 'required' => false
+                //'required' => ($options['nuevo']) ? true : false
             ]);
         if ($options['admin']) {
             $builder
@@ -113,7 +115,7 @@ class UsuarioType extends AbstractType
                 )
             ))
             ->add('cambiarPassword', 'submit', array(
-                'label' => 'Guardar los cambios y cambiar la contraseña',
+                'label' => (!$options['nuevo']) ? 'Guardar los cambios y cambiar la contraseña' : 'Guardar cambios',
                 'attr' => array('class' => 'btn btn-success'),
                 'validation_groups' => array('Default', 'password')
             ));

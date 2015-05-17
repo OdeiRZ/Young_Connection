@@ -46,6 +46,7 @@ class Aficion
      */
     public function __construct()
     {
+
         $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
