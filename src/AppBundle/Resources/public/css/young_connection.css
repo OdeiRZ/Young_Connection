@@ -56,3 +56,11 @@ nav li.menu:nth-last-child(2) {
     right:100px;
 }
 
+.recordar {
+    color: #A94442;
+    float:right;
+}
+
+.recordar:hover {
+    color: #8A6D3B;
+}

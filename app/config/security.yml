@@ -30,7 +30,11 @@ security:
             security: false
 
         registro:
-            pattern:  ^/usuario/nuevo$
+            pattern:  ^/nuevo$
+            security: false
+
+        recordar:
+            pattern:  ^/recordar$
             security: false
 
         # secures part of the application

@@ -1,7 +1,7 @@
 {% extends '::layout.html.twig' %}
 
 {% block title %}
-    Entrar en la aplicación
+    Acceso a la aplicación
 {% endblock %}
 
 {% block content %}
@@ -16,7 +16,12 @@
                 {% endif %}
                 <form method="post" action="{{ path('usuario_comprobar') }}">
                     <fieldset>
-                        <legend>Introduzca los datos de acceso</legend>
+                        <legend>
+                            Introduzca los datos de acceso
+                            <a href="{{ path('usuario_recordar') }}" class="recordar" title="Recordar Contraseña">
+                                <i class="glyphicon glyphicon-exclamation-sign"></i>
+                            </a>
+                        </legend>
                         <div class="form-group">
                             <label for="username">Correo electrónico</label>
                             <input type="text" class="form-control" name="_username"

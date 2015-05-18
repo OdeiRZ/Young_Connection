@@ -24,7 +24,7 @@ class AficionController extends Controller
         $aficiones = $em->getRepository('AppBundle:Aficion')
             ->createQueryBuilder('a')
             ->orderBy('a.descripcion')
-            //->Where('a.validada = true')
+            //->where('a.validada = true')
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Aficion:listar.html.twig', [
