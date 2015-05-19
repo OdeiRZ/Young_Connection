@@ -51,13 +51,6 @@
                             </ul>
                         </li>
                     {% endif %}
-                    <li class="{{ 'mensaje' in ruta ? 'active dropdown' : 'dropdown' }}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-envelope"></i> Mensajes <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ path('mensajes_listar') }}">Listar Mensajes{% if ruta == 'mensajes_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
-                            <li><a href="{{ path('mensaje_nuevo') }}">Crear Mensaje{% if ruta == 'mensaje_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
-                        </ul>
-                    </li>
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="{{ 'usuario' in ruta ? 'active dropdown' : 'dropdown' }}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> Usuarios <span class="caret"></span></a>
@@ -76,11 +69,19 @@
                             </ul>
                         </li>
                     {% endif %}
-                    <li class="menu">
-                        <a href="{{ path('usuario_modificar', { 'usuario': app.user.id }) }}"><i class="glyphicon glyphicon-cog"></i></a>
+                </ul>
+                <ul class="nav navbar-nav user-nav right">
+                    <li class="header-nav-item">
+                        <a class="header-nav-link" href="{{ path('usuario_modificar', { 'usuario': app.user.id }) }}">
+                            {% if app.user.getWebPath %}<img src="{{ asset(app.user.getWebPath) }}" alt="{{ app.user.id }}" class="avatar" height="20" width="20" />{% endif %}
+                            <span>{{ app.user.username }}</span>
+                        </a>
                     </li>
-                    <li class="menu">
-                        <a href="{{ path('usuario_salir') }}"><i class="glyphicon glyphicon-log-out"></i></a>
+                    <li class="header-nav-item">
+                        <a class="header-nav-link" href="{{ path('mensajes_listar') }}"><i class="glyphicon glyphicon-envelope"></i></a>
+                    </li>
+                    <li class="header-nav-item">
+                        <a class="header-nav-link" href="{{ path('usuario_salir') }}"><i class="glyphicon glyphicon-log-out"></i></a>
                     </li>
                 </ul>
             </div>
