@@ -40,7 +40,7 @@ class Usuario implements UserInterface
     protected $apellidos;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="date")
      *
      * @var \DateTime
      */

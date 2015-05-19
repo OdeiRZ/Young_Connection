@@ -30,7 +30,7 @@
                     <td>{{ usuario.telefono }}</td>
                     <td>{{ usuario.correoElectronico }}</td>
                     <td>
-                        <img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}" class="img-thumbnail" height="100" width="100" />
+                        {% if usuario.getWebPath %}<img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}" class="img-thumbnail" height="100" width="100" />{% endif %}
                     </td>
                     <td>{{ usuario.esActivo ? 'Sí' : 'No' }}</td>
                     <td>{{ usuario.esAdministrador ? 'Sí' : 'No' }}</td>

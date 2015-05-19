@@ -11,7 +11,7 @@
             <tr>
                 <th>Nombre</th>
                 <th>Ciudad</th>
-                <th>Provincia</th>
+                <th>Pais</th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
                 <th></th>
@@ -21,8 +21,8 @@
             {% for centro in centros %}
                 <tr>
                     <td>{{ centro.nombre }}</td>
-                    <td>{{ centro.ciudad }}</td>
-                    <td>{{ centro.provincia }}</td>
+                    <td>{{ centro.ciudad }} {% if centro.provincia %}({{ centro.provincia }}){% endif %}</td>
+                    <td>{{ centro.pais }}</td>
                     <td>{{ centro.direccion }}</td>
                     <td>{{ centro.telefono }}</td>
                     <td>

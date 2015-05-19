@@ -33,21 +33,28 @@ class Centro
     protected $ciudad;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */
     protected $provincia;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $pais;
+
+    /**
+     * @ORM\Column(type="string")
      *
      * @var string
      */
     protected $direccion;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      *
      * @var string
      */
@@ -233,5 +240,28 @@ class Centro
     public function getProvincia()
     {
         return $this->provincia;
+    }
+
+    /**
+     * Set pais
+     *
+     * @param string $pais
+     * @return Centro
+     */
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    /**
+     * Get pais
+     *
+     * @return string 
+     */
+    public function getPais()
+    {
+        return $this->pais;
     }
 }

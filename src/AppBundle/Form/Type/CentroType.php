@@ -22,13 +22,17 @@ class CentroType extends AbstractType
                 'label' => 'Provincia',
                 'required' => false
             ])
+            ->add('pais', null, [
+                'label' => 'Pais*',
+                'required' => true
+            ])
             ->add('direccion', null, [
-                'label' => 'Dirección',
-                'required' => false
+                'label' => 'Dirección*',
+                'required' => true
             ])
             ->add('telefono', null, [
-                'label' => 'Teléfono',
-                'required' => false
+                'label' => 'Teléfono*',
+                'required' => true
             ])
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',

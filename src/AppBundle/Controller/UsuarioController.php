@@ -26,7 +26,7 @@ class UsuarioController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usuarios = $em->getRepository('AppBundle:Usuario')
             ->createQueryBuilder('u')
-            ->orderBy('uapellidos', 'DESC')
+            ->orderBy('u.apellidos', 'DESC')
             ->addOrderBy('u.nombre', 'DESC')
             ->getQuery()
             ->getResult();
