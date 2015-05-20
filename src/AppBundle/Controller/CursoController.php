@@ -32,6 +32,7 @@ class CursoController extends Controller
 
     /**
      * @Route("/modificar/{curso}", name="curso_modificar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')
      */
     public function modificarAction(Curso $curso, Request $peticion)
     {
@@ -63,6 +64,7 @@ class CursoController extends Controller
 
     /**
      * @Route("/nuevo", name="curso_nuevo"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')
      */
     public function nuevoAction(Request $peticion)
     {
@@ -87,6 +89,7 @@ class CursoController extends Controller
 
     /**
      * @Route("/eliminar/{curso}", name="curso_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')
      */
     public function eliminarAction(Curso $curso, Request $peticion)
     {

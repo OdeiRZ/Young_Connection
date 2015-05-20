@@ -91,6 +91,7 @@ class MensajeController extends Controller
 
     /**
      * @Route("/eliminar/{mensaje}", name="mensaje_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function eliminarAction(Mensaje $mensaje, Request $peticion)
     {

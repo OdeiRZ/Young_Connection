@@ -17,6 +17,7 @@ class IntercambioController extends Controller
 {
     /**
      * @Route("/listar", name="intercambios_listar")
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
     public function listarAction()
     {
@@ -33,8 +34,7 @@ class IntercambioController extends Controller
 
     /**
      * @Route("/modificar/{intercambio}", name="intercambio_modificar"), methods={'GET', 'POST'}
-     * @Security(expression="has_role('ROLE_ADMIN')")
-     * @Security(expression="has_role('ROLE_COORDINADOR')")
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
     public function modificarAction(Intercambio $intercambio, Request $peticion)
     {
@@ -66,8 +66,7 @@ class IntercambioController extends Controller
 
     /**
      * @Route("/nuevo", name="intercambio_nuevo"), methods={'GET', 'POST'}
-     * @Security(expression="has_role('ROLE_ADMIN')")
-     * @Security(expression="has_role('ROLE_COORDINADOR')")
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
     public function nuevoAction(Request $peticion)
     {
@@ -92,8 +91,7 @@ class IntercambioController extends Controller
 
     /**
      * @Route("/eliminar/{intercambio}", name="intercambio_eliminar"), methods={'GET', 'POST'}
-     * @Security(expression="has_role('ROLE_ADMIN')")
-     * @Security(expression="has_role('ROLE_COORDINADOR')")
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
     public function eliminarAction(Intercambio $intercambio, Request $peticion)
     {

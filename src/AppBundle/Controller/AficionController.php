@@ -34,6 +34,7 @@ class AficionController extends Controller
 
     /**
      * @Route("/modificar/{aficion}", name="aficion_modificar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function modificarAction(Aficion $aficion, Request $peticion)
     {
@@ -92,6 +93,7 @@ class AficionController extends Controller
 
     /**
      * @Route("/eliminar/{aficion}", name="aficion_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function eliminarAction(Aficion $aficion, Request $peticion)
     {

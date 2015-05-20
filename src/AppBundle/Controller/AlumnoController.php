@@ -17,6 +17,7 @@ class AlumnoController extends Controller
 {
     /**
      * @Route("/listar", name="alumnos_listar")
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
     public function listarAction()
     {
@@ -33,6 +34,7 @@ class AlumnoController extends Controller
 
     /**
      * @Route("/modificar/{alumno}", name="alumno_modificar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
     public function modificarAction(Alumno $alumno, Request $peticion)
     {
@@ -64,6 +66,7 @@ class AlumnoController extends Controller
 
     /**
      * @Route("/nuevo", name="alumno_nuevo"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
     public function nuevoAction(Request $peticion)
     {
@@ -87,6 +90,7 @@ class AlumnoController extends Controller
 
     /**
      * @Route("/eliminar/{alumno}", name="alumno_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function eliminarAction(Alumno $alumno, Request $peticion)
     {

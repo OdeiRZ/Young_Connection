@@ -32,6 +32,7 @@ class CentroController extends Controller
 
     /**
      * @Route("/modificar/{centro}", name="centro_modificar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')
      */
     public function modificarAction(Centro $centro, Request $peticion)
     {
@@ -63,6 +64,7 @@ class CentroController extends Controller
 
     /**
      * @Route("/nuevo", name="centro_nuevo"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')
      */
     public function nuevoAction(Request $peticion)
     {
@@ -87,6 +89,7 @@ class CentroController extends Controller
 
     /**
      * @Route("/eliminar/{centro}", name="centro_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')
      */
     public function eliminarAction(Centro $centro, Request $peticion)
     {
