@@ -5,13 +5,15 @@
 {% block content %}
     <h1 class="well">Listado de Intercambios</h1>
 
+    {{ form(formulario_fechas) }}
+
     {% if intercambios %}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
                 <th>F. Inicio</th>
                 <th>F. Fin</th>
-                <th>Obervaciones</th>
+                <th>Observaciones</th>
                 <th></th>
             </tr>
             </thead>
@@ -39,4 +41,12 @@
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
     <a href="{{ path('intercambio_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Intercambio </a>
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/*'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

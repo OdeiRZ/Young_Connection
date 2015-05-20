@@ -18,7 +18,7 @@ class IntercambioType extends AbstractType
                 'required' => true
             ])
             ->add('fechaFin', 'date', [
-                'label' => 'Fecha Fin*',
+                'label' => 'Fecha de Fin*',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'attr' => array('class' => 'date'),

@@ -98,7 +98,6 @@ class DefaultController extends Controller
                 return new RedirectResponse(
                     $this->generateUrl('inicio')
                 );
-
             } else {
                 $error = "El Correo no está registrado en el Sistema";
             }

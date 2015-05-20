@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Intercambio;
 use AppBundle\Form\Type\IntercambioType;
+use AppBundle\Form\Type\RangoFechasType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,15 +20,26 @@ class IntercambioController extends Controller
      * @Route("/listar", name="intercambios_listar")
      * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
-    public function listarAction()
+    public function listarAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $intercambios = $em->getRepository('AppBundle:Intercambio')
+        $fechasPorDefecto = array('desde' => null, 'hasta' => null);
+        $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto)->handleRequest($request);
+        $fechas = ($form->isValid()) ? ['desde' => $_POST['rangoFechas']['desde'], 'hasta' => $_POST['rangoFechas']['hasta']] : ['desde' => null, 'hasta' => null];
+        $qb = $em->getRepository('AppBundle:Intercambio')
             ->createQueryBuilder('i')
-            ->orderBy('i.fechaInicio', 'DESC')
+            ->orderBy('i.fechaInicio', 'DESC');
+        if ($fechas['desde'] && $fechas['hasta']) {
+            $qb->where('i.fechaInicio >= :desde')
+               ->andWhere('i.fechaFin <= :hasta')
+               ->setParameter('desde', $fechas['desde'])
+               ->setParameter('hasta', $fechas['hasta']);
+        }
+        $intercambios =  $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Intercambio:listar.html.twig', [
+            'formulario_fechas' => $form->createView(),
             'intercambios' => $intercambios
         ]);
     }
