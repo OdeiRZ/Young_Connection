@@ -24,7 +24,7 @@ class FiltroPaisType extends AbstractType
                            'name' => 'pais']
             ])
             ->add('enviar', 'submit', [
-                'label' => 'Filtrar Centros',
+                'label' => ($options['centro']) ? 'Filtrar Centros' : 'Filtrar Familias',
                 'attr' => ['class' => 'btn btn-info']
             ]);
     }
@@ -35,7 +35,9 @@ class FiltroPaisType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'paises' => null
+            'paises' => null,
+            'centro' => false,
+            'familia' => false
         ]);
     }
 

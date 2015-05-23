@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Familia;
 use AppBundle\Form\Type\FamiliaType;
+use AppBundle\Form\Type\FiltroPaisType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,16 +19,36 @@ class FamiliaController extends Controller
     /**
      * @Route("/listar", name="familias_listar")
      */
-    public function listarAction()
+    public function listarAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $familias = $em->getRepository('AppBundle:Familia')
-            ->createQueryBuilder('f')
-            //->orderBy('f.alumno.usuario.apellidos', 'DESC')
-            //->addOrderBy('f.alumno.usuario.nombre', 'DESC')
+        $auxPaises = $em->createQueryBuilder('f')
+            ->select('f.pais')
+            ->from('AppBundle:Familia', 'f')
+            ->add('groupBy', 'f.pais')
+            ->orderBy('f.pais', 'ASC')
+            ->getQuery()
+            ->getResult();
+        $paises = [];
+        foreach ($auxPaises as $i => $pais) {
+            $paises[$auxPaises[$i]['pais']] = $auxPaises[$i]['pais'];
+        }
+        $form = $this->createForm(new FiltroPaisType(), $paises, [
+            'paises' => $paises,
+            'familia' => true
+        ])->handleRequest($request);
+        $pais = ($form->isValid()) ? $_POST['filtroPaises']['pais'] : null;
+        $qb = $em->getRepository('AppBundle:Familia')
+            ->createQueryBuilder('f');
+        if ($pais) {
+            $qb->where('f.pais = :pais')
+                ->setParameter('pais', $_POST['filtroPaises']['pais']);
+        }
+        $familias =  $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Familia:listar.html.twig', [
+            'formulario_paises' => $form->createView(),
             'familias' => $familias
         ]);
     }

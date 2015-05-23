@@ -29,11 +29,13 @@ class CentroController extends Controller
                 ->orderBy('c.pais', 'ASC')
                 ->getQuery()
                 ->getResult();
+        $paises = [];
         foreach ($auxPaises as $i => $pais) {
             $paises[$auxPaises[$i]['pais']] = $auxPaises[$i]['pais'];
         }
         $form = $this->createForm(new FiltroPaisType(), $paises, [
-            'paises' => $paises
+            'paises' => $paises,
+            'centro' => true
         ])->handleRequest($request);
         $pais = ($form->isValid()) ? $_POST['filtroPaises']['pais'] : null;
         $qb = $em->getRepository('AppBundle:Centro')

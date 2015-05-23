@@ -29,6 +29,7 @@ class CursoController extends Controller
             ->orderBy('c.familia', 'ASC')
             ->getQuery()
             ->getResult();
+        $familias = [];
         foreach ($auxFamilias as $i => $familia) {
             $familias[$auxFamilias[$i]['familia']] = $auxFamilias[$i]['familia'];
         }
