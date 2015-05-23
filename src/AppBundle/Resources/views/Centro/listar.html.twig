@@ -5,6 +5,8 @@
 {% block content %}
     <h1 class="well">Listado de Centros</h1>
 
+    {{ form(formulario_paises) }}
+
     {% if centros %}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>

@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Intercambio;
 use AppBundle\Form\Type\IntercambioType;
-use AppBundle\Form\Type\RangoFechasType;
+use AppBundle\Form\Type\FiltroFechasType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,8 +24,8 @@ class IntercambioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $fechasPorDefecto = array('desde' => null, 'hasta' => null);
-        $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto)->handleRequest($request);
-        $fechas = ($form->isValid()) ? ['desde' => $_POST['rangoFechas']['desde'], 'hasta' => $_POST['rangoFechas']['hasta']] : ['desde' => null, 'hasta' => null];
+        $form = $this->createForm(new FiltroFechasType(), $fechasPorDefecto)->handleRequest($request);
+        $fechas = ($form->isValid()) ? ['desde' => $_POST['filtroFechas']['desde'], 'hasta' => $_POST['filtroFechas']['hasta']] : $fechasPorDefecto;
         $qb = $em->getRepository('AppBundle:Intercambio')
             ->createQueryBuilder('i')
             ->orderBy('i.fechaInicio', 'DESC');

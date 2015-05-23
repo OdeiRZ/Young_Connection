@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Centro;
 use AppBundle\Form\Type\CentroType;
+use AppBundle\Form\Type\FiltroPaisType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,15 +19,36 @@ class CentroController extends Controller
     /**
      * @Route("/listar", name="centros_listar")
      */
-    public function listarAction()
+
+    public function listarAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $centros = $em->getRepository('AppBundle:Centro')
+        $auxPaises = $em->createQueryBuilder('a')
+                ->select('a.pais')
+                ->from('AppBundle:Centro', 'a')
+                ->add('groupBy', 'a.pais')
+                ->orderBy('a.pais', 'ASC')
+                ->getQuery()
+                ->getResult();
+        foreach ($auxPaises as $i => $pais) {
+            $paises[$auxPaises[$i]['pais']] = $auxPaises[$i]['pais'];
+        }
+        $form = $this->createForm(new FiltroPaisType(), $paises, [
+            'paises' => $paises
+        ])->handleRequest($request);
+        $pais = ($form->isValid()) ? $_POST['filtroPaises']['pais'] : null;
+        $qb = $em->getRepository('AppBundle:Centro')
             ->createQueryBuilder('c')
-            ->orderBy('c.nombre', 'DESC')
+            ->orderBy('c.nombre', 'ASC');
+        if ($pais) {
+            $qb->where('c.pais = :pais')
+               ->setParameter('pais', $_POST['filtroPaises']['pais']);
+        }
+        $centros =  $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Centro:listar.html.twig', [
+            'formulario_paises' => $form->createView(),
             'centros' => $centros
         ]);
     }

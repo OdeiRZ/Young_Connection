@@ -2,11 +2,12 @@
 
 namespace AppBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class RangoFechasType extends AbstractType
+class FiltroPaisType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,24 +16,17 @@ class RangoFechasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('desde', 'date', [
-                'label' => 'Desde',
+            ->add('pais', 'choice', [
+                'label' => 'Paises',
                 'required' => false,
-                'widget' => 'single_text',
-                'format' => 'dd-MM-yyyy',
-                'attr' => ['class' => 'date',
-                           'name' => 'desde']
-            ])
-            ->add('hasta', 'date', [
-                'label' => 'Hasta',
-                'required' => false,
-                'widget' => 'single_text',
-                'format' => 'dd-MM-yyyy',
-                'attr' => ['class' => 'date',
-                           'name' => 'hasta']
+                'choices' => $options['paises'],
+                //'expanded' => false,
+                'empty_value' => 'Todos',
+                'attr' => ['class' => 'toggle',
+                           'name' => 'pais']
             ])
             ->add('enviar', 'submit', [
-                'label' => 'Filtrar Intercambios',
+                'label' => 'Filtrar Centros',
                 'attr' => ['class' => 'btn btn-info']
             ]);
     }
@@ -43,7 +37,7 @@ class RangoFechasType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-
+            'paises' => null
         ]);
     }
 
@@ -52,6 +46,6 @@ class RangoFechasType extends AbstractType
      */
     public function getName()
     {
-        return 'rangoFechas';
+        return 'filtroPaises';
     }
 }
