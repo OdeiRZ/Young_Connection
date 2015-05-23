@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Curso;
 use AppBundle\Form\Type\CursoType;
+use AppBundle\Form\Type\FiltroFamiliaType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,15 +19,35 @@ class CursoController extends Controller
     /**
      * @Route("/listar", name="cursos_listar")
      */
-    public function listarAction()
+    public function listarAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $cursos = $em->getRepository('AppBundle:Curso')
+        $auxFamilias = $em->createQueryBuilder('c')
+            ->select('c.familia')
+            ->from('AppBundle:Curso', 'c')
+            ->add('groupBy', 'c.familia')
+            ->orderBy('c.familia', 'ASC')
+            ->getQuery()
+            ->getResult();
+        foreach ($auxFamilias as $i => $familia) {
+            $familias[$auxFamilias[$i]['familia']] = $auxFamilias[$i]['familia'];
+        }
+        $form = $this->createForm(new FiltroFamiliaType(), $familias, [
+            'familias' => $familias
+        ])->handleRequest($request);
+        $familia = ($form->isValid()) ? $_POST['filtroFamilias']['familia'] : null;
+        $qb = $em->getRepository('AppBundle:Curso')
             ->createQueryBuilder('c')
-            ->orderBy('c.descripcion', 'DESC')
+            ->orderBy('c.descripcion', 'ASC');
+        if ($familia) {
+            $qb->where('c.familia = :familia')
+               ->setParameter('familia', $_POST['filtroFamilias']['familia']);
+        }
+        $cursos =  $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Curso:listar.html.twig', [
+            'formulario_familias' => $form->createView(),
             'cursos' => $cursos
         ]);
     }

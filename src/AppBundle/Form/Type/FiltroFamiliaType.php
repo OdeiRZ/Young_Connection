@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FiltroPaisType extends AbstractType
+class FiltroFamiliaType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,16 +15,16 @@ class FiltroPaisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pais', 'choice', [
-                'label' => 'Paises',
+            ->add('familia', 'choice', [
+                'label' => 'Familias',
                 'required' => false,
-                'choices' => $options['paises'],
-                'empty_value' => 'Todos',
+                'choices' => $options['familias'],
+                'empty_value' => 'Todas',
                 'attr' => ['class' => 'toggle',
                            'name' => 'pais']
             ])
             ->add('enviar', 'submit', [
-                'label' => 'Filtrar Centros',
+                'label' => 'Filtrar Cursos',
                 'attr' => ['class' => 'btn btn-info']
             ]);
     }
@@ -35,7 +35,7 @@ class FiltroPaisType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'paises' => null
+            'familias' => null
         ]);
     }
 
@@ -44,6 +44,6 @@ class FiltroPaisType extends AbstractType
      */
     public function getName()
     {
-        return 'filtroPaises';
+        return 'filtroFamilias';
     }
 }

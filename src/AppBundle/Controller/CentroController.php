@@ -19,15 +19,14 @@ class CentroController extends Controller
     /**
      * @Route("/listar", name="centros_listar")
      */
-
     public function listarAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $auxPaises = $em->createQueryBuilder('a')
-                ->select('a.pais')
-                ->from('AppBundle:Centro', 'a')
-                ->add('groupBy', 'a.pais')
-                ->orderBy('a.pais', 'ASC')
+        $auxPaises = $em->createQueryBuilder('c')
+                ->select('c.pais')
+                ->from('AppBundle:Centro', 'c')
+                ->add('groupBy', 'c.pais')
+                ->orderBy('c.pais', 'ASC')
                 ->getQuery()
                 ->getResult();
         foreach ($auxPaises as $i => $pais) {
