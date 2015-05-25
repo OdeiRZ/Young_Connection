@@ -114,7 +114,7 @@ class Usuario implements UserInterface
     protected $esCoordinador;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mensaje", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="Mensaje", mappedBy="usuarioOrigen")
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Mensaje

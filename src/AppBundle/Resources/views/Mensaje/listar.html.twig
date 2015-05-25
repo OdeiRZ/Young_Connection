@@ -5,11 +5,12 @@
 {% block content %}
     <h1 class="well">Listado de Mensajes</h1>
 
+    {{ form(formulario_usuarios) }}
     {% if mensajes %}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
-                <th>Destinatario/a</th>
+                <th>Orígen</th>
                 <th>Fecha Envio</th>
                 <th>Fecha Recepción</th>
                 <th>Contenido</th>
@@ -19,7 +20,7 @@
             <tbody>
             {% for mensaje in mensajes %}
                 <tr>
-                    <td>{{ mensaje.usuarioDestino }}</td>
+                    <td>{{ mensaje.usuarioOrigen }}</td>
                     <td>{{ mensaje.fechaEnvio|date("d/m/Y H:i") }}</td>
                     <td>{{ mensaje.fechaRecepcion|date("d/m/Y H:i") }}</td>
                     <td>{{ mensaje.contenido }}</td>

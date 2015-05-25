@@ -3,9 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Mensaje;
-use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\MensajeType;
-use AppBundle\Form\Type\UsuarioType;
+use AppBundle\Form\Type\FiltroUsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,16 +19,24 @@ class MensajeController extends Controller
     /**
      * @Route("/listar", name="mensajes_listar")
      */
-    public function listarAction()
+    public function listarAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $mensajes = $em->getRepository('AppBundle:Mensaje')
+        $form = $this->createForm(new FiltroUsuarioType())->handleRequest($request);
+        $usuario = ($form->isValid()) ? $_POST['filtroUsuarios']['usuario'] : null;
+        $qb = $em->getRepository('AppBundle:Mensaje')
             ->createQueryBuilder('m')
             ->addOrderBy('m.usuarioDestino', 'DESC')
-            ->addOrderBy('m.fechaEnvio', 'DESC')
+            ->addOrderBy('m.fechaEnvio', 'DESC');
+        if ($usuario) {
+            $qb->where('m.usuarioOrigen = :usuario')
+                ->setParameter('usuario', $_POST['filtroUsuarios']['usuario']);
+        }
+        $mensajes = $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Mensaje:listar.html.twig', [
+            'formulario_usuarios' => $form->createView(),
             'mensajes' => $mensajes
         ]);
     }

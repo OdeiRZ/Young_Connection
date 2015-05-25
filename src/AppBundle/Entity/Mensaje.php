@@ -40,7 +40,7 @@ class Mensaje
     protected $contenido;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="mensajes")
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Usuario
