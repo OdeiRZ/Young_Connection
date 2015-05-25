@@ -3,8 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
+use AppBundle\Form\Type\FiltroApellidoType;
 use AppBundle\Form\Type\UsuarioType;
-use AppBundle\Utils\Notificaciones;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,16 +21,26 @@ class UsuarioController extends Controller
      * @Route("/listar", name="usuarios_listar")
      * @Security(expression="has_role('ROLE_ADMIN')")
      */
-    public function listarAction()
+    public function listarAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $usuarios = $em->getRepository('AppBundle:Usuario')
-            ->createQueryBuilder('u')
-            ->orderBy('u.apellidos', 'DESC')
-            ->addOrderBy('u.nombre', 'DESC')
+        $apellidosDefecto = null;
+        $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($request);
+        $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
+        $qb = $em->getRepository('AppBundle:Usuario')
+                 ->createQueryBuilder('u')
+                 ->orderBy('u.apellidos', 'DESC')
+                 ->addOrderBy('u.nombre', 'DESC');
+        if ($apellidos) {
+            $qb->where('u.apellidos LIKE :apellidos')
+               ->orWhere('u.nombre LIKE :apellidos')
+               ->setParameter('apellidos', '%'.$apellidos.'%');
+        }
+        $usuarios =  $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Usuario:listar.html.twig', [
+            'formulario_apellidos' => $form->createView(),
             'usuarios' => $usuarios
         ]);
     }

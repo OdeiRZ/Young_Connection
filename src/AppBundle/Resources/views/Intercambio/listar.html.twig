@@ -5,8 +5,8 @@
 {% block content %}
     <h1 class="well">Listado de Intercambios</h1>
 
+    {{ form(formulario_fechas) }}
     {% if intercambios %}
-        {{ form(formulario_fechas) }}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
