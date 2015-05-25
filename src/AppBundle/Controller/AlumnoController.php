@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Idioma;
 use AppBundle\Form\Type\AlumnoType;
+use AppBundle\Form\Type\FiltroCursoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,15 +21,23 @@ class AlumnoController extends Controller
      * @Route("/listar", name="alumnos_listar")
      * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
-    public function listarAction()
+    public function listarAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $alumnos = $em->getRepository('AppBundle:Alumno')
-            ->createQueryBuilder('a')
-            ->orderBy('a.usuario')
+        $form = $this->createForm(new FiltroCursoType())->handleRequest($request);
+        $curso = ($form->isValid()) ? $_POST['filtroCursos']['curso'] : null;
+        $qb = $em->getRepository('AppBundle:Alumno')
+                 ->createQueryBuilder('a')
+                 ->orderBy('a.usuario');
+        if ($curso) {
+            $qb->where('a.curso = :curso')
+                ->setParameter('curso', $_POST['filtroCursos']['curso']);
+        }
+        $alumnos = $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Alumno:listar.html.twig', [
+            'formulario_cursos' => $form->createView(),
             'alumnos' => $alumnos
         ]);
     }

@@ -5,6 +5,7 @@
 {% block content %}
     <h1 class="well">Listado de Alumnos</h1>
 
+    {{ form(formulario_cursos) }}
     {% if alumnos %}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
