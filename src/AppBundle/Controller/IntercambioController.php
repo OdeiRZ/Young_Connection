@@ -27,8 +27,8 @@ class IntercambioController extends Controller
         $form = $this->createForm(new FiltroFechasType(), $fechasPorDefecto)->handleRequest($request);
         $fechas = ($form->isValid()) ? ['desde' => $_POST['filtroFechas']['desde'], 'hasta' => $_POST['filtroFechas']['hasta']] : $fechasPorDefecto;
         $qb = $em->getRepository('AppBundle:Intercambio')
-            ->createQueryBuilder('i')
-            ->orderBy('i.fechaInicio', 'DESC');
+                 ->createQueryBuilder('i')
+                 ->orderBy('i.fechaInicio', 'DESC');
         if ($fechas['desde'] && $fechas['hasta']) {
             $qb->where('i.fechaInicio >= :desde')
                ->andWhere('i.fechaFin <= :hasta')

@@ -25,9 +25,9 @@ class MensajeController extends Controller
         $form = $this->createForm(new FiltroUsuarioType())->handleRequest($request);
         $usuario = ($form->isValid()) ? $_POST['filtroUsuarios']['usuario'] : null;
         $qb = $em->getRepository('AppBundle:Mensaje')
-            ->createQueryBuilder('m')
-            ->addOrderBy('m.usuarioDestino', 'DESC')
-            ->addOrderBy('m.fechaEnvio', 'DESC');
+                 ->createQueryBuilder('m')
+                 ->addOrderBy('m.usuarioDestino', 'DESC')
+                 ->addOrderBy('m.fechaEnvio', 'DESC');
         if ($usuario) {
             $qb->where('m.usuarioOrigen = :usuario')
                 ->setParameter('usuario', $_POST['filtroUsuarios']['usuario']);

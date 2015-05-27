@@ -39,7 +39,7 @@ class FamiliaController extends Controller
         ])->handleRequest($request);
         $pais = ($form->isValid()) ? $_POST['filtroPaises']['pais'] : null;
         $qb = $em->getRepository('AppBundle:Familia')
-            ->createQueryBuilder('f');
+                 ->createQueryBuilder('f');
         if ($pais) {
             $qb->where('f.pais = :pais')
                 ->setParameter('pais', $_POST['filtroPaises']['pais']);

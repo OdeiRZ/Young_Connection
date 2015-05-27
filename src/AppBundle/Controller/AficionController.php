@@ -22,11 +22,10 @@ class AficionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $aficiones = $em->getRepository('AppBundle:Aficion')
-            ->createQueryBuilder('a')
-            ->orderBy('a.descripcion')
-            //->where('a.validada = true')
-            ->getQuery()
-            ->getResult();
+                        ->createQueryBuilder('a')
+                        ->orderBy('a.descripcion')
+                        ->getQuery()
+                        ->getResult();
         return $this->render('AppBundle:Aficion:listar.html.twig', [
             'aficiones' => $aficiones
         ]);

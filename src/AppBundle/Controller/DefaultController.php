@@ -40,6 +40,7 @@ class DefaultController extends Controller
     {
         $usuario = new Usuario();
         $usuario
+            ->setRuta("user.png")
             ->setEsActivo(true)
             ->setEsAdministrador(false)
             ->setEsCoordinador(false);
@@ -76,13 +77,13 @@ class DefaultController extends Controller
         if ($request->getMethod() == 'POST') {
             $em = $this->getDoctrine()->getManager();
             $usuarios = $em->getRepository('AppBundle:Usuario')
-                ->createQueryBuilder('p')
-                ->where('p.correoElectronico = :email')
-                ->setParameter('email', $request->get('_username'))
-                ->setMaxResults(1);
+                           ->createQueryBuilder('p')
+                           ->where('p.correoElectronico = :email')
+                           ->setParameter('email', $request->get('_username'))
+                           ->setMaxResults(1);
             $usuario = $em->createQuery($usuarios)
-                ->setParameter('email', $request->get('_username'))
-                ->getOneOrNullResult();
+                          ->setParameter('email', $request->get('_username'))
+                          ->getOneOrNullResult();
             if ($usuario != null) {
                 $nuevaClave = "";
                 $cadena = "abcdefghijklmnopqrstuvwxyz1234567890";

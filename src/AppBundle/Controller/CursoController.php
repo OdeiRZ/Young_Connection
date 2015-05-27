@@ -23,12 +23,12 @@ class CursoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $auxFamilias = $em->createQueryBuilder('c')
-            ->select('c.familia')
-            ->from('AppBundle:Curso', 'c')
-            ->add('groupBy', 'c.familia')
-            ->orderBy('c.familia', 'ASC')
-            ->getQuery()
-            ->getResult();
+                          ->select('c.familia')
+                          ->from('AppBundle:Curso', 'c')
+                          ->add('groupBy', 'c.familia')
+                          ->orderBy('c.familia', 'ASC')
+                          ->getQuery()
+                          ->getResult();
         $familias = [];
         foreach ($auxFamilias as $i => $familia) {
             $familias[$auxFamilias[$i]['familia']] = $auxFamilias[$i]['familia'];
@@ -38,8 +38,8 @@ class CursoController extends Controller
         ])->handleRequest($request);
         $familia = ($form->isValid()) ? $_POST['filtroFamilias']['familia'] : null;
         $qb = $em->getRepository('AppBundle:Curso')
-            ->createQueryBuilder('c')
-            ->orderBy('c.descripcion', 'ASC');
+                 ->createQueryBuilder('c')
+                 ->orderBy('c.descripcion', 'ASC');
         if ($familia) {
             $qb->where('c.familia = :familia')
                ->setParameter('familia', $_POST['filtroFamilias']['familia']);

@@ -90,7 +90,8 @@ class UsuarioController extends Controller
     public function nuevoAction(Request $peticion)
     {
         $usuario = new Usuario();
-        $usuario->setEsActivo(true);
+        $usuario->setEsActivo(true)
+                ->setRuta("user.png");
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'coordinador' => $this->isGranted('ROLE_COORDINADOR'),

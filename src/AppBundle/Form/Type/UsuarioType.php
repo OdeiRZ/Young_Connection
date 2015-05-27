@@ -31,11 +31,11 @@ class UsuarioType extends AbstractType
                 'required' => true
             ])
             ->add('fechaNacimiento', 'date', [
-                'label' => 'Fecha de Nacimiento',
+                'label' => 'Fecha de Nacimiento*',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'attr' => array('class' => 'date'),
-                'required' => false
+                'required' => true
             ])
             ->add('sexo', 'choice', [
                 'choices' => $sexos,

@@ -39,8 +39,8 @@ class CentroController extends Controller
         ])->handleRequest($request);
         $pais = ($form->isValid()) ? $_POST['filtroPaises']['pais'] : null;
         $qb = $em->getRepository('AppBundle:Centro')
-            ->createQueryBuilder('c')
-            ->orderBy('c.nombre', 'ASC');
+                 ->createQueryBuilder('c')
+                 ->orderBy('c.nombre', 'ASC');
         if ($pais) {
             $qb->where('c.pais = :pais')
                ->setParameter('pais', $_POST['filtroPaises']['pais']);
