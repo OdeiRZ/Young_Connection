@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\UsuarioType;
+use AppBundle\Utils\Mensajes;
 use AppBundle\Utils\Notificaciones;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,8 +16,10 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="inicio")
      */
-    public function indexAction()
+    public function indexAction(Request $peticion)
     {
+        $mensajes = Mensajes::obtenerMensajesNoLeidos($this, $this->container, $this->get('security.token_storage')->getToken()->getUser());
+        $peticion->getSession()->set('mensajes_no_leidos', $mensajes);
         return $this->render('AppBundle:Default:inicio.html.twig');
     }
 
@@ -71,18 +74,18 @@ class DefaultController extends Controller
     /**
      * @Route("/recordar", name="usuario_recordar"), methods={'GET', 'POST'}
      */
-    public function recordarAction(Request $request)
+    public function recordarAction(Request $peticion)
     {
         $error = null;
-        if ($request->getMethod() == 'POST') {
+        if ($peticion->getMethod() == 'POST') {
             $em = $this->getDoctrine()->getManager();
             $usuarios = $em->getRepository('AppBundle:Usuario')
                            ->createQueryBuilder('p')
                            ->where('p.correoElectronico = :email')
-                           ->setParameter('email', $request->get('_username'))
+                           ->setParameter('email', $peticion->get('_username'))
                            ->setMaxResults(1);
             $usuario = $em->createQuery($usuarios)
-                          ->setParameter('email', $request->get('_username'))
+                          ->setParameter('email', $peticion->get('_username'))
                           ->getOneOrNullResult();
             if ($usuario != null) {
                 $nuevaClave = "";

@@ -23,8 +23,8 @@ use AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Container;
 
-class Notificaciones {
-
+class Notificaciones
+{
     static public function notificarRegistro(Controller $controlador, \Swift_Mailer $mailer, Container $container, Usuario $usuario)
     {
         if ($usuario->getCorreoElectronico()) {

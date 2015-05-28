@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Mensaje;
 use AppBundle\Form\Type\MensajeType;
 use AppBundle\Form\Type\FiltroUsuarioType;
+use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,10 +20,12 @@ class MensajeController extends Controller
     /**
      * @Route("/listar", name="mensajes_listar")
      */
-    public function listarAction(Request $request)
+    public function listarAction(Request $peticion)
     {
+        Mensajes::actualizarMensajesNoLeidos($this, $this->container, $this->get('security.token_storage')->getToken()->getUser());
+        $peticion->getSession()->set('mensajes_no_leidos', 0);
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new FiltroUsuarioType())->handleRequest($request);
+        $form = $this->createForm(new FiltroUsuarioType())->handleRequest($peticion);
         $usuario = ($form->isValid()) ? $_POST['filtroUsuarios']['usuario'] : null;
         $qb = $em->getRepository('AppBundle:Mensaje')
                  ->createQueryBuilder('m')
@@ -79,6 +82,7 @@ class MensajeController extends Controller
     {
         $mensaje = new Mensaje();
         $mensaje->setFechaEnvio(new \DateTime())
+                ->setEstaRecibido(false)
                 ->setUsuarioOrigen($this->get('security.token_storage')->getToken()->getUser());
         $formulario = $this->createForm(new MensajeType(), $mensaje);
         $formulario->handleRequest($peticion);

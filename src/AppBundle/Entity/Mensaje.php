@@ -26,11 +26,11 @@ class Mensaje
     protected $fechaEnvio;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="boolean")
      *
-     * @var \DateTime
+     * @var boolean
      */
-    protected $fechaRecepcion;
+    protected $estaRecibido;
 
     /**
      * @ORM\Column(type="text")
@@ -178,5 +178,28 @@ class Mensaje
     public function getUsuarioDestino()
     {
         return $this->usuarioDestino;
+    }
+
+    /**
+     * Set estaRecibido
+     *
+     * @param boolean $estaRecibido
+     * @return Mensaje
+     */
+    public function setEstaRecibido($estaRecibido)
+    {
+        $this->estaRecibido = $estaRecibido;
+
+        return $this;
+    }
+
+    /**
+     * Get estaRecibido
+     *
+     * @return boolean 
+     */
+    public function getEstaRecibido()
+    {
+        return $this->estaRecibido;
     }
 }

@@ -78,7 +78,7 @@
                         </a>
                     </li>
                     <li class="header-nav-item">
-                        <a class="header-nav-link" href="{{ path('mensajes_listar') }}"><i class="glyphicon glyphicon-envelope"></i></a>
+                        <a class="header-nav-link" href="{{ path('mensajes_listar') }}"><span class="badge">{{ app.request.session.get("mensajes_no_leidos") }} <i class="glyphicon glyphicon-envelope"></i></span></a>
                     </li>
                     <li class="header-nav-item">
                         <a class="header-nav-link" href="{{ path('usuario_salir') }}"><i class="glyphicon glyphicon-log-out"></i></a>

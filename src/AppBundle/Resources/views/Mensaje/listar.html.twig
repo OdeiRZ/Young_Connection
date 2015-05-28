@@ -10,9 +10,9 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
-                <th>Orígen</th>
+                <th>Destinatario</th>
                 <th>Fecha Envio</th>
-                <th>Fecha Recepción</th>
+                <th>Recibido</th>
                 <th>Contenido</th>
                 <th></th>
             </tr>
@@ -20,9 +20,9 @@
             <tbody>
             {% for mensaje in mensajes %}
                 <tr>
-                    <td>{{ mensaje.usuarioOrigen }}</td>
+                    <td>{{ mensaje.usuarioDestino }}</td>
                     <td>{{ mensaje.fechaEnvio|date("d/m/Y H:i") }}</td>
-                    <td>{{ mensaje.fechaRecepcion|date("d/m/Y H:i") }}</td>
+                    <td><i class="glyphicon glyphicon-{{ mensaje.estaRecibido ? 'ok' : 'remove' }}"></i></td>
                     <td>{{ mensaje.contenido }}</td>
                     <td>
                         {% if is_granted('ROLE_ADMIN') %}
