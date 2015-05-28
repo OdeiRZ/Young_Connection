@@ -18,8 +18,8 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $peticion)
     {
-        $mensajes = Mensajes::obtenerMensajesNoLeidos($this, $this->container, $this->get('security.token_storage')->getToken()->getUser());
-        $peticion->getSession()->set('mensajes_no_leidos', $mensajes);
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
+            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
         return $this->render('AppBundle:Default:inicio.html.twig');
     }
 

@@ -25,14 +25,14 @@
                     <td><i class="glyphicon glyphicon-{{ mensaje.estaRecibido ? 'ok' : 'remove' }}"></i></td>
                     <td>{{ mensaje.contenido }}</td>
                     <td>
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {#% if is_granted('ROLE_ADMIN') %#}
                             <a href="{{ path('mensaje_modificar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
                                 <i class="glyphicon glyphicon-pencil"></i> Modificar
                             </a>
                             <a href="{{ path('mensaje_eliminar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
                                 <i class="glyphicon glyphicon-trash"></i> Eliminar
                             </a>
-                        {% endif %}
+                        {#% endif %#}
                     </td>
                 </tr>
             {% endfor %}

@@ -23,14 +23,17 @@ class MensajeController extends Controller
     public function listarAction(Request $peticion)
     {
         Mensajes::actualizarMensajesNoLeidos($this, $this->container, $this->get('security.token_storage')->getToken()->getUser());
-        $peticion->getSession()->set('mensajes_no_leidos', 0);
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
+            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new FiltroUsuarioType())->handleRequest($peticion);
         $usuario = ($form->isValid()) ? $_POST['filtroUsuarios']['usuario'] : null;
         $qb = $em->getRepository('AppBundle:Mensaje')
                  ->createQueryBuilder('m')
+                 ->where('m.usuarioOrigen = :id')
+                 ->setParameter('id', $this->get('security.token_storage')->getToken()->getUser())
                  ->addOrderBy('m.usuarioDestino', 'DESC')
-                 ->addOrderBy('m.fechaEnvio', 'DESC');
+                 ->addOrderBy('m.fechaEnvio', 'ASC');
         if ($usuario) {
             $qb->where('m.usuarioOrigen = :usuario')
                 ->setParameter('usuario', $_POST['filtroUsuarios']['usuario']);

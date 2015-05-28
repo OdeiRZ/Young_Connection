@@ -6,6 +6,7 @@ use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Idioma;
 use AppBundle\Form\Type\AlumnoType;
 use AppBundle\Form\Type\FiltroCursoType;
+use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,10 +22,12 @@ class AlumnoController extends Controller
      * @Route("/listar", name="alumnos_listar")
      * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
-    public function listarAction(Request $request)
+    public function listarAction(Request $peticion)
     {
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
+            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new FiltroCursoType())->handleRequest($request);
+        $form = $this->createForm(new FiltroCursoType())->handleRequest($peticion);
         $curso = ($form->isValid()) ? $_POST['filtroCursos']['curso'] : null;
         $qb = $em->getRepository('AppBundle:Alumno')
                  ->createQueryBuilder('a')

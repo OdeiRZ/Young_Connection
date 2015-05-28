@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Curso;
 use AppBundle\Form\Type\CursoType;
 use AppBundle\Form\Type\FiltroFamiliaType;
+use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,8 +20,10 @@ class CursoController extends Controller
     /**
      * @Route("/listar", name="cursos_listar")
      */
-    public function listarAction(Request $request)
+    public function listarAction(Request $peticion)
     {
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
+            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
         $em = $this->getDoctrine()->getManager();
         $auxFamilias = $em->createQueryBuilder('c')
                           ->select('c.familia')
@@ -35,7 +38,7 @@ class CursoController extends Controller
         }
         $form = $this->createForm(new FiltroFamiliaType(), $familias, [
             'familias' => $familias
-        ])->handleRequest($request);
+        ])->handleRequest($peticion);
         $familia = ($form->isValid()) ? $_POST['filtroFamilias']['familia'] : null;
         $qb = $em->getRepository('AppBundle:Curso')
                  ->createQueryBuilder('c')

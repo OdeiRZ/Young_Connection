@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Familia;
 use AppBundle\Form\Type\FamiliaType;
 use AppBundle\Form\Type\FiltroPaisType;
+use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,8 +20,10 @@ class FamiliaController extends Controller
     /**
      * @Route("/listar", name="familias_listar")
      */
-    public function listarAction(Request $request)
+    public function listarAction(Request $peticion)
     {
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
+            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
         $em = $this->getDoctrine()->getManager();
         $auxPaises = $em->createQueryBuilder('f')
             ->select('f.pais')
@@ -36,7 +39,7 @@ class FamiliaController extends Controller
         $form = $this->createForm(new FiltroPaisType(), $paises, [
             'paises' => $paises,
             'familia' => true
-        ])->handleRequest($request);
+        ])->handleRequest($peticion);
         $pais = ($form->isValid()) ? $_POST['filtroPaises']['pais'] : null;
         $qb = $em->getRepository('AppBundle:Familia')
                  ->createQueryBuilder('f');

@@ -21,11 +21,13 @@ class UsuarioController extends Controller
      * @Route("/listar", name="usuarios_listar")
      * @Security(expression="has_role('ROLE_ADMIN')")
      */
-    public function listarAction(Request $request)
+    public function listarAction(Request $peticion)
     {
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
+            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
         $em = $this->getDoctrine()->getManager();
         $apellidosDefecto = null;
-        $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($request);
+        $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
         $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
                  ->createQueryBuilder('u')

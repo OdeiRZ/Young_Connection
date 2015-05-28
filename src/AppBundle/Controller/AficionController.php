@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Aficion;
 use AppBundle\Form\Type\AficionType;
+use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,8 +19,10 @@ class AficionController extends Controller
     /**
      * @Route("/listar", name="aficiones_listar")
      */
-    public function listarAction()
+    public function listarAction(Request $peticion)
     {
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
+            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
         $em = $this->getDoctrine()->getManager();
         $aficiones = $em->getRepository('AppBundle:Aficion')
                         ->createQueryBuilder('a')

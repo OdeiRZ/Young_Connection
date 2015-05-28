@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Centro;
 use AppBundle\Form\Type\CentroType;
 use AppBundle\Form\Type\FiltroPaisType;
+use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,8 +20,10 @@ class CentroController extends Controller
     /**
      * @Route("/listar", name="centros_listar")
      */
-    public function listarAction(Request $request)
+    public function listarAction(Request $peticion)
     {
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
+            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
         $em = $this->getDoctrine()->getManager();
         $auxPaises = $em->createQueryBuilder('c')
                 ->select('c.pais')
@@ -36,7 +39,7 @@ class CentroController extends Controller
         $form = $this->createForm(new FiltroPaisType(), $paises, [
             'paises' => $paises,
             'centro' => true
-        ])->handleRequest($request);
+        ])->handleRequest($peticion);
         $pais = ($form->isValid()) ? $_POST['filtroPaises']['pais'] : null;
         $qb = $em->getRepository('AppBundle:Centro')
                  ->createQueryBuilder('c')
