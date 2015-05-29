@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\UsuarioType;
+use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
 use AppBundle\Utils\Notificaciones;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,8 +19,9 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $peticion)
     {
-        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
-            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
+                          $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         return $this->render('AppBundle:Default:inicio.html.twig');
     }
 

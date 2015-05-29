@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Centro;
 use AppBundle\Form\Type\CentroType;
 use AppBundle\Form\Type\FiltroPaisType;
+use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -22,8 +23,9 @@ class CentroController extends Controller
      */
     public function listarAction(Request $peticion)
     {
-        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
-            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
+                          $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $auxPaises = $em->createQueryBuilder('c')
                 ->select('c.pais')

@@ -34,8 +34,14 @@
                         </ul>
                     </li>
                     <li class="{{ 'aficion' in ruta ? 'active dropdown' : 'dropdown' }}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-heart-empty"></i> Aficiones <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <span class="badge">{{ app.request.session.get("aficiones_no_validadas") }} <i class="glyphicon glyphicon-heart"></i></span>
+                            {% else %}
+                            <i class="glyphicon glyphicon-heart-empty"></i>
+                            {% endif %}
+                            Aficiones <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ path('aficiones_listar') }}">Listar Aficiones{% if ruta == 'aficiones_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
                             <li><a href="{{ path('aficion_nuevo') }}">Crear Afición{% if ruta == 'aficion_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
                         </ul>

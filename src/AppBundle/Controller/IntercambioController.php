@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Intercambio;
 use AppBundle\Form\Type\IntercambioType;
 use AppBundle\Form\Type\FiltroFechasType;
+use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -23,8 +24,9 @@ class IntercambioController extends Controller
      */
     public function listarAction(Request $peticion)
     {
-        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
-            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
+                          $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $fechasPorDefecto = array('desde' => null, 'hasta' => null);
         $form = $this->createForm(new FiltroFechasType(), $fechasPorDefecto)->handleRequest($peticion);

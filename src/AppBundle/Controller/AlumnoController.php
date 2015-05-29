@@ -6,6 +6,7 @@ use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Idioma;
 use AppBundle\Form\Type\AlumnoType;
 use AppBundle\Form\Type\FiltroCursoType;
+use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,8 +25,9 @@ class AlumnoController extends Controller
      */
     public function listarAction(Request $peticion)
     {
-        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
-            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
+                          $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new FiltroCursoType())->handleRequest($peticion);
         $curso = ($form->isValid()) ? $_POST['filtroCursos']['curso'] : null;

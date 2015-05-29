@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Aficion;
 use AppBundle\Form\Type\AficionType;
+use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -21,8 +22,9 @@ class AficionController extends Controller
      */
     public function listarAction(Request $peticion)
     {
-        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this,
-            $this->container, $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
+                          $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $aficiones = $em->getRepository('AppBundle:Aficion')
                         ->createQueryBuilder('a')
@@ -40,7 +42,9 @@ class AficionController extends Controller
      */
     public function modificarAction(Aficion $aficion, Request $peticion)
     {
-        $formulario = $this->createForm(new AficionType(), $aficion);
+        $formulario = $this->createForm(new AficionType(), $aficion, [
+            'admin' => $this->isGranted('ROLE_ADMIN'),
+        ]);
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Afición',
