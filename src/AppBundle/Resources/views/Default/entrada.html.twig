@@ -1,51 +1,52 @@
 {% extends '::layout.html.twig' %}
 
+{% block stylesheets %}
+    {% stylesheets '@AppBundle/Resources/public/css/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block title %}
     Acceso a la aplicación
 {% endblock %}
 
 {% block content %}
     <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Acceso &mdash; Young Connection</div>
-            <div class="panel-body">
-                {% if error %}
-                    <div class="alert alert-danger alert-dismissable">
-                        {{ error.message | trans }}
+        <div class="panel-body">
+            {% if error %}
+                <div class="alert alert-danger alert-dismissable">
+                    {{ error.message | trans }}
+                </div>
+            {% endif %}
+            <form method="post" action="{{ path('usuario_comprobar') }}" class="form-login">
+                <div class="header">
+                    <a href="#" class="link-head-left"><i class="icon-home"></i></a>
+                    <span>Acceso</span>
+                    <a href="{{ path('usuario_recordar') }}" class="link-head-right recordar" title="Recordar Contraseña">
+                        <i class="glyphicon glyphicon-exclamation-sign"></i>
+                    </a>
+                </div>
+                <div class="avatar-login">
+                    <img src="{{ asset('bundles/app/img/home2.png') }}" alt="">
+                </div>
+                <div class="inputs">
+                    <input name="_username" required placeholder="Correo electrónico" type="text"
+                           {% if not ultimo_usuario %}autofocus="1" {% endif %} autocorrect="off"
+                           autocapitalize="off" type="text" value="{{ ultimo_usuario }}">
+                    <input name="_password" required placeholder="Contraseña de acceso" type="password"
+                           {% if ultimo_usuario %}autofocus="1" {% endif %}>
+                    <div class="clear"></div>
+                    <div class="button-login">
+                        <button type="submit" >
+                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Conectarse
+                        </button>
                     </div>
-                {% endif %}
-                <form method="post" action="{{ path('usuario_comprobar') }}">
-                    <fieldset>
-                        <legend>
-                            Introduzca los datos de acceso
-                            <a href="{{ path('usuario_recordar') }}" class="recordar" title="Recordar Contraseña">
-                                <i class="glyphicon glyphicon-exclamation-sign"></i>
-                            </a>
-                        </legend>
-                        <div class="form-group">
-                            <label for="username">Correo electrónico</label>
-                            <input type="text" class="form-control" name="_username"
-                                   {% if not ultimo_usuario %}autofocus="1" {% endif %} autocorrect="off"
-                                   autocapitalize="off" placeholder="Correo con el que se registró"
-                                   value="{{ ultimo_usuario }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Contraseña</label>
-                            <input type="password" class="form-control" name="_password"
-                                   {% if ultimo_usuario %}autofocus="1" {% endif %}
-                                   placeholder="Contraseña de acceso">
-                        </div>
-                        <div class="btn-group btn-block">
-                            <button type="submit" class="btn btn-primary col-xs-6 col-md-6">
-                                <i class="glyphicon glyphicon-log-in"></i> Conectarse
-                            </button>
-                            <a href="{{ path('usuario_nuevo') }}" class="btn btn-success col-xs-6 col-md-6">
-                                <i class="glyphicon glyphicon-user"></i> Registrarse
-                            </a>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
+                </div>
+                <div class="footer-login">
+                    ¿Aún no tienes una cuenta? <a href="{{ path('usuario_nuevo') }}">¡Regístrate aquí!</a>
+                </div>
+            </form>
+            <div class="clear"></div>
         </div>
     </div>
 {% endblock %}
