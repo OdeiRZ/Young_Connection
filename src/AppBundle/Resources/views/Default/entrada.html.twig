@@ -20,19 +20,21 @@
             {% endif %}
             <form method="post" action="{{ path('usuario_comprobar') }}" class="form-login">
                 <div class="header">
-                    <a href="#" class="link-head-left"><!--<i class="glyphicon glyphicon-home"></i>--></a>
+                    <a href="#" class="link-head-left">
+                        <!--<i class="glyphicon glyphicon-home"></i>-->
+                    </a>
                     <span>Acceso</span>
-                    <a href="{{ path('usuario_recordar') }}" class="link-head-right recordar" title="Recordar Contraseña">
+                    <a href="{{ path('usuario_recordar') }}" class="link-head-right recordar" title="Regenerar Contraseña">
                         <i class="glyphicon glyphicon-exclamation-sign"></i>
                     </a>
                 </div>
                 <div class="avatar-login">
-                    <img src="{{ asset('bundles/app/img/home2.png') }}" alt="">
+                    <img src="{{ asset('bundles/app/img/home.gif') }}" data-test="tinRightOut" alt="">
                 </div>
                 <div class="inputs">
                     <input name="_username" required placeholder="Correo electrónico" type="text"
                            {% if not ultimo_usuario %}autofocus="1" {% endif %} autocorrect="off"
-                           autocapitalize="off" type="text" value="{{ ultimo_usuario }}">
+                           autocapitalize="off" value="{{ ultimo_usuario }}">
                     <input name="_password" required placeholder="Contraseña de acceso" type="password"
                            {% if ultimo_usuario %}autofocus="1" {% endif %}>
                     <div class="clear"></div>

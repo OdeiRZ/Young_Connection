@@ -3,7 +3,7 @@
 {% block title %}Listar Aficiones{% endblock %}
 
 {% block content %}
-    <h1 class="well">Listado de Aficiones</h1>
+    <h2 class="well">Listado de Aficiones</h2>
 
     {% if aficiones %}
         <table class="table table-bordered table-condensed table-hover table-striped">
@@ -36,7 +36,7 @@
             </tbody>
         </table>
     {% else %}
-        <h2>No hay Aficiones para mostrar</h2>
+        <h3>No hay Aficiones para mostrar</h3>
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;

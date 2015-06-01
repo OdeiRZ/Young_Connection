@@ -3,7 +3,7 @@
 {% block title %}Listar Intercambios{% endblock %}
 
 {% block content %}
-    <h1 class="well">Listado de Intercambios</h1>
+    <h2 class="well">Listado de Intercambios</h2>
 
     {{ form(formulario_fechas) }}
     {% if intercambios %}
@@ -35,7 +35,7 @@
             </tbody>
         </table>
     {% else %}
-        <h2>No hay Intercambios para mostrar</h2>
+        <h3>No hay Intercambios para mostrar</h3>
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;

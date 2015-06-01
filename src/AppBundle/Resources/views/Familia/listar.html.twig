@@ -3,7 +3,7 @@
 {% block title %}Listar Familias{% endblock %}
 
 {% block content %}
-    <h1 class="well">Listado de Familias</h1>
+    <h2 class="well">Listado de Familias</h2>
 
     {% if familias %}
         {{ form(formulario_paises) }}
@@ -73,7 +73,7 @@
             </tbody>
         </table>
     {% else %}
-        <h2>No hay Familias para mostrar</h2>
+        <h3>No hay Familias para mostrar</h3>
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;

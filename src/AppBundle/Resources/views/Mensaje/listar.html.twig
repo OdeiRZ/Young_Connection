@@ -3,7 +3,7 @@
 {% block title %}Listar Mensajes{% endblock %}
 
 {% block content %}
-    <h1 class="well">Listado de Mensajes</h1>
+    <h2 class="well">Listado de Mensajes</h2>
 
     {{ form(formulario_usuarios) }}
     {% if mensajes %}
@@ -39,7 +39,7 @@
             </tbody>
         </table>
     {% else %}
-        <h2>No hay Mensajes para mostrar</h2>
+        <h3>No hay Mensajes para mostrar</h3>
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;

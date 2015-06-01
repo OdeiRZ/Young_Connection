@@ -3,7 +3,7 @@
 {% block title %}Listar Cursos{% endblock %}
 
 {% block content %}
-    <h1 class="well">Listado de Cursos</h1>
+    <h2 class="well">Listado de Cursos</h2>
 
     {% if cursos %}
         {{ form(formulario_familias) }}
@@ -37,7 +37,7 @@
             </tbody>
         </table>
     {% else %}
-        <h2>No hay Cursos para mostrar</h2>
+        <h3>No hay Cursos para mostrar</h3>
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;

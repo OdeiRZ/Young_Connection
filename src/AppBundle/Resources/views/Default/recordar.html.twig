@@ -1,36 +1,51 @@
 {% extends '::layout.html.twig' %}
 
-{% block title %}Recordar Usuario{% endblock %}
+{% block stylesheets %}
+    {% stylesheets '@AppBundle/Resources/public/css/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block title %}
+    Recordar Usuario
+{% endblock %}
 
 {% block content %}
     <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Acceso &mdash; Young Connection</div>
-            <div class="panel-body">
-                {% if error %}
-                    <div class="alert alert-danger alert-dismissable">
-                        {{ error | trans }}
+        <div class="panel-body">
+            {% if error %}
+                <div class="alert alert-danger alert-dismissable">
+                    {{ error | trans }}
+                </div>
+            {% endif %}
+            <form method="post" action="{{ path('usuario_recordar') }}" class="form-login">
+                <div class="header">
+                    <a href="#" class="link-head-left">
+                        <!--<i class="glyphicon glyphicon-menu-left"></i>-->
+                    </a>
+                    <span>Regenerar Contraseña</span>
+                    <a href="{{ path('inicio') }}" class="link-head-right recordar"  title="Volver">
+                        <i class="glyphicon glyphicon-home"></i>
+                    </a>
+                </div>
+                <div class="avatar-login-regenerate">
+                    <img src="{{ asset('bundles/app/img/regenerate.gif') }}" alt="">
+                </div>
+                <div class="inputs">
+                    <input name="_username" required placeholder="Correo electrónico" type="text"
+                           autofocus="1" autocorrect="off" autocapitalize="off">
+                    <div class="clear"></div>
+                    <div class="button-login">
+                        <button type="submit" >
+                            <i class="glyphicon glyphicon-exclamation-sign"></i> &nbsp; Regenerar
+                        </button>
                     </div>
-                {% endif %}
-                <form method="post" action="{{ path('usuario_recordar') }}">
-                    <fieldset>
-                        <legend>Introduzca su Correo para regenerar su Contraseña</legend>
-                        <div class="form-group">
-                            <label for="username">Correo electrónico</label>
-                            <input type="text" class="form-control" name="_username" autofocus="1" autocorrect="off"
-                                   autocapitalize="off" placeholder="Correo con el que se registró" required>
-                        </div>
-                        <div class="btn-group btn-block">
-                            <button type="submit" class="btn btn-primary col-xs-6 col-md-6">
-                                <i class="glyphicon glyphicon-exclamation-sign"></i> Regenerar
-                            </button>
-                            <a href="{{ path('inicio') }}" class="btn btn-success col-xs-6 col-md-6">
-                                <i class="glyphicon glyphicon-chevron-left"></i> Volver
-                            </a>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
+                </div>
+                <div class="footer-login">
+                    ¿Aún no tienes una cuenta? <a href="{{ path('usuario_nuevo') }}">¡Regístrate aquí!</a>
+                </div>
+            </form>
+            <div class="clear"></div>
         </div>
     </div>
 {% endblock %}

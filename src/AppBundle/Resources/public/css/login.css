@@ -7,7 +7,7 @@ input:focus, a:focus, button:focus, button:focus {
 /* General Section */
 .form-login {
     background: #ffffff;
-    margin: 10px auto;
+    margin: 5px auto;
     width: 360px;
     border:1px solid #E7E7E7;
     border-radius: 10px;
@@ -45,11 +45,11 @@ input:focus, a:focus, button:focus, button:focus {
     border-left:1px solid #ffffff;
 }
 /* avatar */
-.avatar-login {
-    margin-top:25px;
+.avatar-login, .avatar-login-regenerate {
+    margin-top:15px;
     text-align: center;
 }
-.avatar-login img{
+.avatar-login img, .avatar-login-regenerate img {
     width:200px;
     height:200px;
     border:15px solid #efefef;
@@ -58,9 +58,17 @@ input:focus, a:focus, button:focus, button:focus {
     border-radius: 100%;
     text-align: center;
 }
+.avatar-login img:hover {
+    transition: all 1.5s cubic-bezier(1, 1.5, 0.5, 1) 0s;
+    transform: rotateY(360deg);
+}
+.avatar-login-regenerate img:hover {
+    transform: rotate(360deg) scale(1);
+    transition: all 3s cubic-bezier(0, 1.5, 1.5, 3) 0s;
+}
 /* inputs */
 .inputs {
-    margin-top:10px;
+    margin-top:5px;
 }
 .inputs input[type="text"], .inputs [type="password"] {
     width:320px;
@@ -68,7 +76,7 @@ input:focus, a:focus, button:focus, button:focus {
     background:#efefef;
     color:#b8b8b8;
     font-size:16px;
-    margin-top:15px;
+    margin-top:10px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -111,7 +119,6 @@ input:focus, a:focus, button:focus, button:focus {
 }
 .recordar {
     color: #b8b8b8;
-    float:right;
 }
 .recordar:hover {
     color: gray;

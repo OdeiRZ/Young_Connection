@@ -3,7 +3,7 @@
 {% block title %}Listar Usuarios{% endblock %}
 
 {% block content %}
-    <h1 class="well">Listado de Usuarios</h1>
+    <h2 class="well">Listado de Usuarios</h2>
 
     {{ form(formulario_apellidos) }}
     {% if usuarios %}
@@ -49,7 +49,7 @@
             </tbody>
         </table>
     {% else %}
-        <h2>No hay Usuarios para mostrar</h2>
+        <h3>No hay Usuarios para mostrar</h3>
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
