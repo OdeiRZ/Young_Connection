@@ -21,7 +21,7 @@ input:focus, a:focus, button:focus, button:focus {
     font-size:16px;
     font-weight:bold;
     text-transform:uppercase;
-    color:#5E5E5E;
+    color:#b8b8b8;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -110,14 +110,14 @@ input:focus, a:focus, button:focus, button:focus {
     box-shadow: inset 0 1px 2px #4CAE4C;
 }
 .recordar {
-    color: #8A6D3B;
+    color: #b8b8b8;
     float:right;
 }
 .recordar:hover {
-    color: #A94442;
+    color: gray;
 }
 .recordar i {
-    font-size: 1.4em;
+    font-size: 1.3em;
 }
 /* footer */
 .footer-login {
@@ -129,4 +129,5 @@ input:focus, a:focus, button:focus, button:focus {
     border-bottom-right-radius: 10px;
     text-align: center;
     font-size: 13px !important;
+    color:gray;
 }
