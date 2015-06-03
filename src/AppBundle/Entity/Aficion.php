@@ -33,10 +33,10 @@ class Aficion
     protected $validada;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Alumno", mappedBy="aficiones")
+     * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="aficiones")
      * @ORM\JoinColumn(nullable=true)
      *
-     * @var Alumno
+     * @var Usuario
      *
      */
     protected $alumnos;
@@ -109,10 +109,10 @@ class Aficion
     /**
      * Add alumnos
      *
-     * @param \AppBundle\Entity\Alumno $alumnos
+     * @param \AppBundle\Entity\Usuario $alumnos
      * @return Aficion
      */
-    public function addAlumno(\AppBundle\Entity\Alumno $alumnos)
+    public function addAlumno(\AppBundle\Entity\Usuario $alumnos)
     {
         $this->alumnos[] = $alumnos;
 
@@ -122,9 +122,9 @@ class Aficion
     /**
      * Remove alumnos
      *
-     * @param \AppBundle\Entity\Alumno $alumnos
+     * @param \AppBundle\Entity\Usuario $alumnos
      */
-    public function removeAlumno(\AppBundle\Entity\Alumno $alumnos)
+    public function removeAlumno(\AppBundle\Entity\Usuario $alumnos)
     {
         $this->alumnos->removeElement($alumnos);
     }

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -61,6 +62,67 @@ class UsuarioType extends AbstractType
             ]);
         if ($options['admin']) {
             $builder
+                ->add('curso', null, [
+                    'label' => 'Curso',
+                    'required' => false
+                ]);
+        }
+        if ($options['alumno'] and !$options['nuevo']) {
+            $builder
+                ->add('tieneProblemasSalud', null, [
+                    'label' => 'Problemas de Salud',
+                    'required' => false
+                ])
+                ->add('detallesProblemasSalud', 'textarea', [
+                    'label' => 'Detalles Problemas de Salud',
+                    'required' => false
+                ])
+                ->add('esFumador', null, [
+                    'label' => 'Fumador',
+                    'required' => false
+                ])
+                ->add('esBebedor', null, [
+                    'label' => 'Bebedor',
+                    'required' => false
+                ])
+                ->add('haViajadoExtranjero', null, [
+                    'label' => 'Ha Viajado al Extranjero',
+                    'required' => false
+                ])
+                ->add('detallesViajeExtranjero', 'textarea', [
+                    'label' => 'Detalles Viaje Extranjero',
+                    'required' => false
+                ])
+                ->add('preferenciaCompanero', null, [
+                    'label' => 'Preferencia de Compañero/a',
+                    'required' => false
+                ])
+                ->add('descripcion', 'textarea', [
+                    'label' => 'Descripción',
+                    'required' => false
+                ])
+                ->add('idiomas', 'collection', [
+                    'type'  => new IdiomaType(),
+                    'label' => 'Idioma/s',
+                    'required' => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                ])
+                ->add('aficiones', null, [
+                    'label' => 'Afición/es',
+                    'required' => false,
+                    'expanded' => true,
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('a')
+                            ->Where('a.validada = true'); },
+                    'attr' => [
+                        'class' => 'toggle'
+                    ]
+                ]);
+        }
+        if ($options['admin']) {
+            $builder
                 ->add('esActivo', null, [
                     'label' => 'Está Activo',
                     'required' => false,
@@ -71,6 +133,10 @@ class UsuarioType extends AbstractType
                 ])
                 ->add('esCoordinador', null, [
                     'label' => 'Es un Coordinador',
+                    'required' => false,
+                ])
+                ->add('esAlumno', null, [
+                    'label' => 'Es un Alumno',
                     'required' => false,
                 ]);
         }
@@ -132,6 +198,7 @@ class UsuarioType extends AbstractType
             'cascade_validation' => true,
             'admin' => false,
             'coordinador' => false,
+            'alumno' => false,
             'nuevo' => false
         ]);
     }

@@ -114,12 +114,110 @@ class Usuario implements UserInterface
     protected $esCoordinador;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var boolean
+     */
+    protected $esAlumno;
+
+    /**
      * @ORM\OneToMany(targetEntity="Mensaje", mappedBy="usuarioOrigen")
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Mensaje
      */
     protected $mensajes;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var boolean
+     */
+    protected $tieneProblemasSalud;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    protected $detallesProblemasSalud;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var boolean
+     */
+    protected $esFumador;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var boolean
+     */
+    protected $esBebedor;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @var boolean
+     */
+    protected $haViajadoExtranjero;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    protected $detallesViajeExtranjero;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Usuario")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Usuario
+     */
+    protected $preferenciaCompanero;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    protected $descripcion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Curso", inversedBy="alumnos")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Curso
+     */
+    protected $curso;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Idioma", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Idioma
+     */
+    protected $idiomas;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Aficion", inversedBy="alumnos")
+     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OrderBy({"descripcion" = "ASC"})
+     *
+     * @var Aficion
+     */
+    protected $aficiones;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Familia", inversedBy="alumnos")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Familia
+     *
+     */
+    protected $familia;
 
     /**
      * Get id
@@ -436,6 +534,9 @@ class Usuario implements UserInterface
         if ($this->getEsCoordinador()) {
             $roles[] = 'ROLE_COORDINADOR';
         }
+        if ($this->getEsAlumno()) {
+            $roles[] = 'ROLE_ALUMNO';
+        }
         return $roles;
     }
 
@@ -585,4 +686,333 @@ class Usuario implements UserInterface
         return $this->imagen;
     }
 
+
+    /**
+     * Set esAlumno
+     *
+     * @param boolean $esAlumno
+     * @return Usuario
+     */
+    public function setEsAlumno($esAlumno)
+    {
+        $this->esAlumno = $esAlumno;
+
+        return $this;
+    }
+
+    /**
+     * Get esAlumno
+     *
+     * @return boolean 
+     */
+    public function getEsAlumno()
+    {
+        return $this->esAlumno;
+    }
+
+    /**
+     * Set tieneProblemasSalud
+     *
+     * @param boolean $tieneProblemasSalud
+     * @return Usuario
+     */
+    public function setTieneProblemasSalud($tieneProblemasSalud)
+    {
+        $this->tieneProblemasSalud = $tieneProblemasSalud;
+
+        return $this;
+    }
+
+    /**
+     * Get tieneProblemasSalud
+     *
+     * @return boolean 
+     */
+    public function getTieneProblemasSalud()
+    {
+        return $this->tieneProblemasSalud;
+    }
+
+    /**
+     * Set detallesProblemasSalud
+     *
+     * @param string $detallesProblemasSalud
+     * @return Usuario
+     */
+    public function setDetallesProblemasSalud($detallesProblemasSalud)
+    {
+        $this->detallesProblemasSalud = $detallesProblemasSalud;
+
+        return $this;
+    }
+
+    /**
+     * Get detallesProblemasSalud
+     *
+     * @return string 
+     */
+    public function getDetallesProblemasSalud()
+    {
+        return $this->detallesProblemasSalud;
+    }
+
+    /**
+     * Set esFumador
+     *
+     * @param boolean $esFumador
+     * @return Usuario
+     */
+    public function setEsFumador($esFumador)
+    {
+        $this->esFumador = $esFumador;
+
+        return $this;
+    }
+
+    /**
+     * Get esFumador
+     *
+     * @return boolean 
+     */
+    public function getEsFumador()
+    {
+        return $this->esFumador;
+    }
+
+    /**
+     * Set esBebedor
+     *
+     * @param boolean $esBebedor
+     * @return Usuario
+     */
+    public function setEsBebedor($esBebedor)
+    {
+        $this->esBebedor = $esBebedor;
+
+        return $this;
+    }
+
+    /**
+     * Get esBebedor
+     *
+     * @return boolean 
+     */
+    public function getEsBebedor()
+    {
+        return $this->esBebedor;
+    }
+
+    /**
+     * Set haViajadoExtranjero
+     *
+     * @param boolean $haViajadoExtranjero
+     * @return Usuario
+     */
+    public function setHaViajadoExtranjero($haViajadoExtranjero)
+    {
+        $this->haViajadoExtranjero = $haViajadoExtranjero;
+
+        return $this;
+    }
+
+    /**
+     * Get haViajadoExtranjero
+     *
+     * @return boolean 
+     */
+    public function getHaViajadoExtranjero()
+    {
+        return $this->haViajadoExtranjero;
+    }
+
+    /**
+     * Set detallesViajeExtranjero
+     *
+     * @param string $detallesViajeExtranjero
+     * @return Usuario
+     */
+    public function setDetallesViajeExtranjero($detallesViajeExtranjero)
+    {
+        $this->detallesViajeExtranjero = $detallesViajeExtranjero;
+
+        return $this;
+    }
+
+    /**
+     * Get detallesViajeExtranjero
+     *
+     * @return string 
+     */
+    public function getDetallesViajeExtranjero()
+    {
+        return $this->detallesViajeExtranjero;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Usuario
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Add preferenciaCompanero
+     *
+     * @param \AppBundle\Entity\Alumno $preferenciaCompanero
+     * @return Usuario
+     */
+    public function addPreferenciaCompanero(\AppBundle\Entity\Alumno $preferenciaCompanero)
+    {
+        $this->preferenciaCompanero[] = $preferenciaCompanero;
+
+        return $this;
+    }
+
+    /**
+     * Remove preferenciaCompanero
+     *
+     * @param \AppBundle\Entity\Alumno $preferenciaCompanero
+     */
+    public function removePreferenciaCompanero(\AppBundle\Entity\Alumno $preferenciaCompanero)
+    {
+        $this->preferenciaCompanero->removeElement($preferenciaCompanero);
+    }
+
+    /**
+     * Get preferenciaCompanero
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPreferenciaCompanero()
+    {
+        return $this->preferenciaCompanero;
+    }
+
+    /**
+     * Set curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     * @return Usuario
+     */
+    public function setCurso(\AppBundle\Entity\Curso $curso)
+    {
+        $this->curso = $curso;
+
+        return $this;
+    }
+
+    /**
+     * Get curso
+     *
+     * @return \AppBundle\Entity\Curso 
+     */
+    public function getCurso()
+    {
+        return $this->curso;
+    }
+
+    /**
+     * Add idiomas
+     *
+     * @param \AppBundle\Entity\Idioma $idiomas
+     * @return Usuario
+     */
+    public function addIdioma(\AppBundle\Entity\Idioma $idiomas)
+    {
+        $this->idiomas[] = $idiomas;
+
+        return $this;
+    }
+
+    /**
+     * Remove idiomas
+     *
+     * @param \AppBundle\Entity\Idioma $idiomas
+     */
+    public function removeIdioma(\AppBundle\Entity\Idioma $idiomas)
+    {
+        $this->idiomas->removeElement($idiomas);
+    }
+
+    /**
+     * Get idiomas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdiomas()
+    {
+        return $this->idiomas;
+    }
+
+    /**
+     * Add aficiones
+     *
+     * @param \AppBundle\Entity\Aficion $aficiones
+     * @return Usuario
+     */
+    public function addAficione(\AppBundle\Entity\Aficion $aficiones)
+    {
+        $this->aficiones[] = $aficiones;
+
+        return $this;
+    }
+
+    /**
+     * Remove aficiones
+     *
+     * @param \AppBundle\Entity\Aficion $aficiones
+     */
+    public function removeAficione(\AppBundle\Entity\Aficion $aficiones)
+    {
+        $this->aficiones->removeElement($aficiones);
+    }
+
+    /**
+     * Get aficiones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAficiones()
+    {
+        return $this->aficiones;
+    }
+
+    /**
+     * Set familia
+     *
+     * @param \AppBundle\Entity\Familia $familia
+     * @return Usuario
+     */
+    public function setFamilia(\AppBundle\Entity\Familia $familia = null)
+    {
+        $this->familia = $familia;
+
+        return $this;
+    }
+
+    /**
+     * Get familia
+     *
+     * @return \AppBundle\Entity\Familia 
+     */
+    public function getFamilia()
+    {
+        return $this->familia;
+    }
 }

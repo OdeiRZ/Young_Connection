@@ -29,10 +29,10 @@
                     <td>
                         {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('centro_modificar', { 'centro': centro.id }) }}" class="btn btn-default btn-xs">
-                                <i class="glyphicon glyphicon-pencil"></i> Modificar
+                                <i class="glyphicon glyphicon-pencil"></i>
                             </a>
                             <a href="{{ path('centro_eliminar', { 'centro': centro.id }) }}" class="btn btn-default btn-xs">
-                                <i class="glyphicon glyphicon-trash"></i> Eliminar
+                                <i class="glyphicon glyphicon-trash"></i>
                         </a>
                         {% endif %}
                     </td>

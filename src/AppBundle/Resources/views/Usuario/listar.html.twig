@@ -19,6 +19,7 @@
                 <th>Activo</th>
                 <th>Administrador</th>
                 <th>Coordinador</th>
+                <th>Alumno</th>
                 <th></th>
             </tr>
             </thead>
@@ -36,12 +37,13 @@
                     <td>{{ usuario.esActivo ? 'Sí' : 'No' }}</td>
                     <td>{{ usuario.esAdministrador ? 'Sí' : 'No' }}</td>
                     <td>{{ usuario.esCoordinador ? 'Sí' : 'No' }}</td>
+                    <td>{{ usuario.esAlumno ? 'Sí' : 'No' }}</td>
                     <td>
                         <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-pencil"></i> Modificar
+                            <i class="glyphicon glyphicon-pencil"></i>
                         </a>
                         <a href="{{ path('usuario_eliminar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-trash"></i> Eliminar
+                            <i class="glyphicon glyphicon-trash"></i>
                         </a>
                     </td>
                 </tr>

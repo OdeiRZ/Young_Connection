@@ -103,10 +103,10 @@ class Familia
     protected $observaciones;
 
     /**
-     * @ORM\OneToMany(targetEntity="Alumno", mappedBy="familia")
+     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="familia")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @var Alumno
+     * @var Usuario
      */
     protected $alumnos;
 
@@ -347,10 +347,10 @@ class Familia
     /**
      * Add alumnos
      *
-     * @param \AppBundle\Entity\Alumno $alumnos
+     * @param \AppBundle\Entity\Usuario $alumnos
      * @return Familia
      */
-    public function addAlumno(\AppBundle\Entity\Alumno $alumnos)
+    public function addAlumno(\AppBundle\Entity\Usuario $alumnos)
     {
         $this->alumnos[] = $alumnos;
 
@@ -360,9 +360,9 @@ class Familia
     /**
      * Remove alumnos
      *
-     * @param \AppBundle\Entity\Alumno $alumnos
+     * @param \AppBundle\Entity\Usuario $alumnos
      */
-    public function removeAlumno(\AppBundle\Entity\Alumno $alumnos)
+    public function removeAlumno(\AppBundle\Entity\Usuario $alumnos)
     {
         $this->alumnos->removeElement($alumnos);
     }

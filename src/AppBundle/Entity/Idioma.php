@@ -47,10 +47,10 @@ class Idioma
     protected $speaking;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Alumno", inversedBy="idiomas")
+     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="idiomas")
      * @ORM\JoinColumn(nullable=true)
      *
-     * @var Alumno
+     * @var Usuario
      *
      */
     protected $alumnos;
@@ -160,10 +160,10 @@ class Idioma
     /**
      * Set alumno
      *
-     * @param \AppBundle\Entity\Alumno $alumno
+     * @param \AppBundle\Entity\Usuario $alumno
      * @return Idioma
      */
-    public function setAlumno(\AppBundle\Entity\Alumno $alumno)
+    public function setAlumno(\AppBundle\Entity\Usuario $alumno)
     {
         $this->alumno = $alumno;
 
@@ -173,7 +173,7 @@ class Idioma
     /**
      * Get alumno
      *
-     * @return \AppBundle\Entity\Alumno 
+     * @return \AppBundle\Entity\Usuario
      */
     public function getAlumno()
     {
@@ -191,9 +191,9 @@ class Idioma
     /**
      * Add alumno
      *
-     * @param Alumno $alumno
+     * @param Usuario $alumno
      */
-    public function addAlumno(Alumno $alumno)
+    public function addAlumno(Usuario $alumno)
     {
         if (!$this->alumnos->contains($alumno)) {
             $this->alumnos->add($alumno);
@@ -203,9 +203,9 @@ class Idioma
     /**
      * Remove alumnos
      *
-     * @param \AppBundle\Entity\Alumno $alumnos
+     * @param \AppBundle\Entity\Usuario $alumnos
      */
-    public function removeAlumno(\AppBundle\Entity\Alumno $alumnos)
+    public function removeAlumno(\AppBundle\Entity\Usuario $alumnos)
     {
         $this->alumnos->removeElement($alumnos);
     }

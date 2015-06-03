@@ -5,7 +5,43 @@
 {% block content %}
     <h2 class="well"> Modificar Usuario {{ usuario.correoElectronico }}</h2>
 
-    {{ form(formulario) }}
+    {{ form_start(formulario) }}
+
+    {% if is_granted('ROLE_ALUMNO') %}
+        {{ form_row(formulario.nombre) }}
+        {{ form_row(formulario.apellidos) }}
+        {{ form_row(formulario.fechaNacimiento) }}
+        {{ form_row(formulario.sexo) }}
+        {{ form_row(formulario.telefono) }}
+        {{ form_row(formulario.imagen) }}
+        {{ form_row(formulario.correoElectronico) }}
+        {{ form_row(formulario.tieneProblemasSalud) }}
+        {{ form_row(formulario.detallesProblemasSalud) }}
+        {{ form_row(formulario.esFumador) }}
+        {{ form_row(formulario.esBebedor) }}
+        {{ form_row(formulario.haViajadoExtranjero) }}
+        {{ form_row(formulario.detallesViajeExtranjero) }}
+        {{ form_row(formulario.preferenciaCompanero) }}
+        {{ form_row(formulario.descripcion) }}
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Idioma/s</label>
+            <div class="col-sm-10">
+                <ul class="coleccion" style="padding-top: 10px; list-style: none;"
+                    data-prototype="{{ form_widget(formulario.idiomas.vars.prototype)|e }}">
+                    {% for idioma in formulario.idiomas %}
+                        <li>{{ form_row(idioma.descripcion) }}</li>
+                        <li>{{ form_row(idioma.reading) }}</li>
+                        <li>{{ form_row(idioma.writing) }}</li>
+                        <li>{{ form_row(idioma.speaking) }}</li>
+                        <hr />
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {{ form_row(formulario.aficiones) }}
+    {% endif %}
+
+    {{ form_end(formulario) }}
 
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('usuarios_listar') }}" class="btn btn-info">Volver al listado de Usuarios</a>

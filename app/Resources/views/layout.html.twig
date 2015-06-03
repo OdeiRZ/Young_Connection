@@ -46,23 +46,20 @@
                             <li><a href="{{ path('aficion_nuevo') }}">Crear Afición{% if ruta == 'aficion_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
                         </ul>
                     </li>
-                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COORDINADOR') or is_granted('ROLE_ALUMNO') %}
-                        <li class="{{ 'alumno' in ruta or 'familia' in ruta ? 'active dropdown' : 'dropdown' }}">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> Alumnos <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ path('alumnos_listar') }}">Listar Alumnos{% if ruta == 'alumnos_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
-                                <li><a href="{{ path('familias_listar') }}">Listar Familias{% if ruta == 'familias_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
-                                <li><a href="{{ path('alumno_nuevo') }}">Crear Alumno{% if ruta == 'alumno_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
-                                <li><a href="{{ path('familia_nuevo') }}">Crear Familia{% if ruta == 'familia_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
-                            </ul>
-                        </li>
-                    {% endif %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li class="{{ 'usuario' in ruta ? 'active dropdown' : 'dropdown' }}">
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COORDINADOR') %}
+                        <li class="{{ 'usuario' in ruta or 'alumno' in ruta or 'familia' in ruta ? 'active dropdown' : 'dropdown' }}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> Usuarios <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <li><a href="{{ path('usuarios_listar') }}">Listar Usuarios{% if ruta == 'usuarios_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                                {% endif %}
+                                <li><a href="{{ path('alumnos_listar') }}">Listar Alumnos{% if ruta == 'alumnos_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                                <li><a href="{{ path('coordinadores_listar') }}">Listar Coordinadores{% if ruta == 'coordinadores_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                                <li><a href="{{ path('familias_listar') }}">Listar Familias{% if ruta == 'familias_listar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <li><a href="{{ path('usuario_nuevo_admin') }}">Crear Usuario{% if ruta == 'usuario_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                                <li><a href="{{ path('familia_nuevo') }}">Crear Familia{% if ruta == 'familia_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                     {% endif %}

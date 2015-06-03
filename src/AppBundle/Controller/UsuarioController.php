@@ -26,20 +26,84 @@ class UsuarioController extends Controller
     public function listarAction(Request $peticion)
     {
         $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
-                          $this->get('security.token_storage')->getToken()->getUser()));
+            $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $apellidosDefecto = null;
         $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
         $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
-                 ->createQueryBuilder('u')
-                 ->orderBy('u.apellidos', 'DESC')
-                 ->addOrderBy('u.nombre', 'DESC');
+            ->createQueryBuilder('u')
+            ->orderBy('u.apellidos', 'DESC')
+            ->addOrderBy('u.nombre', 'DESC');
         if ($apellidos) {
             $qb->where('u.apellidos LIKE :apellidos')
-               ->orWhere('u.nombre LIKE :apellidos')
-               ->setParameter('apellidos', '%'.$apellidos.'%');
+                ->orWhere('u.nombre LIKE :apellidos')
+                ->setParameter('apellidos', '%'.$apellidos.'%');
+        }
+        $usuarios =  $qb
+            ->getQuery()
+            ->getResult();
+        return $this->render('AppBundle:Usuario:listar.html.twig', [
+            'formulario_apellidos' => $form->createView(),
+            'usuarios' => $usuarios
+        ]);
+    }
+
+    /**
+     * @Route("/listar/alumnos", name="alumnos_listar")
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
+     */
+    public function listarAlumnosAction(Request $peticion)
+    {
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
+            $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
+        $em = $this->getDoctrine()->getManager();
+        $apellidosDefecto = null;
+        $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
+        $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
+        $qb = $em->getRepository('AppBundle:Usuario')
+            ->createQueryBuilder('u')
+            ->orderBy('u.apellidos', 'DESC')
+            ->addOrderBy('u.nombre', 'DESC')
+            ->where('u.esAlumno = 1');
+        if ($apellidos) {
+            $qb->andWhere('u.apellidos LIKE :apellidos')
+                ->orWhere('u.nombre LIKE :apellidos')
+                ->setParameter('apellidos', '%'.$apellidos.'%');
+        }
+        $usuarios =  $qb
+            ->getQuery()
+            ->getResult();
+        return $this->render('AppBundle:Usuario:listar.html.twig', [
+            'formulario_apellidos' => $form->createView(),
+            'usuarios' => $usuarios
+        ]);
+    }
+
+    /**
+     * @Route("/listar/coordinadores", name="coordinadores_listar")
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
+     */
+    public function listarCoordinadoresAction(Request $peticion)
+    {
+        $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
+            $this->get('security.token_storage')->getToken()->getUser()));
+        $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
+        $em = $this->getDoctrine()->getManager();
+        $apellidosDefecto = null;
+        $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
+        $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
+        $qb = $em->getRepository('AppBundle:Usuario')
+            ->createQueryBuilder('u')
+            ->orderBy('u.apellidos', 'DESC')
+            ->addOrderBy('u.nombre', 'DESC')
+            ->where('u.esCoordinador = 1');
+        if ($apellidos) {
+            $qb->andWhere('u.apellidos LIKE :apellidos')
+                ->orWhere('u.nombre LIKE :apellidos')
+                ->setParameter('apellidos', '%'.$apellidos.'%');
         }
         $usuarios =  $qb
             ->getQuery()
@@ -61,7 +125,8 @@ class UsuarioController extends Controller
         }
         $formulario = $this->createForm(new UsuarioType(), $usuario, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
-            'coordinador' => $this->isGranted('ROLE_COORDINADOR')
+            'coordinador' => $this->isGranted('ROLE_COORDINADOR'),
+            'alumno' => $this->isGranted('ROLE_ALUMNO')
         ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
@@ -91,6 +156,7 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/nuevo", name="usuario_nuevo_admin"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function nuevoAction(Request $peticion)
     {
@@ -100,6 +166,7 @@ class UsuarioController extends Controller
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'coordinador' => $this->isGranted('ROLE_COORDINADOR'),
+            'alumno' => $this->isGranted('ROLE_ALUMNO'),
             'nuevo' => true
         ));
         $formulario->handleRequest($peticion);

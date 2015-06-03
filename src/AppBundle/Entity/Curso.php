@@ -42,10 +42,10 @@ class Curso
     protected $centro;
 
     /**
-     * @ORM\OneToMany(targetEntity="Alumno", mappedBy="curso")
+     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="curso")
      * @ORM\JoinColumn(nullable=false)
      *
-     * @var Alumno
+     * @var Usuario
      */
     protected $alumnos;
 
@@ -138,10 +138,10 @@ class Curso
     /**
      * Add alumnos
      *
-     * @param \AppBundle\Entity\Alumno $alumnos
+     * @param \AppBundle\Entity\Usuario $alumnos
      * @return Curso
      */
-    public function addAlumno(\AppBundle\Entity\Alumno $alumnos)
+    public function addAlumno(\AppBundle\Entity\Usuario $alumnos)
     {
         $this->alumnos[] = $alumnos;
 
@@ -151,9 +151,9 @@ class Curso
     /**
      * Remove alumnos
      *
-     * @param \AppBundle\Entity\Alumno $alumnos
+     * @param \AppBundle\Entity\Usuario $alumnos
      */
-    public function removeAlumno(\AppBundle\Entity\Alumno $alumnos)
+    public function removeAlumno(\AppBundle\Entity\Usuario $alumnos)
     {
         $this->alumnos->removeElement($alumnos);
     }

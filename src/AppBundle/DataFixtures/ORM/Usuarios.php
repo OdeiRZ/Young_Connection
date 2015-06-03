@@ -42,7 +42,8 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
             ->setTelefono('666666666')
             ->setEsActivo(true)
             ->setEsAdministrador(true)
-            ->setEsCoordinador(false);
+            ->setEsCoordinador(false)
+            ->setEsAlumno(false);
         $manager->persist($usuario);
         $manager->flush();
     }

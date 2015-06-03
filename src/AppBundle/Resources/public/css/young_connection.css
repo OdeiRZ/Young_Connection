@@ -69,12 +69,14 @@ code {
     vertical-align: middle;
     border-radius: 3px;
 }
-
+.dropdown-menu {
+    min-width: 130px;
+}
 
 @media (min-width: 768px) and (max-width: 1200px){
-    .nav > li > a {
+    /*.nav > li > a {
         padding: 15px 8px;
-    }
+    }*/
 }
 @media (max-width: 992px){
     .navbar-header {
@@ -111,7 +113,7 @@ code {
     .collapse.in{
         display:block !important;
     }
-    .navbar-nav > li:last-child > a {
-        padding-bottom: 10px;
+    .navbar-nav:last-child>li:last-child> a {
+        float: left;
     }
 }
