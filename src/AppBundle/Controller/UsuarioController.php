@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\FiltroApellidoType;
+use AppBundle\Form\Type\FiltroCursoType;
 use AppBundle\Form\Type\UsuarioType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
@@ -60,18 +61,16 @@ class UsuarioController extends Controller
             $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
-        $apellidosDefecto = null;
-        $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
-        $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
+        $form = $this->createForm(new FiltroCursoType())->handleRequest($peticion);
+        $curso = ($form->isValid()) ? $_POST['filtroCursos']['curso'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
-            ->createQueryBuilder('u')
-            ->orderBy('u.apellidos', 'DESC')
-            ->addOrderBy('u.nombre', 'DESC')
-            ->where('u.esAlumno = 1');
-        if ($apellidos) {
-            $qb->andWhere('u.apellidos LIKE :apellidos')
-                ->orWhere('u.nombre LIKE :apellidos')
-                ->setParameter('apellidos', '%'.$apellidos.'%');
+                 ->createQueryBuilder('u')
+                 ->orderBy('u.apellidos', 'DESC')
+                 ->addOrderBy('u.nombre', 'DESC')
+                 ->where('u.esAlumno = 1');
+        if ($curso) {
+            $qb->where('a.curso = :curso')
+               ->setParameter('curso', $_POST['filtroCursos']['curso']);
         }
         $usuarios =  $qb
             ->getQuery()
