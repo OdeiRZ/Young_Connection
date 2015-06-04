@@ -194,7 +194,7 @@ class Usuario implements UserInterface
     protected $curso;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Idioma", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Idioma", cascade={"persist"}, mappedBy="alumnos")
      * @ORM\JoinColumn(nullable=true)
      *
      * @var Idioma
