@@ -95,6 +95,9 @@ class UsuarioType extends AbstractType
                 ])
                 ->add('preferenciaCompanero', null, [
                     'label' => 'Preferencia de Compañero/a',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                  ->Where('u.esAlumno = 1'); },
                     'required' => false
                 ])
                 ->add('descripcion', 'textarea', [

@@ -378,14 +378,6 @@ class Familia
     }
 
     /**
-     *
-     */
-    public function __toString()
-    {
-        return $this->getDireccion();
-    }
-
-    /**
      * Add miembros
      *
      * @param \AppBundle\Entity\Miembro $miembros
@@ -485,5 +477,13 @@ class Familia
     public function getPais()
     {
         return $this->pais;
+    }
+
+    /**
+     *
+     */
+    public function __toString()
+    {
+        return $this->getDireccion();
     }
 }
