@@ -41,8 +41,6 @@
                             {% for miembro in familia.miembros %}
                                 <li>{{ miembro.apellidos }} {{ miembro.nombre }}</li>
                                 <li>{{ miembro.fechaNacimiento|date("d/m/Y") }}</li>
-                                <li>{{ miembro.correoElectronico }}</li>
-                                <li>{{ miembro.telefono }}</li>
                                 <li>{{ (miembro.sexo == 'M' ? 'Masculino' : 'Femenino') }}</li>
                                 <li>{{ miembro.tipo }}</li>
                                 <hr/>

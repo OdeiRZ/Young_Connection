@@ -19,7 +19,7 @@ class Alojamiento
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Familia")
+     * @ORM\ManyToOne(targetEntity="Familia")
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Familia
@@ -36,21 +36,21 @@ class Alojamiento
     protected $alumno;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Grupo", inversedBy="alojamientos")
+     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="alojamientos")
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Grupo
      *
      */
-    protected $grupos;
+    protected $grupo;
 
     /**
-     * Constructor
+     *
      */
-    public function __construct()
+    public function __toString()
     {
-        $this->familia = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->grupos = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->getAlumno() . ' ' .
+               $this->getFamilia();
     }
 
     /**
@@ -64,32 +64,22 @@ class Alojamiento
     }
 
     /**
-     * Add familia
+     * Set familia
      *
      * @param \AppBundle\Entity\Familia $familia
      * @return Alojamiento
      */
-    public function addFamilium(\AppBundle\Entity\Familia $familia)
+    public function setFamilia(\AppBundle\Entity\Familia $familia)
     {
-        $this->familia[] = $familia;
+        $this->familia = $familia;
 
         return $this;
     }
 
     /**
-     * Remove familia
-     *
-     * @param \AppBundle\Entity\Familia $familia
-     */
-    public function removeFamilium(\AppBundle\Entity\Familia $familia)
-    {
-        $this->familia->removeElement($familia);
-    }
-
-    /**
      * Get familia
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \AppBundle\Entity\Familia 
      */
     public function getFamilia()
     {
@@ -120,44 +110,22 @@ class Alojamiento
     }
 
     /**
-     * Add grupos
+     * Set grupo
      *
-     * @param \AppBundle\Entity\Grupo $grupos
-     * @return Alojamiento
+     * @param \AppBundle\Entity\Grupo $grupo
      */
-    public function addGrupo(\AppBundle\Entity\Grupo $grupos)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
-        $this->grupos[] = $grupos;
-
-        return $this;
+        $this->grupo = $grupo;
     }
 
     /**
-     * Remove grupos
+     * Get grupo
      *
-     * @param \AppBundle\Entity\Grupo $grupos
+     * @return \AppBundle\Entity\Grupo 
      */
-    public function removeGrupo(\AppBundle\Entity\Grupo $grupos)
+    public function getGrupo()
     {
-        $this->grupos->removeElement($grupos);
-    }
-
-    /**
-     * Get grupos
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getGrupos()
-    {
-        return $this->grupos;
-    }
-
-    /**
-     *
-     */
-    public function __toString()
-    {
-        return $this->getAlumno() . ' ' .
-               $this->getFamilia();
+        return $this->grupo;
     }
 }

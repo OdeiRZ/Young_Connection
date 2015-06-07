@@ -111,7 +111,7 @@ class Familia
     protected $alumnos;
 
     /**
-     * @ORM\OneToMany(targetEntity="Miembro", mappedBy="familia", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Miembro", mappedBy="familia", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=true)
      *
      * @var Miembro

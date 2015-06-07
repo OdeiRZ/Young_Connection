@@ -874,10 +874,10 @@ class Usuario implements UserInterface
     /**
      * Add preferenciaCompanero
      *
-     * @param \AppBundle\Entity\Alumno $preferenciaCompanero
+     * @param \AppBundle\Entity\Usuario $preferenciaCompanero
      * @return Usuario
      */
-    public function addPreferenciaCompanero(\AppBundle\Entity\Alumno $preferenciaCompanero)
+    public function addPreferenciaCompanero(\AppBundle\Entity\Usuario $preferenciaCompanero)
     {
         $this->preferenciaCompanero[] = $preferenciaCompanero;
 
@@ -887,9 +887,9 @@ class Usuario implements UserInterface
     /**
      * Remove preferenciaCompanero
      *
-     * @param \AppBundle\Entity\Alumno $preferenciaCompanero
+     * @param \AppBundle\Entity\Usuario $preferenciaCompanero
      */
-    public function removePreferenciaCompanero(\AppBundle\Entity\Alumno $preferenciaCompanero)
+    public function removePreferenciaCompanero(\AppBundle\Entity\Usuario $preferenciaCompanero)
     {
         $this->preferenciaCompanero->removeElement($preferenciaCompanero);
     }
@@ -1014,5 +1014,51 @@ class Usuario implements UserInterface
     public function getFamilia()
     {
         return $this->familia;
+    }
+
+    /**
+     * Add grupos
+     *
+     * @param \AppBundle\Entity\Grupo $grupos
+     * @return Usuario
+     */
+    public function addGrupo(\AppBundle\Entity\Grupo $grupos)
+    {
+        $this->grupos[] = $grupos;
+
+        return $this;
+    }
+
+    /**
+     * Remove grupos
+     *
+     * @param \AppBundle\Entity\Grupo $grupos
+     */
+    public function removeGrupo(\AppBundle\Entity\Grupo $grupos)
+    {
+        $this->grupos->removeElement($grupos);
+    }
+
+    /**
+     * Get grupos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGrupos()
+    {
+        return $this->grupos;
+    }
+
+    /**
+     * Set grupos
+     *
+     * @param \AppBundle\Entity\Grupo $grupos
+     * @return Usuario
+     */
+    public function setGrupos(\AppBundle\Entity\Grupo $grupos = null)
+    {
+        $this->grupos = $grupos;
+
+        return $this;
     }
 }

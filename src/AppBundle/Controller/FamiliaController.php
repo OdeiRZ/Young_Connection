@@ -110,7 +110,6 @@ class FamiliaController extends Controller
         $familia = new Familia();
         $formulario = $this->createForm(new FamiliaType(), $familia);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($familia);

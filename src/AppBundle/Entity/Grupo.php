@@ -19,13 +19,35 @@ class Grupo
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Alojamiento", cascade={"persist"}, mappedBy="grupos")
+     * @ORM\ManyToOne(targetEntity="Usuario")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Usuario
+     *
+     */
+    protected $coordinador;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Alojamiento", mappedBy="grupo", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=true)
      *
      * @var Alojamiento
      *
      */
     protected $alojamientos;
+
+    /**
+     *
+     */
+    public function __toString()
+    {
+        $aux = '';
+        $alojamientos = $this->getAlojamientos();
+        foreach($alojamientos as $alojamiento) {
+            $aux .= $alojamiento . '<br/>';
+        }
+        return $aux;
+    }
 
     /**
      * Constructor
@@ -54,8 +76,7 @@ class Grupo
     public function addAlojamiento(\AppBundle\Entity\Alojamiento $alojamientos)
     {
         $this->alojamientos[] = $alojamientos;
-
-        return $this;
+        $alojamientos->setGrupo($this);
     }
 
     /**
@@ -78,17 +99,27 @@ class Grupo
         return $this->alojamientos;
     }
 
+
     /**
+     * Set coordinador
      *
+     * @param \AppBundle\Entity\Usuario $coordinador
+     * @return Grupo
      */
-    public function __toString()
+    public function setCoordinador(\AppBundle\Entity\Usuario $coordinador)
     {
-        $aux = '';
-        $alojamientos = $this->getAlojamientos();
-        foreach($alojamientos as $alojamiento) {
-            $aux .= $alojamiento . '<br/>';
-        }
-        return $aux;
+        $this->coordinador = $coordinador;
+
+        return $this;
     }
 
+    /**
+     * Get coordinador
+     *
+     * @return \AppBundle\Entity\Usuario 
+     */
+    public function getCoordinador()
+    {
+        return $this->coordinador;
+    }
 }

@@ -10,19 +10,23 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
-                <th>Grupos</th>
+                <th>Coordinador/es</th>
+                <th>Alojamiento/s</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             {% for grupo in grupos %}
                 <tr>
+                    <td>{{ grupo.coordinador }}</td>
                     <td>
+                        <ul>
                         {% for alojamiento in grupo.alojamientos %}
                             <li>{{ alojamiento.alumno }}</li>
                             <li>{{ alojamiento.familia }}</li>
                             <hr/>
                         {% endfor %}
+                        </ul>
                     </td>
                     <td>
                         <a href="{{ path('grupo_modificar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs">
