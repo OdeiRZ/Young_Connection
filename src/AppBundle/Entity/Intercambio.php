@@ -33,6 +33,14 @@ class Intercambio
     protected $fechaFin;
 
     /**
+     * @ORM\OneToMany(targetEntity="intercambio", mappedBy="centro")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Grupo
+     */
+    protected $grupos;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      *
      * @var string
@@ -116,5 +124,45 @@ class Intercambio
     public function getObservaciones()
     {
         return $this->observaciones;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->grupos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add grupos
+     *
+     * @param \AppBundle\Entity\intercambio $grupos
+     * @return Intercambio
+     */
+    public function addGrupo(\AppBundle\Entity\intercambio $grupos)
+    {
+        $this->grupos[] = $grupos;
+
+        return $this;
+    }
+
+    /**
+     * Remove grupos
+     *
+     * @param \AppBundle\Entity\intercambio $grupos
+     */
+    public function removeGrupo(\AppBundle\Entity\intercambio $grupos)
+    {
+        $this->grupos->removeElement($grupos);
+    }
+
+    /**
+     * Get grupos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGrupos()
+    {
+        return $this->grupos;
     }
 }

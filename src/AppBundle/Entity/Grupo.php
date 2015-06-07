@@ -28,6 +28,14 @@ class Grupo
     protected $alojamientos;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Intercambio", inversedBy="grupos")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @var Intercambio
+     */
+    protected $intercambio;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -89,5 +97,28 @@ class Grupo
             $aux .= $alojamiento . '<br/>';
         }
         return $aux;
+    }
+
+    /**
+     * Set intercambio
+     *
+     * @param \AppBundle\Entity\Intercambio $intercambio
+     * @return Grupo
+     */
+    public function setIntercambio(\AppBundle\Entity\Intercambio $intercambio)
+    {
+        $this->intercambio = $intercambio;
+
+        return $this;
+    }
+
+    /**
+     * Get intercambio
+     *
+     * @return \AppBundle\Entity\Intercambio 
+     */
+    public function getIntercambio()
+    {
+        return $this->intercambio;
     }
 }
