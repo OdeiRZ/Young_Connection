@@ -1,4 +1,4 @@
-$('label:contains("Idioma/s"), label:contains("Miembro/s")').eq(1).remove(); //borramos segundo label idiomas/miembros
+$('label:contains("Idioma/s"), label:contains("Alojamiento/s"), label:contains("Miembro/s")').eq(1).remove(); //borramos segundo label idiomas/miembros/alojamientos
 var $addTagLink = $('<a href="#" class="agregar_link">Agregar</a>');
 var $newLinkLi = $('<li></li>').append($addTagLink);
 
@@ -22,7 +22,6 @@ jQuery(document).ready(function() {
         yearRange: "-100:+0"
     };
     $.datepicker.setDefaults($.datepicker.regional['es']);
-
     asignarCalendario();
     $collectionHolder = $('ul.coleccion');
     $collectionHolder.append($newLinkLi);
@@ -72,7 +71,6 @@ function addTagFormDeleteLink($tagFormLi) {
 }
 
 function asignarCalendario() {
-
     $('.date').datepicker({
         language: 'es',
         dateFormat: 'dd-mm-yy',

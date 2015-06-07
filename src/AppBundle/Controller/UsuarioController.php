@@ -46,7 +46,7 @@ class UsuarioController extends Controller
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Usuario:listar.html.twig', [
-            'formulario_apellidos' => $form->createView(),
+            'formulario_auxilar' => $form->createView(),
             'usuarios' => $usuarios
         ]);
     }
@@ -76,7 +76,7 @@ class UsuarioController extends Controller
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Usuario:listar.html.twig', [
-            'formulario_apellidos' => $form->createView(),
+            'formulario_auxilar' => $form->createView(),
             'usuarios' => $usuarios
         ]);
     }
@@ -108,7 +108,7 @@ class UsuarioController extends Controller
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Usuario:listar.html.twig', [
-            'formulario_apellidos' => $form->createView(),
+            'formulario_auxilar' => $form->createView(),
             'usuarios' => $usuarios
         ]);
     }

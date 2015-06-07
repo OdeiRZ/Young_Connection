@@ -1,0 +1,51 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Listar Grupos{% endblock %}
+
+{% block content %}
+    <h2 class="well">Listado de Grupos</h2>
+
+    {{ form(formulario_cursos) }}
+    {% if grupos %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Grupos</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for grupo in grupos %}
+                <tr>
+                    <td>
+                        {% for alojamiento in grupo.alojamientos %}
+                            <li>{{ alojamiento.alumno }}</li>
+                            <li>{{ alojamiento.familia }}</li>
+                            <hr/>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ path('grupo_modificar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
+                        <a href="{{ path('grupo_eliminar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>No hay Grupos para mostrar</h3>
+    {% endif %}
+
+    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('grupo_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Grupo </a>
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts '@AppBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

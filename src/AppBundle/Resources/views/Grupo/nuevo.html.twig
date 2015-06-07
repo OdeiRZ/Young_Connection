@@ -1,0 +1,28 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Nuevo Grupo{% endblock %}
+
+{% block content %}
+    <h2 class="well">Crear un nuevo Grupo</h2>
+
+    {{ form_start(formulario) }}
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Alojamiento/s</label>
+        <div class="col-sm-10">
+            <ul class="coleccion" style="padding-top: 10px; list-style: none;"
+                data-prototype="{{ form_widget(formulario.alojamientos.vars.prototype)|e }}">
+            </ul>
+        </div>
+    </div>
+
+    {{ form_end(formulario) }}
+
+    <a href="{{ path('grupos_listar') }}" class="btn btn-info">Volver al listado de Grupos</a>
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts '@AppBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
