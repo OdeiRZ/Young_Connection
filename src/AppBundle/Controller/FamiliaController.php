@@ -8,6 +8,7 @@ use AppBundle\Form\Type\FiltroPaisType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ class FamiliaController extends Controller
 {
     /**
      * @Route("/listar", name="familias_listar")
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
     public function listarAction(Request $peticion)
     {
@@ -60,12 +62,13 @@ class FamiliaController extends Controller
 
     /**
      * @Route("/modificar/{familia}", name="familia_modificar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ALUMNO')")
      */
     public function modificarAction(Familia $familia, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
         if (!$familia) {
-            throw $this->createNotFoundException('No hay familias disponibles'.$familia);
+            throw $this->createNotFoundException('No hay familias disponibles '.$familia);
         }
         $miembros = new ArrayCollection();
         foreach ($familia->getMiembros() as $miembro) {
@@ -88,12 +91,14 @@ class FamiliaController extends Controller
                 }
             }
             if ($formulario->get('eliminar')->isClicked()) {
+                $usuario = $this->get('security.token_storage')->getToken()->getUser();
+                $usuario->setFamilia(null);
                 $em->remove($familia);
             }
             $em->flush();
             $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
-                $this->generateUrl('familias_listar')
+                $this->generateUrl('inicio')
             );
         }
         return $this->render('AppBundle:Familia:modificar.html.twig', [
@@ -104,6 +109,7 @@ class FamiliaController extends Controller
 
     /**
      * @Route("/nuevo", name="familia_nuevo"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ALUMNO')")
      */
     public function nuevoAction(Request $peticion)
     {
@@ -112,29 +118,18 @@ class FamiliaController extends Controller
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $usuario = $this->get('security.token_storage')->getToken()->getUser();
+            $usuario->setFamilia($familia);     //if ($usuario->getEsAlumno()) {}
             $em->persist($familia);
             $em->flush();
             $this->addFlash('success', 'Familia creada correctamente');
             return new RedirectResponse(
-                $this->generateUrl('familias_listar')
+                $this->generateUrl('inicio')
             );
         }
         return $this->render('AppBundle:Familia:nuevo.html.twig', [
             'familia' => $familia,
             'formulario' => $formulario->createView()
         ]);
-    }
-
-    /**
-     * @Route("/eliminar/{familia}", name="familia_eliminar"), methods={'GET', 'POST'}
-     */
-    public function eliminarAction(Familia $familia, Request $peticion)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($familia);
-        $em->flush();
-        return new RedirectResponse(
-            $this->generateUrl('familias_listar')
-        );
     }
 }

@@ -77,15 +77,6 @@ class Miembro
     protected $familia;
 
     /**
-     * @ORM\OneToOne(targetEntity="Usuario")
-     * @ORM\JoinColumn(nullable=true)
-     *
-     * @var Usuario
-     *
-     */
-    protected $usuario;
-
-    /**
      * Get id
      *
      * @return integer 
@@ -257,36 +248,12 @@ class Miembro
     }
 
     /**
-     * Set usuario
-     *
-     * @param \AppBundle\Entity\Usuario $usuario
-     * @return Miembro
-     */
-    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return \AppBundle\Entity\Usuario
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
-    }
-
-    /**
      * Set familia
      *
      * @param \AppBundle\Entity\Miembro $miembro
      */
     public function setFamilia(\AppBundle\Entity\Familia $familia = null)
     {
-
         $this->familia = $familia;
     }
 

@@ -90,7 +90,6 @@ class IntercambioController extends Controller
         $intercambio = new Intercambio();
         $formulario = $this->createForm(new IntercambioType(), $intercambio);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($intercambio);
