@@ -16,6 +16,10 @@ class GrupoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('descripcion', null, [
+                'label' => 'Descripción*',
+                'required' => true
+            ])
             ->add('coordinador', null, [
                 'label' => 'Coordinador/a*',
                 'query_builder' => function(EntityRepository $er) {

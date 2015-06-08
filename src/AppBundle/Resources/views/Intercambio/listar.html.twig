@@ -12,6 +12,7 @@
             <tr>
                 <th>F. Inicio</th>
                 <th>F. Fin</th>
+                <th>Grupo/s</th>
                 <th>Observaciones</th>
                 <th></th>
             </tr>
@@ -21,6 +22,14 @@
                 <tr>
                     <td>{{ intercambio.fechaInicio|date("d/m/Y") }}</td>
                     <td>{{ intercambio.fechaFin|date("d/m/Y") }}</td>
+                    <td>
+                        <ul>
+                            {% for grupo in intercambio.grupos %}
+                                <li><a href="#">{{ grupo }}</a></li>
+                                <hr/>
+                            {% endfor %}
+                        </ul>
+                    </td>
                     <td>{{ intercambio.observaciones }}</td>
                     <td>
                         <a href="{{ path('intercambio_modificar', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs">

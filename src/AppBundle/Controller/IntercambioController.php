@@ -67,6 +67,9 @@ class IntercambioController extends Controller
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
+                foreach($intercambio->getGrupos() as $grupo) {
+                    $grupo->setIntercambio(null);
+                }
                 $em->remove($intercambio);
             }
             $em->flush();
@@ -92,6 +95,9 @@ class IntercambioController extends Controller
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            foreach($intercambio->getGrupos() as $grupo) {
+                $grupo->setIntercambio($intercambio);
+            }
             $em->persist($intercambio);
             $em->flush();
             $this->addFlash('success', 'Intercambio creado correctamente');
@@ -112,6 +118,9 @@ class IntercambioController extends Controller
     public function eliminarAction(Intercambio $intercambio, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
+        foreach($intercambio->getGrupos() as $grupo) {
+            $grupo->setIntercambio(null);
+        }
         $em->remove($intercambio);
         $em->flush();
         return new RedirectResponse(

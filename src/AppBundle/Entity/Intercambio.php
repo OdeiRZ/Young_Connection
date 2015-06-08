@@ -33,7 +33,7 @@ class Intercambio
     protected $fechaFin;
 
     /**
-     * @ORM\OneToMany(targetEntity="intercambio", mappedBy="centro")
+     * @ORM\OneToMany(targetEntity="Grupo", mappedBy="intercambio")
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Grupo

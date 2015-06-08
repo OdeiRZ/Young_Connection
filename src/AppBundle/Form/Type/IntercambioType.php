@@ -24,6 +24,10 @@ class IntercambioType extends AbstractType
                 'attr' => array('class' => 'date'),
                 'required' => true
             ])
+            ->add('grupos', null, [
+                'label' => 'Grupo/s*',
+                'required' => true
+            ])
             ->add('observaciones', null, [
                 'label' => 'Observaciones',
                 'required' => false

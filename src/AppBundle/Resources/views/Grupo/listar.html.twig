@@ -10,6 +10,7 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
+                <th>Descripción</th>
                 <th>Coordinador/es</th>
                 <th>Alojamiento/s</th>
                 <th></th>
@@ -18,6 +19,7 @@
             <tbody>
             {% for grupo in grupos %}
                 <tr>
+                    <td>{{ grupo.descripcion }}</td>
                     <td>{{ grupo.coordinador }}</td>
                     <td>
                         <ul>

@@ -19,6 +19,13 @@ class Grupo
     protected $id;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $descripcion;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @ORM\JoinColumn(nullable=false)
      *
@@ -37,16 +44,26 @@ class Grupo
     protected $alojamientos;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Intercambio", inversedBy="grupos")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Intercambio
+     *
+     */
+    protected $intercambio;
+
+    /**
      *
      */
     public function __toString()
     {
-        $aux = '';
+        /*$aux = '';
         $alojamientos = $this->getAlojamientos();
         foreach($alojamientos as $alojamiento) {
             $aux .= $alojamiento . '<br/>';
         }
-        return $aux;
+        return $aux;*/
+        return $this->getDescripcion();
     }
 
     /**
@@ -121,5 +138,51 @@ class Grupo
     public function getCoordinador()
     {
         return $this->coordinador;
+    }
+
+    /**
+     * Set intercambio
+     *
+     * @param \AppBundle\Entity\Intercambio $intercambio
+     * @return Grupo
+     */
+    public function setIntercambio(\AppBundle\Entity\Intercambio $intercambio = null)
+    {
+        $this->intercambio = $intercambio;
+
+        return $this;
+    }
+
+    /**
+     * Get intercambio
+     *
+     * @return \AppBundle\Entity\Intercambio 
+     */
+    public function getIntercambio()
+    {
+        return $this->intercambio;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Grupo
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 }
