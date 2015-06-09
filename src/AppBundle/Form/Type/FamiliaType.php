@@ -10,6 +10,10 @@ class FamiliaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('descripcion', null, [
+                'label' => 'Descripción*',
+                'required' => true
+            ])
             ->add('direccion', null, [
                 'label' => 'Dirección*',
                 'required' => true
@@ -73,7 +77,6 @@ class FamiliaType extends AbstractType
                 ]
             ]);
     }
-
 
     /**
      * Returns the name of this type.

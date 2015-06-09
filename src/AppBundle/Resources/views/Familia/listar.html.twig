@@ -12,6 +12,7 @@
             <tr>
                 <th>Alumno/s</th>
                 <th>Miembro/s</th>
+                <th>Descripción</th>
                 <th>Dirección</th>
                 <th>Ciudad</th>
                 <th>Pais</th>
@@ -31,7 +32,7 @@
                     <td>
                         <ul>
                             {% for alumno in familia.alumnos %}
-                                <li><a href="#">{{ alumno.usuario }}</a></li>
+                                <li><a href="#">{{ alumno }}</a></li>
                                 <hr/>
                             {% endfor %}
                         </ul>
@@ -47,6 +48,7 @@
                             {% endfor %}
                         </ul>
                     </td>
+                    <td>{{ familia.descripcion }}</td>
                     <td>{{ familia.direccion }}</td>
                     <td>{{ familia.ciudad }} ({{ familia.provincia }})</td>
                     <td>{{ familia.pais }}</td>
@@ -67,5 +69,5 @@
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
-    <a href="{{ path('familia_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Familia </a>
+    <!--<a href="{{ path('familia_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Familia </a>-->
 {% endblock %}

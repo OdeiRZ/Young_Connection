@@ -3,9 +3,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields="descripcion", message="La descripción ya está registrada")
  */
 class Familia
 {
@@ -17,6 +19,13 @@ class Familia
      * @var integer
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $descripcion;
 
     /**
      * @ORM\Column(type="string")
@@ -480,10 +489,35 @@ class Familia
     }
 
     /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Familia
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
      *
      */
     public function __toString()
     {
-        return $this->getDireccion();
+        return $this->getDescripcion() . ' - ' .
+        $this->getCiudad() . ' (' .
+        $this->getProvincia() . ')';
     }
 }
