@@ -437,15 +437,6 @@ class Usuario implements UserInterface
     }
 
     /**
-     *
-     */
-    public function __toString()
-    {
-        return $this->getApellidos()
-        . ' ' . $this->getNombre();
-    }
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -1060,5 +1051,15 @@ class Usuario implements UserInterface
         $this->grupos = $grupos;
 
         return $this;
+    }
+
+    /**
+     *
+     */
+    public function __toString()
+    {
+        $aux = ($this->getEsAlumno() or $this->getEsCoordinador()) ? ' - (' . $this->getCurso() . ')' : '';
+        return $this->getApellidos() . ' ' .
+               $this->getNombre() . $aux;
     }
 }

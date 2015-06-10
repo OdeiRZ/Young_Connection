@@ -2,13 +2,20 @@
 
 namespace AppBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FamiliaType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $usuario = $options['usuario'];
         $builder
             ->add('descripcion', null, [
                 'label' => 'Descripción*',
@@ -66,8 +73,18 @@ class FamiliaType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
             ])
+            ->add('alumnos', null, [
+                'label' => 'Alumno/s Miembros*',
+                'query_builder' => function(EntityRepository $er) use ($usuario) {
+                    return $er->createQueryBuilder('a')
+                              ->Where('a.esAlumno = 1')
+                              //->andWhere('a.familia IS NULL') //deshabilitado este filtro para poder deseleccionar alumnos
+                              ->andWhere('a.id != :id_alumno')
+                              ->setParameter('id_alumno', $usuario); },
+                'required' => false
+            ])
             ->add('observaciones', 'textarea', [
-                'label' => 'Descripcion',
+                'label' => 'Observaciones',
                 'required' => false
             ])
             ->add('enviar', 'submit', [
@@ -79,9 +96,19 @@ class FamiliaType extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => 'AppBundle\Entity\Familia',
+            'cascade_validation' => true,
+            'usuario' => null
+        ]);
+    }
+
+    /**
+     * @return string
      */
     public function getName()
     {

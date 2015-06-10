@@ -30,12 +30,12 @@ class FamiliaController extends Controller
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $auxPaises = $em->createQueryBuilder('f')
-            ->select('f.pais')
-            ->from('AppBundle:Familia', 'f')
-            ->add('groupBy', 'f.pais')
-            ->orderBy('f.pais', 'ASC')
-            ->getQuery()
-            ->getResult();
+                        ->select('f.pais')
+                        ->from('AppBundle:Familia', 'f')
+                        ->add('groupBy', 'f.pais')
+                        ->orderBy('f.pais', 'ASC')
+                        ->getQuery()
+                        ->getResult();
         $paises = [];
         foreach ($auxPaises as $i => $pais) {
             $paises[$auxPaises[$i]['pais']] = $auxPaises[$i]['pais'];
@@ -49,7 +49,7 @@ class FamiliaController extends Controller
                  ->createQueryBuilder('f');
         if ($pais) {
             $qb->where('f.pais = :pais')
-                ->setParameter('pais', $_POST['filtroPaises']['pais']);
+               ->setParameter('pais', $_POST['filtroPaises']['pais']);
         }
         $familias =  $qb
             ->getQuery()
@@ -74,26 +74,37 @@ class FamiliaController extends Controller
         foreach ($familia->getMiembros() as $miembro) {
             $miembros->add($miembro);
         }
-        $formulario = $this->createForm(new FamiliaType(), $familia);
+        $alumnos = new ArrayCollection();
+        foreach ($familia->getAlumnos() as $alumno) {
+            $alumnos->add($alumno);
+        }
+        foreach ($familia->getAlumnos() as $alumno) {
+            $alumno->setFamilia(null);
+        }
+        $formulario = $this->createForm(new FamiliaType(), $familia, ['usuario' => $this->get('security.token_storage')
+                                                                                        ->getToken()->getUser()->getId()]);
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Familia',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
+                'attr' => ['class' => 'btn btn-danger']
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             foreach ($miembros as $miembro) {
                 if (false === $familia->getMiembros()->contains($miembro)) {
-                    $em->remove($miembro); //$miembro->setFamilia(null);
-                    //$familia->removeElement($miembro); //$em->persist($miembro);
+                    $em->remove($miembro); //$miembro->setFamilia(null);    //$familia->removeElement($miembro); //$em->persist($miembro);
                 }
             }
             if ($formulario->get('eliminar')->isClicked()) {
-                $usuario = $this->get('security.token_storage')->getToken()->getUser();
-                $usuario->setFamilia(null);
+                foreach ($alumnos as $alumno) {     //$usuario = $this->get('security.token_storage')->getToken()->getUser();
+                    $alumno->setFamilia(null);      //$usuario->setFamilia(null);
+                }
                 $em->remove($familia);
+            } else {
+                $familia->addAlumno($this->get('security.token_storage')->getToken()->getUser());
+                foreach ($familia->getAlumnos() as $alumno) {
+                    $alumno->setFamilia($familia);
+                }
             }
             $em->flush();
             $this->addFlash('success', 'Datos guardados correctamente');
@@ -114,12 +125,15 @@ class FamiliaController extends Controller
     public function nuevoAction(Request $peticion)
     {
         $familia = new Familia();
-        $formulario = $this->createForm(new FamiliaType(), $familia);
+        $formulario = $this->createForm(new FamiliaType(), $familia, ['usuario' => $this->get('security.token_storage')
+                                                                                        ->getToken()->getUser()->getId()]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $usuario = $this->get('security.token_storage')->getToken()->getUser();
-            $usuario->setFamilia($familia);     //if ($usuario->getEsAlumno()) {}
+            $familia->addAlumno($this->get('security.token_storage')->getToken()->getUser());
+            foreach ($familia->getAlumnos() as $alumno) {       //$usuario = $this->get('security.token_storage')->getToken()->getUser();
+                $alumno->setFamilia($familia);                  //$usuario->setFamilia(null);
+            }
             $em->persist($familia);
             $em->flush();
             $this->addFlash('success', 'Familia creada correctamente');
@@ -131,5 +145,19 @@ class FamiliaController extends Controller
             'familia' => $familia,
             'formulario' => $formulario->createView()
         ]);
+    }
+
+    /**
+     * @Route("/eliminar/{familia}", name="familia_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
+     */
+    public function eliminarAction(Familia $familia, Request $peticion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($familia);
+        $em->flush();
+        return new RedirectResponse(
+            $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'familias_listar' : 'inicio')
+        );
     }
 }

@@ -24,6 +24,7 @@
                 <th>Detalles Compartir Alumno</th>
                 <th>Tiene Habitación Extra</th>
                 <th>Observaciones</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -60,6 +61,13 @@
                     <td>{{ familia.detallesCompartirAlumno }}</td>
                     <td>{{ familia.tieneHabitacionExtra ? 'Sí' : 'No' }}</td>
                     <td>{{ familia.observaciones }}</td>
+                    <td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('familia_eliminar', { 'familia': familia.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
