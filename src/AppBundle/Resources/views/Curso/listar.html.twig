@@ -21,7 +21,13 @@
                 <tr>
                     <td>{{ curso.descripcion }}</td>
                     <td>{{ curso.familia }}</td>
-                    <td>{{ curso.centro }}</td>
+                    <td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('centro_modificar', { 'centro': curso.centro.id }) }}">{{ curso.centro }}</a>
+                        {% else %}
+                            {{ curso.centro }}
+                        {% endif %}
+                    </td>
                     <td>
                         {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('curso_modificar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">

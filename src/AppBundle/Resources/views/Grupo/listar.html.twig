@@ -20,12 +20,23 @@
             {% for grupo in grupos %}
                 <tr>
                     <td>{{ grupo.descripcion }}</td>
-                    <td>{{ grupo.coordinador }}</td>
+                    <td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('usuario_modificar', { 'usuario': grupo.coordinador.id }) }}">{{ grupo.coordinador }}</a>
+                        {% else %}
+                            {{ grupo.coordinador }}
+                        {% endif %}
+                    </td>
                     <td>
                         <ul>
                         {% for alojamiento in grupo.alojamientos %}
-                            <li>{{ alojamiento.alumno }}</li>
-                            <li>{{ alojamiento.familia }}</li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="{{ path('usuario_modificar', { 'usuario': alojamiento.alumno.id }) }}">{{ alojamiento.alumno }}</a></li>
+                                <li>{{ alojamiento.familia }}</li>
+                            {% else %}
+                                <li>{{ alojamiento.alumno }}</li>
+                                <li>{{ alojamiento.familia }}</li>
+                            {% endif %}
                             <hr/>
                         {% endfor %}
                         </ul>

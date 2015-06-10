@@ -33,7 +33,11 @@
                     <td>
                         <ul>
                             {% for alumno in familia.alumnos %}
-                                <li><a href="#">{{ alumno }}</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('usuario_modificar', { 'usuario': alumno.id }) }}">{{ alumno }}</a>
+                                {% else %}
+                                    {{ alumno }}
+                                {% endif %}
                                 <hr/>
                             {% endfor %}
                         </ul>

@@ -25,7 +25,11 @@
                     <td>
                         <ul>
                             {% for grupo in intercambio.grupos %}
-                                <li><a href="#">{{ grupo }}</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('grupo_modificar', { 'grupo': grupo.id }) }}">{{ grupo }}</a>
+                                {% else %}
+                                    {{ grupo }}
+                                {% endif %}
                                 <hr/>
                             {% endfor %}
                         </ul>
