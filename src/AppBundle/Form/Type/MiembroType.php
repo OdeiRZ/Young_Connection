@@ -48,14 +48,6 @@ class MiembroType extends AbstractType
             ->add('tipo', null, [
                 'label' => 'Tipo de Miembro*',
                 'required' => true
-            ])
-            ->add('familia', null, [
-                'label' => 'Familia*',
-                'required' => true
-            ])
-            ->add('usuario', null, [
-                'label' => 'Usuario',
-                'required' => false
             ]);
     }
 

@@ -901,7 +901,7 @@ class Usuario implements UserInterface
      * @param \AppBundle\Entity\Curso $curso
      * @return Usuario
      */
-    public function setCurso(\AppBundle\Entity\Curso $curso)
+    public function setCurso(\AppBundle\Entity\Curso $curso = null)
     {
         $this->curso = $curso;
 

@@ -16,10 +16,10 @@
                 <th>Teléfono</th>
                 <th>Correo Electrónico</th>
                 <th>Fotografía</th>
-                <th>Activo</th>
                 <th>Administrador</th>
                 <th>Coordinador</th>
                 <th>Alumno</th>
+                <th>Activo</th>
                 <th></th>
             </tr>
             </thead>
@@ -32,12 +32,13 @@
                     <td>{{ usuario.telefono }}</td>
                     <td>{{ usuario.correoElectronico }}</td>
                     <td>
-                        {% if usuario.getWebPath %}<img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}" class="img-thumbnail" height="100" width="100" />{% endif %}
+                        {% if usuario.getWebPath %}<img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}"
+                                                        class="img-thumbnail" height="50" width="50" />{% endif %}
                     </td>
-                    <td>{{ usuario.esActivo ? 'Sí' : 'No' }}</td>
                     <td>{{ usuario.esAdministrador ? 'Sí' : 'No' }}</td>
                     <td>{{ usuario.esCoordinador ? 'Sí' : 'No' }}</td>
                     <td>{{ usuario.esAlumno ? 'Sí' : 'No' }}</td>
+                    <td>{{ usuario.esActivo ? 'Sí' : 'No' }}</td>
                     <td>
                         <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-pencil"></i>

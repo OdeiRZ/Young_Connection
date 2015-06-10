@@ -33,8 +33,8 @@ class IntercambioType extends AbstractType
             ->add('grupos', null, [
                 'label' => 'Grupo/s*',
                 'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('g')
-                              ->Where('g.intercambio IS NULL'); },
+                    return $er->createQueryBuilder('g'); },
+                              //->Where('g.intercambio IS NULL'); },    //Deshabilitamos opcion para permitir deseleccionar elementos
                 'required' => true
             ])
             ->add('observaciones', null, [

@@ -55,6 +55,9 @@ class IntercambioController extends Controller
      */
     public function modificarAction(Intercambio $intercambio, Request $peticion)
     {
+        foreach($intercambio->getGrupos() as $grupo) {
+            $grupo->setIntercambio(null);
+        }
         $formulario = $this->createForm(new IntercambioType(), $intercambio);
         $formulario
             ->add('eliminar', 'submit', [
@@ -71,6 +74,10 @@ class IntercambioController extends Controller
                     $grupo->setIntercambio(null);
                 }
                 $em->remove($intercambio);
+            } else {
+                foreach($intercambio->getGrupos() as $grupo) {
+                    $grupo->setIntercambio($intercambio);
+                }
             }
             $em->flush();
             $this->addFlash('success', 'Datos guardados correctamente');

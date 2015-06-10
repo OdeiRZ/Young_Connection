@@ -44,7 +44,9 @@ class CursoController extends Controller
         $familia = ($form->isValid()) ? $_POST['filtroFamilias']['familia'] : null;
         $qb = $em->getRepository('AppBundle:Curso')
                  ->createQueryBuilder('c')
-                 ->orderBy('c.descripcion', 'ASC');
+                 ->orderBy('c.centro', 'DESC')
+                 ->AddOrderBy('c.familia', 'ASC')
+                 ->AddOrderBy('c.descripcion', 'ASC');
         if ($familia) {
             $qb->where('c.familia = :familia')
                ->setParameter('familia', $_POST['filtroFamilias']['familia']);

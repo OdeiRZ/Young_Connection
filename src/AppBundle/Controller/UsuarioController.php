@@ -35,7 +35,9 @@ class UsuarioController extends Controller
         $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
             ->createQueryBuilder('u')
-            ->orderBy('u.apellidos', 'DESC')
+            ->orderBy('u.esAdministrador', 'DESC')
+            ->addOrderBy('u.esCoordinador', 'DESC')
+            ->addOrderBy('u.apellidos', 'ASC')
             ->addOrderBy('u.nombre', 'DESC');
         if ($apellidos) {
             $qb->where('u.apellidos LIKE :apellidos')
