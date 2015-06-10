@@ -2,11 +2,17 @@
 
 namespace AppBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class IntercambioType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -26,6 +32,9 @@ class IntercambioType extends AbstractType
             ])
             ->add('grupos', null, [
                 'label' => 'Grupo/s*',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('g')
+                              ->Where('g.intercambio IS NULL'); },
                 'required' => true
             ])
             ->add('observaciones', null, [
@@ -41,9 +50,18 @@ class IntercambioType extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => 'AppBundle\Entity\Intercambio',
+            'cascade_validation' => true,
+        ]);
+    }
+
+    /**
+     * @return string
      */
     public function getName()
     {
