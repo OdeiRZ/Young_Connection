@@ -10,9 +10,9 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
+                <th>Descripción</th>
                 <th>Alumno/s</th>
                 <th>Miembro/s</th>
-                <th>Descripción</th>
                 <th>Dirección</th>
                 <th>Ciudad</th>
                 <th>Pais</th>
@@ -30,6 +30,7 @@
             <tbody>
             {% for familia in familias %}
                 <tr>
+                    <td>{{ familia.descripcion }}</td>
                     <td>
                         <ul>
                             {% for alumno in familia.alumnos %}
@@ -53,7 +54,6 @@
                             {% endfor %}
                         </ul>
                     </td>
-                    <td>{{ familia.descripcion }}</td>
                     <td>{{ familia.direccion }}</td>
                     <td>{{ familia.ciudad }} ({{ familia.provincia }})</td>
                     <td>{{ familia.pais }}</td>

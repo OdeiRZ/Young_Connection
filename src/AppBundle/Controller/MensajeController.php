@@ -32,12 +32,12 @@ class MensajeController extends Controller
         $usuario = ($form->isValid()) ? $_POST['filtroUsuarios']['usuario'] : null;
         $qb = $em->getRepository('AppBundle:Mensaje')
                  ->createQueryBuilder('m')
-                 ->where('m.usuarioOrigen = :id')
-                 ->setParameter('id', $this->get('security.token_storage')->getToken()->getUser())
                  ->addOrderBy('m.usuarioDestino', 'DESC')
-                 ->addOrderBy('m.fechaEnvio', 'ASC');
+                 ->addOrderBy('m.fechaEnvio', 'ASC')
+                 ->where('m.usuarioOrigen = :id')
+                 ->setParameter('id', $this->get('security.token_storage')->getToken()->getUser());
         if ($usuario) {
-            $qb->where('m.usuarioOrigen = :usuario')
+            $qb->andWhere('m.usuarioDestino = :usuario')
                 ->setParameter('usuario', $_POST['filtroUsuarios']['usuario']);
         }
         $mensajes = $qb
@@ -58,9 +58,7 @@ class MensajeController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Mensaje',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
+                'attr' => [ 'class' => 'btn btn-danger' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {

@@ -2,11 +2,12 @@
 
 namespace AppBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FiltroCursoType extends AbstractType
+class FiltroCoordinadorType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,16 +16,19 @@ class FiltroCursoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('curso', 'entity', [
-                'label' => 'Cursos',
+            ->add('coordinador', 'entity', [
+                'label' => 'Coordinador/a',
                 'required' => false,
                 'empty_value' => 'Todos',
-                'class' => 'AppBundle\Entity\Curso',
+                'class' => 'AppBundle\Entity\Usuario',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                              ->Where('u.esCoordinador = 1'); },
                 'attr' => ['class' => 'toggle',
-                           'name' => 'curso']
+                           'name' => 'coordinador']
             ])
             ->add('enviar', 'submit', [
-                'label' => 'Filtrar Alumnos',
+                'label' => 'Filtrar Grupos',
                 'attr' => ['class' => 'btn btn-info']
             ]);
     }
@@ -44,6 +48,6 @@ class FiltroCursoType extends AbstractType
      */
     public function getName()
     {
-        return 'filtroCursos';
+        return 'filtroCoordinadores';
     }
 }

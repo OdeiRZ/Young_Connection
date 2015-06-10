@@ -42,15 +42,11 @@ class AficionController extends Controller
      */
     public function modificarAction(Aficion $aficion, Request $peticion)
     {
-        $formulario = $this->createForm(new AficionType(), $aficion, [
-            'admin' => $this->isGranted('ROLE_ADMIN'),
-        ]);
+        $formulario = $this->createForm(new AficionType(), $aficion, [ 'admin' => $this->isGranted('ROLE_ADMIN') ]);
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Afición',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
+                'attr' => [ 'class' => 'btn btn-danger' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
@@ -76,11 +72,8 @@ class AficionController extends Controller
     public function nuevoAction(Request $peticion)
     {
         $aficion = new Aficion();
-        $aficion
-            ->setValidada(false);
-        $formulario = $this->createForm(new AficionType(), $aficion, [
-            'admin' => $this->isGranted('ROLE_ADMIN'),
-        ]);
+        $aficion->setValidada(false);
+        $formulario = $this->createForm(new AficionType(), $aficion, [ 'admin' => $this->isGranted('ROLE_ADMIN'), ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();

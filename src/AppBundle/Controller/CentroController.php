@@ -28,12 +28,12 @@ class CentroController extends Controller
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $auxPaises = $em->createQueryBuilder('c')
-                ->select('c.pais')
-                ->from('AppBundle:Centro', 'c')
-                ->add('groupBy', 'c.pais')
-                ->orderBy('c.pais', 'ASC')
-                ->getQuery()
-                ->getResult();
+                        ->select('c.pais')
+                        ->from('AppBundle:Centro', 'c')
+                        ->add('groupBy', 'c.pais')
+                        ->orderBy('c.pais', 'ASC')
+                        ->getQuery()
+                        ->getResult();
         $paises = [];
         foreach ($auxPaises as $i => $pais) {
             $paises[$auxPaises[$i]['pais']] = $auxPaises[$i]['pais'];
@@ -50,7 +50,7 @@ class CentroController extends Controller
             $qb->where('c.pais = :pais')
                ->setParameter('pais', $_POST['filtroPaises']['pais']);
         }
-        $centros =  $qb
+        $centros = $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Centro:listar.html.twig', [
@@ -69,9 +69,7 @@ class CentroController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Centro',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
+                'attr' => [ 'class' => 'btn btn-danger' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
@@ -100,7 +98,6 @@ class CentroController extends Controller
         $centro = new Centro();
         $formulario = $this->createForm(new CentroType(), $centro);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($centro);

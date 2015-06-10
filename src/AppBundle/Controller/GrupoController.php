@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Grupo;
 use AppBundle\Form\Type\GrupoType;
-use AppBundle\Form\Type\FiltroCursoType;
+use AppBundle\Form\Type\FiltroCoordinadorType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -28,20 +28,20 @@ class GrupoController extends Controller
                           $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(new FiltroCursoType())->handleRequest($peticion);
-        $curso = ($form->isValid()) ? $_POST['filtroCursos']['curso'] : null;
+        $form = $this->createForm(new FiltroCoordinadorType())->handleRequest($peticion);
+        $curso = ($form->isValid()) ? $_POST['filtroCoordinadores']['coordinador'] : null;
         $qb = $em->getRepository('AppBundle:Grupo')
-                 ->createQueryBuilder('g');
-                 //->orderBy('i.fechaInicio', 'DESC');
+                 ->createQueryBuilder('g')
+                 ->orderBy('g.descripcion', 'ASC');
         if ($curso) {
-            //$qb->where('a.curso = :curso')
-                //->setParameter('curso', $_POST['filtroCursos']['curso']);
+            $qb->where('g.coordinador = :coordinador')
+               ->setParameter('coordinador', $_POST['filtroCoordinadores']['coordinador']);
         }
         $grupos = $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Grupo:listar.html.twig', [
-            'formulario_cursos' => $form->createView(),
+            'formulario_coordinadores' => $form->createView(),
             'grupos' => $grupos
         ]);
     }
@@ -56,9 +56,7 @@ class GrupoController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Grupo',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
+                'attr' => [ 'class' => 'btn btn-danger' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
@@ -87,7 +85,6 @@ class GrupoController extends Controller
         $grupo = new Grupo();
         $formulario = $this->createForm(new GrupoType(), $grupo);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($grupo);

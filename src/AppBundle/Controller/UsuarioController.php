@@ -34,17 +34,17 @@ class UsuarioController extends Controller
         $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
         $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
-            ->createQueryBuilder('u')
-            ->orderBy('u.esAdministrador', 'DESC')
-            ->addOrderBy('u.esCoordinador', 'DESC')
-            ->addOrderBy('u.apellidos', 'ASC')
-            ->addOrderBy('u.nombre', 'DESC');
+                 ->createQueryBuilder('u')
+                 ->orderBy('u.esAdministrador', 'DESC')
+                 ->addOrderBy('u.esCoordinador', 'DESC')
+                 ->addOrderBy('u.apellidos', 'ASC')
+                 ->addOrderBy('u.nombre', 'DESC');
         if ($apellidos) {
             $qb->where('u.apellidos LIKE :apellidos')
-                ->orWhere('u.nombre LIKE :apellidos')
-                ->setParameter('apellidos', '%'.$apellidos.'%');
+               ->orWhere('u.nombre LIKE :apellidos')
+               ->setParameter('apellidos', '%'.$apellidos.'%');
         }
-        $usuarios =  $qb
+        $usuarios = $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Usuario:listar.html.twig', [
@@ -67,17 +67,17 @@ class UsuarioController extends Controller
         $curso = ($form->isValid()) ? $_POST['filtroCursos']['curso'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
                  ->createQueryBuilder('u')
-                 ->orderBy('u.apellidos', 'DESC')
+                 ->orderBy('u.apellidos', 'ASC')
                  ->addOrderBy('u.nombre', 'DESC')
                  ->where('u.esAlumno = 1');
         if ($curso) {
-            $qb->where('a.curso = :curso')
+            $qb->andWhere('u.curso = :curso')
                ->setParameter('curso', $_POST['filtroCursos']['curso']);
         }
-        $usuarios =  $qb
+        $usuarios = $qb
             ->getQuery()
             ->getResult();
-        return $this->render('AppBundle:Usuario:listar.html.twig', [
+        return $this->render('AppBundle:Usuario:listarAlumnos.html.twig', [
             'formulario_auxilar' => $form->createView(),
             'usuarios' => $usuarios
         ]);
@@ -98,15 +98,15 @@ class UsuarioController extends Controller
         $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
             ->createQueryBuilder('u')
-            ->orderBy('u.apellidos', 'DESC')
+            ->orderBy('u.apellidos', 'ASC')
             ->addOrderBy('u.nombre', 'DESC')
             ->where('u.esCoordinador = 1');
         if ($apellidos) {
             $qb->andWhere('u.apellidos LIKE :apellidos')
-                ->orWhere('u.nombre LIKE :apellidos')
-                ->setParameter('apellidos', '%'.$apellidos.'%');
+               ->orWhere('u.nombre LIKE :apellidos')
+               ->setParameter('apellidos', '%'.$apellidos.'%');
         }
-        $usuarios =  $qb
+        $usuarios = $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Usuario:listar.html.twig', [
@@ -201,5 +201,4 @@ class UsuarioController extends Controller
             $this->generateUrl('usuarios_listar')
         );
     }
-
 }

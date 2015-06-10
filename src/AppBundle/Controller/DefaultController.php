@@ -108,10 +108,7 @@ class DefaultController extends Controller
                 $error = "El Correo no está registrado en el Sistema";
             }
         }
-        return $this->render('AppBundle:Default:recordar.html.twig',
-            [
-                'error' => $error
-            ]);
+        return $this->render('AppBundle:Default:recordar.html.twig', [ 'error' => $error ]);
     }
 
 }

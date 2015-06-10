@@ -1,0 +1,93 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Listar Alumnos{% endblock %}
+
+{% block content %}
+    <h2 class="well">Listado de Alumnos</h2>
+
+    {{ form(formulario_auxilar) }}
+    {% if usuarios %}
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Curso</th>
+                <th>Problemas de Salud</th>
+                <th>Detalles Problemas de Salud</th>
+                <th>Fumador</th>
+                <th>Bebedor</th>
+                <th>Ha Viajado al Extranjero</th>
+                <th>Detalles Viaje Extranjero</th>
+                <th>Preferencia de Compañero/a</th>
+                <th>Descripción</th>
+                <th>Idioma/s</th>
+                <th>Afición/es</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}">{{ usuario }}</a>
+                        {% else %}
+                            {{ usuario }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('curso_modificar', { 'curso': usuario.curso.id }) }}">{{ usuario.curso }}</a>
+                        {% else %}
+                            {{ usuario.curso }}
+                        {% endif %}
+                    </td>
+                    <td>{{ usuario.tieneProblemasSalud ? 'Sí' : 'No' }}</td>
+                    <td>{{ usuario.detallesProblemasSalud }}</td>
+                    <td>{{ usuario.esFumador ? 'Sí' : 'No' }}</td>
+                    <td>{{ usuario.esBebedor ? 'Sí' : 'No' }}</td>
+                    <td>{{ usuario.haViajadoExtranjero ? 'Sí' : 'No' }}</td>
+                    <td>{{ usuario.detallesViajeExtranjero }}</td>
+                    <td>
+                        <ul>
+                            {% for companero in usuario.preferenciaCompanero %}
+                                <li>{{ companero.usuario }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ usuario.descripcion }}</td>
+                    <td>
+                        {% for idioma in usuario.idiomas %}
+                            <ul>{{ idioma.descripcion }}
+                                <li>{{ idioma.reading }}</li>
+                                <li>{{ idioma.writing }}</li>
+                                <li>{{ idioma.speaking }}</li>
+                            </ul>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <ul>
+                            {% for aficion in usuario.aficiones %}
+                                <li>{{ aficion }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
+                        <a href="{{ path('usuario_eliminar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>No hay Usuarios para mostrar</h3>
+    {% endif %}
+
+    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('usuario_nuevo_admin') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Alumno </a>
+{% endblock %}

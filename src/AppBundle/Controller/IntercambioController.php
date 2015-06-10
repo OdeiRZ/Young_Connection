@@ -40,7 +40,7 @@ class IntercambioController extends Controller
                ->setParameter('desde', $fechas['desde'])
                ->setParameter('hasta', $fechas['hasta']);
         }
-        $intercambios =  $qb
+        $intercambios = $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Intercambio:listar.html.twig', [
@@ -62,9 +62,7 @@ class IntercambioController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Intercambio',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
+                'attr' => [ 'class' => 'btn btn-danger' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {

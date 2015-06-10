@@ -51,7 +51,7 @@ class FamiliaController extends Controller
             $qb->where('f.pais = :pais')
                ->setParameter('pais', $_POST['filtroPaises']['pais']);
         }
-        $familias =  $qb
+        $familias = $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Familia:listar.html.twig', [

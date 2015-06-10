@@ -38,9 +38,7 @@ class CursoController extends Controller
         foreach ($auxFamilias as $i => $familia) {
             $familias[$auxFamilias[$i]['familia']] = $auxFamilias[$i]['familia'];
         }
-        $form = $this->createForm(new FiltroFamiliaType(), $familias, [
-            'familias' => $familias
-        ])->handleRequest($peticion);
+        $form = $this->createForm(new FiltroFamiliaType(), $familias, [ 'familias' => $familias ])->handleRequest($peticion);
         $familia = ($form->isValid()) ? $_POST['filtroFamilias']['familia'] : null;
         $qb = $em->getRepository('AppBundle:Curso')
                  ->createQueryBuilder('c')
@@ -51,7 +49,7 @@ class CursoController extends Controller
             $qb->where('c.familia = :familia')
                ->setParameter('familia', $_POST['filtroFamilias']['familia']);
         }
-        $cursos =  $qb
+        $cursos = $qb
             ->getQuery()
             ->getResult();
         return $this->render('AppBundle:Curso:listar.html.twig', [
@@ -70,9 +68,7 @@ class CursoController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Curso',
-                'attr' => [
-                    'class' => 'btn btn-danger'
-                ]
+                'attr' => [ 'class' => 'btn btn-danger' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
@@ -101,7 +97,6 @@ class CursoController extends Controller
         $curso = new Curso();
         $formulario = $this->createForm(new CursoType(), $curso);
         $formulario->handleRequest($peticion);
-
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($curso);
