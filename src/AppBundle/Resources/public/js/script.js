@@ -3,6 +3,7 @@ var $addTagLink = $('<a href="#" class="agregar_link">Agregar</a>');
 var $newLinkLi = $('<li></li>').append($addTagLink);
 
 jQuery(document).ready(function() {
+    $('#tabla').DataTable();
     $.datepicker.regional['es'] = {
         closeText: 'Cerrar',
         prevText: '<Ant',

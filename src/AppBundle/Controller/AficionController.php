@@ -56,7 +56,6 @@ class AficionController extends Controller
                     $this->addFlash('error', 'No puedes eliminar una Afición con Usuarios asignados');
                 } else {
                     $em->remove($aficion);
-                    $em->flush();
                 }
             } else {
                 $this->addFlash('success', 'Datos guardados correctamente');

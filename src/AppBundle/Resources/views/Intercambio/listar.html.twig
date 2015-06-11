@@ -2,12 +2,17 @@
 
 {% block title %}Listar Intercambios{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+{% endblock %}
+
 {% block content %}
     <h2 class="well">Listado de Intercambios</h2>
 
     {{ form(formulario_fechas) }}
     {% if intercambios %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
+        <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
                 <th>F. Inicio</th>

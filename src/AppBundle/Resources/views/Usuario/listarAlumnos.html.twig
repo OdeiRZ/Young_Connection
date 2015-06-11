@@ -2,12 +2,17 @@
 
 {% block title %}Listar Alumnos{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+{% endblock %}
+
 {% block content %}
     <h2 class="well">Listado de Alumnos</h2>
 
     {{ form(formulario_auxilar) }}
     {% if usuarios %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
+        <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
                 <th>Usuario</th>
@@ -90,4 +95,10 @@
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
     <a href="{{ path('usuario_nuevo_admin') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Alumno </a>
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts '@AppBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

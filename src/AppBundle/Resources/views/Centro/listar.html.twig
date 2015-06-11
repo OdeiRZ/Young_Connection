@@ -2,12 +2,17 @@
 
 {% block title %}Listar Centros{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+{% endblock %}
+
 {% block content %}
     <h2 class="well">Listado de Centros</h2>
 
     {% if centros %}
         {{ form(formulario_paises) }}
-        <table class="table table-bordered table-condensed table-hover table-striped">
+        <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
                 <th>Nombre</th>
@@ -48,4 +53,10 @@
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('centro_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Centro</a>
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts '@AppBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

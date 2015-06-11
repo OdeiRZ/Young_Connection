@@ -2,12 +2,17 @@
 
 {% block title %}Listar Mensajes{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+{% endblock %}
+
 {% block content %}
     <h2 class="well">Listado de Mensajes</h2>
 
     {{ form(formulario_usuarios) }}
     {% if mensajes %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
+        <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
                 <th>Destinatario</th>
@@ -44,4 +49,10 @@
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
     <a href="{{ path('mensaje_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Mensaje</a>
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts '@AppBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
