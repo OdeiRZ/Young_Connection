@@ -19,7 +19,6 @@ class AficionType extends AbstractType
                 'label' => 'Descripción*',
                 'required' => true
             ]);
-
         if ($options['admin']) {
             $builder
                 ->add('validada', null, [

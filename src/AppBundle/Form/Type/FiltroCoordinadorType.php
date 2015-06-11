@@ -23,7 +23,8 @@ class FiltroCoordinadorType extends AbstractType
                 'class' => 'AppBundle\Entity\Usuario',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                              ->Where('u.esCoordinador = 1'); },
+                              ->Where('u.esCoordinador = 1')
+                              ->andWhere('u.esActivo = 1'); },
                 'attr' => ['class' => 'toggle',
                            'name' => 'coordinador']
             ])

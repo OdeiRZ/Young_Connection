@@ -24,7 +24,8 @@ class GrupoType extends AbstractType
                 'label' => 'Coordinador/a*',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                              ->Where('u.esCoordinador = 1'); },
+                              ->Where('u.esCoordinador = 1')
+                              ->andWhere('u.esActivo = 1'); },
                 'required' => true,
             ])
             ->add('alojamientos', 'collection', [

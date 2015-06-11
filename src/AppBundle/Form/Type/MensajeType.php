@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -12,6 +13,9 @@ class MensajeType extends AbstractType
         $builder
             ->add('usuarioDestino', null, [
                 'label' => 'Destinatario/a*',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                              ->Where('u.esActivo = 1'); },
                 'required' => true
             ])
             ->add('contenido', 'textarea', [

@@ -96,18 +96,22 @@ class FamiliaController extends Controller
                 }
             }
             if ($formulario->get('eliminar')->isClicked()) {
-                foreach ($alumnos as $alumno) {     //$usuario = $this->get('security.token_storage')->getToken()->getUser();
-                    $alumno->setFamilia(null);      //$usuario->setFamilia(null);
+                if (sizeof($familia->getAlojamientos())) {
+                    $this->addFlash('error', 'No puedes eliminar una Familia con Alojamientos asignados');
+                } else {
+                    foreach ($alumnos as $alumno) {     //$usuario = $this->get('security.token_storage')->getToken()->getUser();
+                        $alumno->setFamilia(null);
+                    }
+                    $em->remove($familia);
                 }
-                $em->remove($familia);
             } else {
                 $familia->addAlumno($this->get('security.token_storage')->getToken()->getUser());
                 foreach ($familia->getAlumnos() as $alumno) {
                     $alumno->setFamilia($familia);
                 }
+                $this->addFlash('success', 'Datos guardados correctamente');
             }
             $em->flush();
-            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('inicio')
             );
@@ -154,8 +158,15 @@ class FamiliaController extends Controller
     public function eliminarAction(Familia $familia, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($familia);
-        $em->flush();
+        if (sizeof($familia->getAlojamientos())) {
+            $this->addFlash('error', 'No puedes eliminar una Familia con Alojamientos asignados');
+        } else {
+            foreach ($familia->getAlumnos() as $alumno) {
+                $alumno->setFamilia(null);
+            }
+            $em->remove($familia);
+            $em->flush();
+        }
         return new RedirectResponse(
             $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'familias_listar' : 'inicio')
         );

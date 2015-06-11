@@ -16,7 +16,8 @@ class AlojamientoType extends AbstractType
                 'label' => 'Alumno/a*',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('a')
-                              ->Where('a.esAlumno = 1'); },
+                              ->Where('a.esAlumno = 1')
+                              ->andWhere('a.esActivo = 1'); },
                 'required' => true
             ])
             ->add('familia', null, [

@@ -78,6 +78,7 @@ class FamiliaType extends AbstractType
                 'query_builder' => function(EntityRepository $er) use ($usuario) {
                     return $er->createQueryBuilder('a')
                               ->Where('a.esAlumno = 1')
+                              ->andWhere('a.esActivo = 1')
                               //->andWhere('a.familia IS NULL') //deshabilitado este filtro para poder deseleccionar alumnos
                               ->andWhere('a.id != :id_alumno')
                               ->setParameter('id_alumno', $usuario); },

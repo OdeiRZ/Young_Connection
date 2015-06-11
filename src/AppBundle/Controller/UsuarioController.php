@@ -195,8 +195,14 @@ class UsuarioController extends Controller
     public function eliminarAction(Usuario $usuario, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($usuario);
-        $em->flush();
+        if (sizeof($usuario->getFamilia())) {
+            $this->addFlash('error', 'No puedes eliminar un Alumno con Familia asignada');
+        } elseif (sizeof($usuario->getAlojamientos())) {
+            $this->addFlash('error', 'No puedes eliminar un Alumno con Alojamientos asignados');
+        } else {
+            $em->remove($usuario);
+            $em->flush();
+        }
         return new RedirectResponse(
             $this->generateUrl('usuarios_listar')
         );

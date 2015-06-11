@@ -75,10 +75,15 @@ class CentroController extends Controller
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
-                $em->remove($centro);
+                if (sizeof($centro->getCursos())) {
+                    $this->addFlash('error', 'No puedes eliminar un Centro con Usuarios asignados');
+                } else {
+                    $em->remove($centro);
+                }
+            } else {
+                $this->addFlash('success', 'Datos guardados correctamente');
             }
             $em->flush();
-            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('centros_listar')
             );
@@ -120,8 +125,12 @@ class CentroController extends Controller
     public function eliminarAction(Centro $centro, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($centro);
-        $em->flush();
+        if (sizeof($centro->getCursos())) {
+            $this->addFlash('error', 'No puedes eliminar un Centro con Usuarios asignados');
+        } else {
+            $em->remove($centro);
+            $em->flush();
+        }
         return new RedirectResponse(
             $this->generateUrl('centros_listar')
         );

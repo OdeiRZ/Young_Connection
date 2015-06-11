@@ -121,7 +121,7 @@ class Usuario implements UserInterface
     protected $esAlumno;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mensaje", mappedBy="usuarioOrigen")
+     * @ORM\OneToMany(targetEntity="Mensaje", mappedBy="usuarioOrigen", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Mensaje
@@ -218,6 +218,15 @@ class Usuario implements UserInterface
      *
      */
     protected $familia;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Alojamiento", mappedBy="alumno")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Alojamiento
+     *
+     */
+    protected $alojamientos;
 
     /**
      * Get id
@@ -1061,5 +1070,38 @@ class Usuario implements UserInterface
         $aux = ($this->getEsAlumno() or $this->getEsCoordinador()) ? ' - (' . $this->getCurso() . ')' : '';
         return $this->getApellidos() . ' ' .
                $this->getNombre() . $aux;
+    }
+
+    /**
+     * Add alojamientos
+     *
+     * @param \AppBundle\Entity\Alojamiento $alojamientos
+     * @return Usuario
+     */
+    public function addAlojamiento(\AppBundle\Entity\Alojamiento $alojamientos)
+    {
+        $this->alojamientos[] = $alojamientos;
+
+        return $this;
+    }
+
+    /**
+     * Remove alojamientos
+     *
+     * @param \AppBundle\Entity\Alojamiento $alojamientos
+     */
+    public function removeAlojamiento(\AppBundle\Entity\Alojamiento $alojamientos)
+    {
+        $this->alojamientos->removeElement($alojamientos);
+    }
+
+    /**
+     * Get alojamientos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAlojamientos()
+    {
+        return $this->alojamientos;
     }
 }

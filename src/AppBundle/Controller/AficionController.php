@@ -52,10 +52,16 @@ class AficionController extends Controller
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
-                $em->remove($aficion);
+                if (sizeof($aficion->getAlumnos())) {
+                    $this->addFlash('error', 'No puedes eliminar una Afición con Usuarios asignados');
+                } else {
+                    $em->remove($aficion);
+                    $em->flush();
+                }
+            } else {
+                $this->addFlash('success', 'Datos guardados correctamente');
             }
             $em->flush();
-            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('aficiones_listar')
             );
@@ -97,8 +103,12 @@ class AficionController extends Controller
     public function eliminarAction(Aficion $aficion, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($aficion);
-        $em->flush();
+        if (sizeof($aficion->getAlumnos())) {
+            $this->addFlash('error', 'No puedes eliminar una Afición con Usuarios asignados');
+        } else {
+            $em->remove($aficion);
+            $em->flush();
+        }
         return new RedirectResponse(
             $this->generateUrl('aficiones_listar')
         );

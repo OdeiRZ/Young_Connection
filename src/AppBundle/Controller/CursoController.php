@@ -74,10 +74,16 @@ class CursoController extends Controller
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
-                $em->remove($curso);
+                if (sizeof($curso->getAlumnos())) {
+                    $this->addFlash('error', 'No puedes eliminar un Curso con Usuarios asignados');
+                } else {
+                    $em->remove($curso);
+                    $em->flush();
+                }
+            } else {
+                $this->addFlash('success', 'Datos guardados correctamente');
             }
             $em->flush();
-            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('cursos_listar')
             );
@@ -119,8 +125,12 @@ class CursoController extends Controller
     public function eliminarAction(Curso $curso, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($curso);
-        $em->flush();
+        if (sizeof($curso->getAlumnos())) {
+            $this->addFlash('error', 'No puedes eliminar un Curso con Usuarios asignados');
+        } else {
+            $em->remove($curso);
+            $em->flush();
+        }
         return new RedirectResponse(
             $this->generateUrl('cursos_listar')
         );

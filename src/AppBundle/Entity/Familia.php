@@ -128,6 +128,15 @@ class Familia
     protected $miembros;
 
     /**
+     * @ORM\OneToMany(targetEntity="Alojamiento", mappedBy="familia")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @var Alojamiento
+     *
+     */
+    protected $alojamientos;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -519,5 +528,38 @@ class Familia
         return $this->getDescripcion() . ' - ' .
         $this->getCiudad() . ' (' .
         $this->getProvincia() . ')';
+    }
+
+    /**
+     * Add alojamientos
+     *
+     * @param \AppBundle\Entity\Alojamiento $alojamientos
+     * @return Familia
+     */
+    public function addAlojamiento(\AppBundle\Entity\Alojamiento $alojamientos)
+    {
+        $this->alojamientos[] = $alojamientos;
+
+        return $this;
+    }
+
+    /**
+     * Remove alojamientos
+     *
+     * @param \AppBundle\Entity\Alojamiento $alojamientos
+     */
+    public function removeAlojamiento(\AppBundle\Entity\Alojamiento $alojamientos)
+    {
+        $this->alojamientos->removeElement($alojamientos);
+    }
+
+    /**
+     * Get alojamientos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAlojamientos()
+    {
+        return $this->alojamientos;
     }
 }

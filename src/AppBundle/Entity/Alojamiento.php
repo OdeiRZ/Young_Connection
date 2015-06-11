@@ -19,7 +19,7 @@ class Alojamiento
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Familia")
+     * @ORM\ManyToOne(targetEntity="Familia", inversedBy="alojamientos")
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Familia
@@ -28,7 +28,7 @@ class Alojamiento
     protected $familia;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="alojamientos")
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Usuario
