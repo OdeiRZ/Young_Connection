@@ -35,10 +35,14 @@ class IntercambioController extends Controller
                  ->createQueryBuilder('i')
                  ->orderBy('i.fechaInicio', 'DESC');
         if ($fechas['desde'] && $fechas['hasta']) {
-            $qb->where('i.fechaInicio >= :desde')
-               ->andWhere('i.fechaFin <= :hasta')
-               ->setParameter('desde', $fechas['desde'])
-               ->setParameter('hasta', $fechas['hasta']);
+            if(new \DateTime($fechas['desde']) <= new \DateTime($fechas['hasta'])) {
+                $qb->where('i.fechaInicio >= :desde')
+                    ->andWhere('i.fechaFin <= :hasta')
+                    ->setParameter('desde', $fechas['desde'])
+                    ->setParameter('hasta', $fechas['hasta']);
+            } else {
+                $this->addFlash('error', 'La Fecha de Inicio debe ser inferior a la Fecha Final');
+            }
         }
         $intercambios = $qb
             ->getQuery()
