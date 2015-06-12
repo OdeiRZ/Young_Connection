@@ -67,13 +67,10 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% javascripts '@AppBundle/Resources/public/js/*' %}
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+{% javascripts '@AppBundle/Resources/public/js/*' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
-
-{% block javascripts %}
-    {% javascripts '@AppBundle/Resources/public/js/*' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+{% endjavascripts %}
 {% endblock %}

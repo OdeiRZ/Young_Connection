@@ -9,3 +9,12 @@
 
     <a href="{{ path('mensajes_listar') }}" class="btn btn-info">Volver al listado de Mensajes</a>
 {% endblock %}
+
+{% block javascripts %}
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+{% javascripts '@AppBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
