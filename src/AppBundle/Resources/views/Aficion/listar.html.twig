@@ -6,19 +6,28 @@
     <h2 class="well">Listado de Aficiones</h2>
 
     {% if aficiones %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <form method="post" action="{{ path('grupo_aficion_eliminar') }}">
+        {% endif %}
         <table class="table table-bordered table-condensed table-hover table-striped">
             <thead>
             <tr>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th class="seleccion" id="multiple"><i class="glyphicon glyphicon-check"></i></th>
+                {% endif %}
                 <th>Descripción</th>
                 {% if is_granted('ROLE_ADMIN') %}
-                <th>Validada</th>
-                <th></th>
+                    <th>Validada</th>
+                    <th></th>
                 {% endif %}
             </tr>
             </thead>
             <tbody>
             {% for aficion in aficiones %}
                 <tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td class="seleccion"><input type="checkbox" value="{{ aficion.id }}" name="grupoAficiones[]"/></td>
+                    {% endif %}
                     <td>{{ aficion.descripcion }}</td>
                     {% if is_granted('ROLE_ADMIN') %}
                     <td><i class="glyphicon glyphicon-{{ aficion.validada ? 'ok' : 'remove' }}"></i></td>
@@ -40,5 +49,20 @@
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    {% if is_granted('ROLE_ADMIN') and aficiones %}
+        <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Aficiones seleccionados</button>
+    {% endif %}
     <a href="{{ path('aficion_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Afición</a>
+    {% if is_granted('ROLE_ADMIN') and aficiones %}
+        </form>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+{% javascripts '@AppBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 {% endblock %}

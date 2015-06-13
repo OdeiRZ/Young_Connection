@@ -12,9 +12,15 @@
 
     {% if cursos %}
         {{ form(formulario_familias) }}
+        {% if is_granted('ROLE_ADMIN') %}
+            <form method="post" action="{{ path('grupo_curso_eliminar') }}">
+        {% endif %}
         <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th class="seleccion" id="multiple"><i class="glyphicon glyphicon-check"></i></th>
+                {% endif %}
                 <th>Descripción</th>
                 <th>Familia</th>
                 <th>Centro</th>
@@ -24,6 +30,9 @@
             <tbody>
             {% for curso in cursos %}
                 <tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td class="seleccion"><input type="checkbox" value="{{ curso.id }}" name="grupoCursos[]"/></td>
+                    {% endif %}
                     <td>{{ curso.descripcion }}</td>
                     <td>{{ curso.familia }}</td>
                     <td>
@@ -53,7 +62,11 @@
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
     {% if is_granted('ROLE_ADMIN') %}
+        {% if cursos %}
+            <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Cursos seleccionados</button>
+        {% endif %}
         <a href="{{ path('curso_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Curso</a>
+        </form>
     {% endif %}
 {% endblock %}
 

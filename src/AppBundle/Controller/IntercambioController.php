@@ -7,6 +7,7 @@ use AppBundle\Form\Type\IntercambioType;
 use AppBundle\Form\Type\FiltroFechasType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -132,6 +133,34 @@ class IntercambioController extends Controller
         }
         $em->remove($intercambio);
         $em->flush();
+        return new RedirectResponse(
+            $this->generateUrl('intercambios_listar')
+        );
+    }
+
+    /**
+     * @Route("/eliminarGrupo", name="grupo_intercambio_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
+     */
+    public function eliminarGrupoAction(Request $peticion)
+    {
+        if (isset($_POST['grupoIntercambios']) && sizeof($_POST['grupoIntercambios'])) {
+            $em = $this->getDoctrine()->getManager();
+            $intercambios = new ArrayCollection();
+            foreach($_POST['grupoIntercambios'] as $intercambio) {
+                $intercambios->add($em->getRepository('AppBundle:Intercambio')->findOneBy( array('id' => $intercambio)));
+            }
+            foreach($intercambios as $intercambio) {
+                foreach($intercambio->getGrupos() as $grupo) {
+                    $grupo->setIntercambio(null);
+                }
+                $em->remove($intercambio);
+            }
+            $this->addFlash('success', 'Intercambios eliminados correctamente');
+            $em->flush();
+        } else {
+            $this->addFlash('error', 'Debes seleccionar al menos un Intercambio');
+        }
         return new RedirectResponse(
             $this->generateUrl('intercambios_listar')
         );

@@ -77,7 +77,12 @@ code {
 #tabla_length {
     padding-left: 10px;
 }
-
+#tabla tr:first-child th:first-child, #tabla tr:first-child td:first-child {
+    /*visibility: hidden;*/
+}
+.seleccion, #multiple {
+    text-align: center;
+}
 
 @media (min-width: 768px) and (max-width: 1200px){
     /*.nav > li > a {

@@ -11,10 +11,14 @@
     <h2 class="well">Listado de Grupos</h2>
 
     {{ form(formulario_coordinadores) }}
+    <form method="post" action="{{ path('grupo_grupo_eliminar') }}">
     {% if grupos %}
         <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th class="seleccion" id="multiple"><i class="glyphicon glyphicon-check"></i></th>
+                {% endif %}
                 <th>Descripción</th>
                 <th>Coordinador/es</th>
                 <th>Alojamiento/s</th>
@@ -24,6 +28,9 @@
             <tbody>
             {% for grupo in grupos %}
                 <tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td class="seleccion"><input type="checkbox" value="{{ grupo.id }}" name="grupoGrupos[]"/></td>
+                    {% endif %}
                     <td>{{ grupo.descripcion }}</td>
                     <td>
                         {% if is_granted('ROLE_ADMIN') %}
@@ -63,7 +70,11 @@
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    {% if grupos %}
+        <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Grupos seleccionados</button>
+    {% endif %}
     <a href="{{ path('grupo_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Grupo </a>
+    </form>
 {% endblock %}
 
 {% block javascripts %}

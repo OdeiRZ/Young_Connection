@@ -11,10 +11,16 @@
     <h2 class="well">Listado de Usuarios</h2>
 
     {{ form(formulario_auxilar) }}
+    {% if is_granted('ROLE_ADMIN') %}
+        <form method="post" action="{{ path('grupo_usuarios_eliminar') }}">
+    {% endif %}
     {% if usuarios %}
         <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th class="seleccion" id="multiple"><i class="glyphicon glyphicon-check"></i></th>
+                {% endif %}
                 <th>Nombre</th>
                 <th>F. Nacimiento</th>
                 <th>Sexo</th>
@@ -31,6 +37,9 @@
             <tbody>
             {% for usuario in usuarios %}
                 <tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td class="seleccion"><input type="checkbox" value="{{ usuario.id }}" name="grupoUsuarios[]"/></td>
+                    {% endif %}
                     <td>{{ usuario.apellidos }} {{ usuario.nombre }}</td>
                     <td>{{ usuario.fechaNacimiento|date("d/m/Y") }}</td>
                     <td>{{ (usuario.sexo == 'M' ? 'Masculino' : 'Femenino') }}</td>
@@ -61,7 +70,15 @@
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    {% if is_granted('ROLE_ADMIN') %}
+        {% if usuarios %}
+            <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Usuarios seleccionados</button>
+        {% endif %}
+    {% endif %}
     <a href="{{ path('usuario_nuevo_admin') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Usuario </a>
+    {% if is_granted('ROLE_ADMIN') %}
+        </form>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}

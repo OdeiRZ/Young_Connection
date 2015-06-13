@@ -12,9 +12,15 @@
 
     {% if centros %}
         {{ form(formulario_paises) }}
+        {% if is_granted('ROLE_ADMIN') %}
+            <form method="post" action="{{ path('grupo_centro_eliminar') }}">
+        {% endif %}
         <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th class="seleccion" id="multiple"><i class="glyphicon glyphicon-check"></i></th>
+                {% endif %}
                 <th>Nombre</th>
                 <th>Ciudad</th>
                 <th>Pais</th>
@@ -26,6 +32,9 @@
             <tbody>
             {% for centro in centros %}
                 <tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td class="seleccion"><input type="checkbox" value="{{ centro.id }}" name="grupoCentros[]"/></td>
+                    {% endif %}
                     <td>{{ centro.nombre }}</td>
                     <td>{{ centro.ciudad }} {% if centro.provincia %}({{ centro.provincia }}){% endif %}</td>
                     <td>{{ centro.pais }}</td>
@@ -51,7 +60,11 @@
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
     {% if is_granted('ROLE_ADMIN') %}
+        {% if centros %}
+            <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Centros seleccionados</button>
+        {% endif %}
         <a href="{{ path('centro_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Centro</a>
+        </form>
     {% endif %}
 {% endblock %}
 

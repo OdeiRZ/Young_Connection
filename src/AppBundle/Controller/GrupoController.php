@@ -7,6 +7,7 @@ use AppBundle\Form\Type\GrupoType;
 use AppBundle\Form\Type\FiltroCoordinadorType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -109,6 +110,31 @@ class GrupoController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($grupo);
         $em->flush();
+        return new RedirectResponse(
+            $this->generateUrl('grupos_listar')
+        );
+    }
+
+    /**
+     * @Route("/eliminarGrupo", name="grupo_grupo_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
+     */
+    public function eliminarGrupoAction(Request $peticion)
+    {
+        if (isset($_POST['grupoGrupos']) && sizeof($_POST['grupoGrupos'])) {
+            $em = $this->getDoctrine()->getManager();
+            $grupos = new ArrayCollection();
+            foreach($_POST['grupoGrupos'] as $grupo) {
+                $grupos->add($em->getRepository('AppBundle:Grupo')->findOneBy( array('id' => $grupo)));
+            }
+            foreach($grupos as $grupo) {
+                $em->remove($grupo);
+            }
+            $this->addFlash('success', 'Grupos eliminados correctamente');
+            $em->flush();
+        } else {
+            $this->addFlash('error', 'Debes seleccionar al menos un Grupo');
+        }
         return new RedirectResponse(
             $this->generateUrl('grupos_listar')
         );

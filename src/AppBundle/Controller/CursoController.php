@@ -7,6 +7,7 @@ use AppBundle\Form\Type\CursoType;
 use AppBundle\Form\Type\FiltroFamiliaType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -130,6 +131,36 @@ class CursoController extends Controller
         } else {
             $em->remove($curso);
             $em->flush();
+        }
+        return new RedirectResponse(
+            $this->generateUrl('cursos_listar')
+        );
+    }
+
+    /**
+     * @Route("/eliminarGrupo", name="grupo_curso_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
+     */
+    public function eliminarGrupoAction(Request $peticion)
+    {
+        if (isset($_POST['grupoCursos']) && sizeof($_POST['grupoCursos'])) {
+            $sw = false;
+            $em = $this->getDoctrine()->getManager();
+            $cursos = new ArrayCollection();
+            foreach($_POST['grupoCursos'] as $curso) {
+                $cursos->add($em->getRepository('AppBundle:Curso')->findOneBy( array('id' => $curso)));
+            }
+            foreach($cursos as $curso) {
+                if (sizeof($curso->getAlumnos())) {
+                    $sw = true;
+                } else {
+                    $em->remove($curso);
+                }
+            }
+            $this->addFlash(($sw) ? 'error' : 'success', ($sw) ? 'Alguno/s de los Cursos no se han podido eliminar' : 'Cursos eliminados correctamente');
+            $em->flush();
+        } else {
+            $this->addFlash('error', 'Debes seleccionar al menos un Curso');
         }
         return new RedirectResponse(
             $this->generateUrl('cursos_listar')

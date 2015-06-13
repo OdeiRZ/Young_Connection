@@ -12,9 +12,15 @@
 
     {% if familias %}
         {{ form(formulario_paises) }}
+        {% if is_granted('ROLE_ADMIN') %}
+            <form method="post" action="{{ path('grupo_familia_eliminar') }}">
+        {% endif %}
         <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th class="seleccion" id="multiple"><i class="glyphicon glyphicon-check"></i></th>
+                {% endif %}
                 <th>Descripción</th>
                 <th>Alumno/s</th>
                 <th>Miembro/s</th>
@@ -35,6 +41,9 @@
             <tbody>
             {% for familia in familias %}
                 <tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td class="seleccion"><input type="checkbox" value="{{ familia.id }}" name="grupoFamilias[]"/></td>
+                    {% endif %}
                     <td>{{ familia.descripcion }}</td>
                     <td>
                         <ul>
@@ -86,7 +95,13 @@
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
-    <!--<a href="{{ path('familia_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Familia </a>-->
+    {% if is_granted('ROLE_ADMIN') %}
+        {% if familias %}
+            <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Familias seleccionados</button>
+        {% endif %}
+        <!--<a href="{{ path('familia_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Familia </a>-->
+        </form>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}

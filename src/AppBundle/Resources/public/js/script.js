@@ -1,9 +1,15 @@
 $('label:contains("Idioma/s"), label:contains("Alojamiento/s"), label:contains("Miembro/s")').eq(1).remove(); //borramos segundo label idiomas/miembros/alojamientos
 var $addTagLink = $('<a href="#" class="agregar_link">Agregar</a>');
 var $newLinkLi = $('<li></li>').append($addTagLink);
+var sw = true;
 
 jQuery(document).ready(function() {
     $('#tabla').DataTable();
+    $('#multiple').unbind('click').removeAttr('class').click(function() {
+        $("input[type='checkbox']").prop("checked", sw);
+        $("#multiple i").attr("class", (sw) ? 'glyphicon glyphicon-unchecked' : 'glyphicon glyphicon-check');
+        sw = !sw;
+    });
     $('form').submit(function() {
         $("body").append(
             '<svg width="400" height="200" viewBox="0 0 400 200">'+

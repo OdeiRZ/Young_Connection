@@ -7,6 +7,7 @@ use AppBundle\Form\Type\CentroType;
 use AppBundle\Form\Type\FiltroPaisType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -128,8 +129,39 @@ class CentroController extends Controller
         if (sizeof($centro->getCursos())) {
             $this->addFlash('error', 'No puedes eliminar un Centro con Usuarios asignados');
         } else {
+            $this->addFlash('success', 'Centros eliminados correctamente');
             $em->remove($centro);
             $em->flush();
+        }
+        return new RedirectResponse(
+            $this->generateUrl('centros_listar')
+        );
+    }
+
+    /**
+     * @Route("/eliminarGrupo", name="grupo_centro_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
+     */
+    public function eliminarGrupoAction(Request $peticion)
+    {
+        if (isset($_POST['grupoCentros']) && sizeof($_POST['grupoCentros'])) {
+            $sw = false;
+            $em = $this->getDoctrine()->getManager();
+            $centros = new ArrayCollection();
+            foreach($_POST['grupoCentros'] as $centro) {
+                $centros->add($em->getRepository('AppBundle:Centro')->findOneBy( array('id' => $centro)));
+            }
+            foreach($centros as $centro) {
+                if (sizeof($centro->getCursos())) {
+                    $sw = true;
+                } else {
+                    $em->remove($centro);
+                }
+            }
+            $this->addFlash(($sw) ? 'error' : 'success', ($sw) ? 'Alguno/s de los Centros no se han podido eliminar' : 'Centros eliminados correctamente');
+            $em->flush();
+        } else {
+            $this->addFlash('error', 'Debes seleccionar al menos un Centro');
         }
         return new RedirectResponse(
             $this->generateUrl('centros_listar')

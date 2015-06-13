@@ -8,6 +8,7 @@ use AppBundle\Form\Type\FiltroCursoType;
 use AppBundle\Form\Type\UsuarioType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -196,12 +197,42 @@ class UsuarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         if (sizeof($usuario->getFamilia())) {
-            $this->addFlash('error', 'No puedes eliminar un Alumno con Familia asignada');
+            $this->addFlash('error', 'No puedes eliminar un Usuario con Familia asignada');
         } elseif (sizeof($usuario->getAlojamientos())) {
-            $this->addFlash('error', 'No puedes eliminar un Alumno con Alojamientos asignados');
+            $this->addFlash('error', 'No puedes eliminar un Usuario con Alojamientos asignados');
         } else {
             $em->remove($usuario);
             $em->flush();
+        }
+        return new RedirectResponse(
+            $this->generateUrl('usuarios_listar')
+        );
+    }
+
+    /**
+     * @Route("/eliminarGrupo", name="grupo_usuarios_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
+     */
+    public function eliminarGrupoAction(Request $peticion)
+    {
+        if (isset($_POST['grupoUsuarios']) && sizeof($_POST['grupoUsuarios'])) {
+            $sw = false;
+            $em = $this->getDoctrine()->getManager();
+            $usuarios = new ArrayCollection();
+            foreach($_POST['grupoUsuarios'] as $usuario) {
+                $usuarios->add($em->getRepository('AppBundle:Usuario')->findOneBy( array('id' => $usuario)));
+            }
+            foreach($usuarios as $usuario) {
+                if (sizeof($usuario->getFamilia()) or sizeof($usuario->getAlojamientos())) {
+                    $sw = true;
+                } else {
+                    $em->remove($usuario);
+                }
+            }
+            $this->addFlash(($sw) ? 'error' : 'success', ($sw) ? 'Alguno/s de los Usuarios no se han podido eliminar' : 'Usuarios eliminados correctamente');
+            $em->flush();
+        } else {
+            $this->addFlash('error', 'Debes seleccionar al menos un Usuario');
         }
         return new RedirectResponse(
             $this->generateUrl('usuarios_listar')

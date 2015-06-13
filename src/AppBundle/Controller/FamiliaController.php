@@ -7,12 +7,12 @@ use AppBundle\Form\Type\FamiliaType;
 use AppBundle\Form\Type\FiltroPaisType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Route("/familia")
@@ -169,6 +169,39 @@ class FamiliaController extends Controller
         }
         return new RedirectResponse(
             $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'familias_listar' : 'inicio')
+        );
+    }
+
+    /**
+     * @Route("/eliminarGrupo", name="grupo_familia_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
+     */
+    public function eliminarGrupoAction(Request $peticion)
+    {
+        if (isset($_POST['grupoFamilias']) && sizeof($_POST['grupoFamilias'])) {
+            $sw = false;
+            $em = $this->getDoctrine()->getManager();
+            $familias = new ArrayCollection();
+            foreach($_POST['grupoFamilias'] as $familia) {
+                $familias->add($em->getRepository('AppBundle:Familia')->findOneBy( array('id' => $familia)));
+            }
+            foreach($familias as $familia) {
+                if (sizeof($familia->getAlojamientos())) {
+                    $sw = true;
+                } else {
+                    foreach($familia->getAlumnos() as $alumno) {
+                        $alumno->setFamilia(null);
+                    }
+                    $em->remove($familia);
+                }
+            }
+            $this->addFlash(($sw) ? 'error' : 'success', ($sw) ? 'Alguna/s de los Familias no se han podido eliminar' : 'Familias eliminadas correctamente');
+            $em->flush();
+        } else {
+            $this->addFlash('error', 'Debes seleccionar al menos una Familia');
+        }
+        return new RedirectResponse(
+            $this->generateUrl('familias_listar')
         );
     }
 }

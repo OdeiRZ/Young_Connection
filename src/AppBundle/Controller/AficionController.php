@@ -6,6 +6,7 @@ use AppBundle\Entity\Aficion;
 use AppBundle\Form\Type\AficionType;
 use AppBundle\Utils\Aficiones;
 use AppBundle\Utils\Mensajes;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -107,6 +108,36 @@ class AficionController extends Controller
         } else {
             $em->remove($aficion);
             $em->flush();
+        }
+        return new RedirectResponse(
+            $this->generateUrl('aficiones_listar')
+        );
+    }
+
+    /**
+     * @Route("/eliminarGrupo", name="grupo_aficion_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
+     */
+    public function eliminarGrupoAction(Request $peticion)
+    {
+        if (isset($_POST['grupoAficiones']) && sizeof($_POST['grupoAficiones'])) {
+            $sw = false;
+            $em = $this->getDoctrine()->getManager();
+            $aficiones = new ArrayCollection();
+            foreach($_POST['grupoAficiones'] as $aficion) {
+                $aficiones->add($em->getRepository('AppBundle:Aficion')->findOneBy( array('id' => $aficion)));
+            }
+            foreach($aficiones as $aficion) {
+                if (sizeof($aficion->getAlumnos())) {
+                    $sw = true;
+                } else {
+                    $em->remove($aficion);
+                }
+            }
+            $this->addFlash(($sw) ? 'error' : 'success', ($sw) ? 'Alguna/s de los Aficiones no se han podido eliminar' : 'Aficiones eliminadas correctamente');
+            $em->flush();
+        } else {
+            $this->addFlash('error', 'Debes seleccionar al menos una Afición');
         }
         return new RedirectResponse(
             $this->generateUrl('aficiones_listar')

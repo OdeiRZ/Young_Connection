@@ -11,10 +11,14 @@
     <h2 class="well">Listado de Intercambios</h2>
 
     {{ form(formulario_fechas) }}
+    <form method="post" action="{{ path('grupo_intercambio_eliminar') }}">
     {% if intercambios %}
         <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th class="seleccion" id="multiple"><i class="glyphicon glyphicon-check"></i></th>
+                {% endif %}
                 <th>F. Inicio</th>
                 <th>F. Fin</th>
                 <th>Grupo/s</th>
@@ -25,6 +29,9 @@
             <tbody>
             {% for intercambio in intercambios %}
                 <tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td class="seleccion"><input type="checkbox" value="{{ intercambio.id }}" name="grupoIntercambios[]"/></td>
+                    {% endif %}
                     <td>{{ intercambio.fechaInicio|date("d/m/Y") }}</td>
                     <td>{{ intercambio.fechaFin|date("d/m/Y") }}</td>
                     <td>
@@ -57,7 +64,11 @@
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    {% if intercambios %}
+        <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Intercambios seleccionados</button>
+    {% endif %}
     <a href="{{ path('intercambio_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Intercambio </a>
+    </form>
 {% endblock %}
 
 {% block javascripts %}
