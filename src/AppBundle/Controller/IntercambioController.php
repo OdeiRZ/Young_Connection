@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @Route("/intercambio")
  */
-class IntercambioController extends Controller
+class IntercambioController extends BaseController
 {
     /**
      * @Route("/listar", name="intercambios_listar")
@@ -100,19 +100,26 @@ class IntercambioController extends Controller
      */
     public function nuevoAction(Request $peticion)
     {
+        $ruta = 'intercambios_listar';
         $intercambio = new Intercambio();
         $formulario = $this->createForm(new IntercambioType(), $intercambio);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            foreach($intercambio->getGrupos() as $grupo) {
-                $grupo->setIntercambio($intercambio);
+            if($intercambio->getFechaInicio() <= $intercambio->getFechaFin()) {
+                $em = $this->getDoctrine()->getManager();
+                foreach($intercambio->getGrupos() as $grupo) {
+                    $grupo->setIntercambio($intercambio);
+                }
+                $em->persist($intercambio);
+                $em->flush();
+                $this->notificarIntercambio($intercambio->getGrupos(), $intercambio);
+                $this->addFlash('success', 'Intercambio creado correctamente');
+            } else {
+                $ruta = 'intercambio_nuevo';
+                $this->addFlash('error', 'La Fecha de Inicio debe ser inferior a la Fecha Final');
             }
-            $em->persist($intercambio);
-            $em->flush();
-            $this->addFlash('success', 'Intercambio creado correctamente');
             return new RedirectResponse(
-                $this->generateUrl('intercambios_listar')
+                $this->generateUrl($ruta)
             );
         }
         return $this->render('AppBundle:Intercambio:nuevo.html.twig', [

@@ -22,6 +22,23 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
+    # Datos generales del centro educativo
+    centro:            'Young Connection'
+    localidad:         Linares
+
+
+    # Carpetas donde se encuentran los logos de los informes PDF
+    logos:
+                      organizacion: '../src/AppBundle/Resources/public/images/organizacion.png'
+                      sello: '../src/AppBundle/Resources/public/images/sello.png'
+
+    # Detalles sobre el modelo de intercambio
+    intercambio:
+                      revision: REV.1
+                      proceso: INTERCAMBIO
+                      descripcion: Intercambio de Alumnos
+                      margen: 0
+
     # Prefijo de las notificaciones
     prefijo_notificacion: "[Young_Connection]"
     remite_notificacion: young.connection.soporte@gmail.com

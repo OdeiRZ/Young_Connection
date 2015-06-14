@@ -1,0 +1,27 @@
+<h1 align="center"><br />Intercambio #{{ intercambio.id }}<br /></h1>
+<ul type="square">
+    <li><b>Fecha de Inicio: {{ intercambio.fechaInicio|date("d/m/Y") }}</b><br/></li>
+    <li><b>Fecha de Fin: {{ intercambio.fechaFin|date("d/m/Y") }}<br /></b></li>
+</ul>
+{% for grupo in intercambio.grupos %}
+    <ul type="square">
+        <li><b>{{ grupo.descripcion }}</b></li>
+        <li>Coordinador: {{ grupo.coordinador }}</li>
+        <li>Alojamientos:<br/>
+            <ul>
+                {% for alojamiento in grupo.alojamientos %}
+                    <li>{{ alojamiento.alumno }}</li>
+                    <li>{{ alojamiento.familia }}</li>
+                    <br/>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+    <br/>
+{% endfor %}
+{% if intercambio.observaciones %}
+    <h3 align="center">Observaciones:</h3>
+    <p>{{ intercambio.observaciones }}</p>
+{% endif %}
+<p> </p>
+<p align="center">En {{ localidad }}, a {{ date() | date('d/m/Y') }}</p>

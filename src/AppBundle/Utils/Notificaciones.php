@@ -43,7 +43,7 @@ class Notificaciones
                 ->setSubject($container->getParameter('prefijo_notificacion') . ' Regeneración de Contraseña')
                 ->setFrom($container->getParameter('remite_notificacion'))
                 ->setTo([$usuario->getCorreoElectronico()])
-                ->setBody( "Se ha procesado correctamente su petición de Regeneración de Contraseña.\n\n\nTe Recordamos que tu usuario seguirá siendo tu correo electrónico: " . $usuario->getCorreoElectronico() . ".\nSe te ha asignado la nueva clave: " . $nuevaClave. "\n\n\nEsperamos que disfrutes de tu estancia.", 'text/plain');
+                ->setBody( "Se ha procesadocd correctamente su petición de Regeneración de Contraseña.\n\n\nTe Recordamos que tu usuario seguirá siendo tu correo electrónico: " . $usuario->getCorreoElectronico() . ".\nSe te ha asignado la nueva clave: " . $nuevaClave. "\n\n\nEsperamos que disfrutes de tu estancia.", 'text/plain');
             $mailer->send($mensaje);
         }
     }
