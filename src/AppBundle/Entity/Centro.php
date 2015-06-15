@@ -69,6 +69,13 @@ class Centro
     protected $cursos;
 
     /**
+     * @ORM\Column(type="integer")
+     *
+     * @var int
+
+    protected $alumnos; */
+
+    /**
      * Get id
      *
      * @return integer 
@@ -264,5 +271,19 @@ class Centro
     public function getPais()
     {
         return $this->pais;
+    }
+
+    /**
+     * Get alumnos
+     *
+     * @return int
+     */
+    public function getAlumnos()
+    {
+        $this->alumnos = 0;
+        foreach($this->getCursos() as $curso) {
+            $this->alumnos += count($curso->getAlumnos());
+        }
+        return $this->alumnos;
     }
 }

@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Ob\HighchartsBundle\Highcharts\Highchart;
 
 class DefaultController extends Controller
 {
@@ -22,7 +23,31 @@ class DefaultController extends Controller
         $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
                           $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
-        return $this->render('AppBundle:Default:inicio.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $paises = $em->createQueryBuilder('c')
+                     ->select('c.pais, c.id as total')  //->select('c.pais, c.alumnos as total')
+                     ->from('AppBundle:Centro', 'c')
+                     ->add('groupBy', 'c.pais')
+                     ->orderBy('c.pais', 'ASC')
+                     ->getQuery()
+                     ->getResult();
+        $ob = new Highchart();
+        $ob->chart->renderTo('piechart');
+        $ob->title->text('Alumnos registrados por país');
+        $ob->plotOptions->pie(array(
+            'allowPointSelect'  => true,
+            'cursor'    => 'pointer',
+            'dataLabels'    => array('enabled' => false),
+            'showInLegend'  => true
+        ));
+        $data = array();
+        foreach($paises as $i => $pais) {
+            $data[] = array($pais['pais'], $pais['total']);
+        }
+        $ob->series(array(array('type' => 'pie','name' => 'Total', 'data' => $data)));
+        return $this->render('AppBundle:Default:inicio.html.twig', array(
+            'chart' => $ob
+        ));
     }
 
     /**

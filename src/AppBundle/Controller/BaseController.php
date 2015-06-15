@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Intercambio;
-use AppBundle\Entity\Grupo;
 use Swift_Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use TCPDF;
