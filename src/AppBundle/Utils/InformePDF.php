@@ -68,12 +68,12 @@ class InformePDF extends \TCPDF
 <table cellspacing="0" cellpadding="1" border="0.75" align="center">
     <tr>
         <td rowspan="2" width="10.5%" height="50px"></td>
-        <th colspan="3" width="80%" height="25px">{$captions[0]}</tdh>
+        <td colspan="3" width="80%" height="25px" style="font-weight:bold; font-size:17px">{$captions[0]}</td>
         <td rowspan="2" width="9.5%" height="50px"></td>
     </tr>
     <tr>
-        <td height="25px"> &nbsp;  &nbsp;   &nbsp; {$pagenumtxt}</td>
-        <td colspan="2" height="25px">{$captions[1]}</td>
+        <td height="25px" style="font-size:16px;"> &nbsp; &nbsp;{$pagenumtxt}</td>
+        <td colspan="2" height="25px" style="font-size:17px">{$captions[1]}</td>
     </tr>
 </table>
 EOD;

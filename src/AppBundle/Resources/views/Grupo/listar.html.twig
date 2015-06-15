@@ -54,12 +54,14 @@
                         </ul>
                     </td>
                     <td>
-                        <a href="{{ path('grupo_modificar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </a>
-                        <a href="{{ path('grupo_eliminar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-trash"></i>
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_COORDINADOR') and app.user.id == grupo.coordinador.id) %}
+                            <a href="{{ path('grupo_modificar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+                            <a href="{{ path('grupo_eliminar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

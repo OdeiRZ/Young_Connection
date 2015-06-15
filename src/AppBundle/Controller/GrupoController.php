@@ -53,6 +53,10 @@ class GrupoController extends Controller
      */
     public function modificarAction(Grupo $grupo, Request $peticion)
     {
+        $usuarioActivo = $this->getUser();
+        if ($grupo->getCoordinador()->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->createAccessDeniedException();
+        }
         $formulario = $this->createForm(new GrupoType(), $grupo);
         $formulario
             ->add('eliminar', 'submit', [
