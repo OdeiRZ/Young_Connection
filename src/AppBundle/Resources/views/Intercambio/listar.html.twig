@@ -48,12 +48,14 @@
                     </td>
                     <td>{{ intercambio.observaciones }}</td>
                     <td>
-                        <a href="{{ path('intercambio_modificar', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </a>
-                        <a href="{{ path('intercambio_eliminar', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-trash"></i>
-                        </a>
+                        {#% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_COORDINADOR') and app.user.id in intercambio.coordinadores|keys ) %#}
+                            <a href="{{ path('intercambio_modificar', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+                            <a href="{{ path('intercambio_eliminar', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        {#% endif %#}
                     </td>
                 </tr>
             {% endfor %}

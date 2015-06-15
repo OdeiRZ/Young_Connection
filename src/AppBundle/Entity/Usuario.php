@@ -129,7 +129,7 @@ class Usuario implements UserInterface
     protected $mensajes;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */
@@ -201,7 +201,7 @@ class Usuario implements UserInterface
     protected $curso;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Idioma", cascade={"persist"}, mappedBy="alumnos")
+     * @ORM\OneToMany(targetEntity="Idioma", mappedBy="alumno", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=true)
      *
      * @var Idioma
@@ -938,13 +938,12 @@ class Usuario implements UserInterface
      * Add idiomas
      *
      * @param \AppBundle\Entity\Idioma $idiomas
-     * @return Usuario
      */
     public function addIdioma(\AppBundle\Entity\Idioma $idiomas)
     {
         $this->idiomas[] = $idiomas;
+        $idiomas->setAlumno($this);
 
-        return $this;
     }
 
     /**

@@ -111,6 +111,10 @@ class GrupoController extends Controller
      */
     public function eliminarAction(Grupo $grupo, Request $peticion)
     {
+        $usuarioActivo = $this->getUser();
+        if ($grupo->getCoordinador()->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($grupo);
         $em->flush();

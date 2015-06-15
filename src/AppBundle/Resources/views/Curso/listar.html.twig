@@ -24,7 +24,9 @@
                 <th>Descripción</th>
                 <th>Familia</th>
                 <th>Centro</th>
-                <th></th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th></th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -42,15 +44,16 @@
                             {{ curso.centro }}
                         {% endif %}
                     </td>
-                    <td>
-                        {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td>
                             <a href="{{ path('curso_modificar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
                             <a href="{{ path('curso_eliminar', { 'curso': curso.id }) }}" class="btn btn-default btn-xs">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>
-                        {% endif %}
+                        </td>
+                    {% endif %}
                     </td>
                 </tr>
             {% endfor %}

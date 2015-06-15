@@ -23,15 +23,7 @@
                 {% endif %}
                 <th>Usuario</th>
                 <th>Curso</th>
-                <th>Problemas de Salud</th>
                 <th>País</th>
-                <th>Detalles Problemas de Salud</th>
-                <th>Fumador</th>
-                <th>Bebedor</th>
-                <th>Ha Viajado al Extranjero</th>
-                <th>Detalles Viaje Extranjero</th>
-                <th>Preferencia de Compañero/a</th>
-                <th>Descripción</th>
                 <th>Idioma/s</th>
                 <th>Afición/es</th>
                 <th></th>
@@ -58,43 +50,43 @@
                         {% endif %}
                     </td>
                     <td>{{ usuario.pais }}</td>
-                    <td>{{ usuario.tieneProblemasSalud ? 'Sí' : 'No' }}</td>
-                    <td>{{ usuario.detallesProblemasSalud }}</td>
-                    <td>{{ usuario.esFumador ? 'Sí' : 'No' }}</td>
-                    <td>{{ usuario.esBebedor ? 'Sí' : 'No' }}</td>
-                    <td>{{ usuario.haViajadoExtranjero ? 'Sí' : 'No' }}</td>
-                    <td>{{ usuario.detallesViajeExtranjero }}</td>
                     <td>
-                        <ul>
-                            {% for companero in usuario.preferenciaCompanero %}
-                                <li>{{ companero.usuario }}</li>
+                        {% if usuario.idiomas|length > 0 %}
+                            {% for idioma in usuario.idiomas %}
+                                <ul>{{ idioma.descripcion }}
+                                    <li>{{ idioma.reading }}</li>
+                                    <li>{{ idioma.writing }}</li>
+                                    <li>{{ idioma.speaking }}</li>
+                                </ul>
+                                <hr/>
                             {% endfor %}
-                        </ul>
+                        {% else %}
+                            Sin Idiomas
+                        {% endif %}
                     </td>
-                    <td>{{ usuario.descripcion }}</td>
                     <td>
-                        {% for idioma in usuario.idiomas %}
-                            <ul>{{ idioma.descripcion }}
-                                <li>{{ idioma.reading }}</li>
-                                <li>{{ idioma.writing }}</li>
-                                <li>{{ idioma.speaking }}</li>
+                        {% if usuario.aficiones|length > 0 %}
+                            <ul>
+                                {% for aficion in usuario.aficiones %}
+                                    <li>{{ aficion }}</li>
+                                {% endfor %}
                             </ul>
-                        {% endfor %}
+                        {% else %}
+                            Sin Aficiones
+                        {% endif %}
                     </td>
                     <td>
-                        <ul>
-                            {% for aficion in usuario.aficiones %}
-                                <li>{{ aficion }}</li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                    <td>
-                        <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-pencil"></i>
+                        <a href="{{ path('usuario_consultar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-eye-open"></i>
                         </a>
-                        <a href="{{ path('usuario_eliminar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-trash"></i>
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+                            <a href="{{ path('usuario_eliminar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

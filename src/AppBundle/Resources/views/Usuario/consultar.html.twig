@@ -1,0 +1,217 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Consulta de Usuario{% endblock %}
+
+{% block content %}
+    <h2 class="well">Consulta de Usuario</h2>
+
+    {% if usuario %}
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Nombre</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ usuario.nombre }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Apellidos</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ usuario.apellidos }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Fecha de Nacimiento</label>
+                <div class="col-sm-10">
+                    <input type="text" class="date form-control" value="{{ usuario.fechaNacimiento|date("d/m/Y") }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Sexo</label>
+                <div class="col-sm-10">
+                    <div id="usuario_sexo">
+                        <div class="radio">
+                            <label><input type="radio" {{ usuario.sexo == 'M' ? 'checked="checked"' : '' }} />Masculino</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio"  {{ usuario.sexo == 'F' ? 'checked="checked"' : '' }} />Femenino</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Teléfono</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ usuario.telefono }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Correo electrónico</label>
+                <div class="col-sm-10">
+                    <input type="email" class="date form-control" value="{{ usuario.correoElectronico }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Fotografía</label>
+                <div class="col-sm-10">
+                    <img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}" class="img-thumbnail" height="100" width="100" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Curso</label>
+                <div class="col-sm-10">
+                    <input type="email" class="date form-control" value="{{ usuario.curso }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" {{ usuario.esActivo ? 'checked="checked"' : '' }} />Está Activo</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" {{ usuario.esAdministrador ? 'checked="checked"' : '' }} />Es un Administrador</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" {{ usuario.esCoordinador ? 'checked="checked"' : '' }} />Es un Coordinador</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" {{ usuario.esAlumno ? 'checked="checked"' : '' }} />Es un Alumno</label>
+                    </div>
+                </div>
+            </div>
+            {% if usuario.esAlumno %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Pais</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ usuario.pais }}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <div class="checkbox">
+                            <label><input type="checkbox" {{ usuario.tieneProblemasSalud ? 'checked="checked"' : '' }} />Problemas de Salud</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Detalles Problemas de Salud</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control">{{ usuario.detallesProblemasSalud }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <div class="checkbox">
+                            <label><input type="checkbox" {{ usuario.esFumador ? 'checked="checked"' : '' }} />Fumador</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <div class="checkbox">
+                            <label><input type="checkbox" {{ usuario.esBebedor ? 'checked="checked"' : '' }} />Bebedor</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <div class="checkbox">
+                            <label><input type="checkbox" {{ usuario.haViajadoExtranjero ? 'checked="checked"' : '' }} />Ha Viajado al Extranjero</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Detalles Viaje Extranjero</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control">{{ usuario.detallesViajeExtranjero }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Preferencia de Compañero/a</label>
+                    <div class="col-sm-10">
+                        {% if usuario.preferenciaCompanero|length > 0 %}
+                            <select class="form-control" multiple="multiple">
+                                {% for companero in usuario.preferenciaCompanero %}
+                                    <option selected="selected">{{ companero }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <input type="text" class="form-control" value="Sin Compañeros asignados">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Descripción</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control">{{ usuario.descripcion }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Idioma/s</label>
+                    <div class="col-sm-10">
+                        {% if usuario.idiomas|length > 0 %}
+                            {% for idioma in usuario.idiomas %}
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Descripción</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" value="{{ idioma.descripcion }}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Nivel Reading</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" value="{{ idioma.reading }}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Nivel Writing</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" value="{{ idioma.writing }}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Nivel Speaking</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" value="{{ idioma.speaking }}"></div>
+                                </div>
+                                <hr/>
+                            {% endfor %}
+                        {% else %}
+                            <input type="text" class="form-control" value="Sin Idiomas asignados">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Afición/es</label>
+                    <div class="col-sm-10">
+                        {% if usuario.aficiones|length > 0 %}
+                            {% for aficion in usuario.aficiones %}
+                                <div class="checkbox">
+                                    <label><input type="checkbox" checked="checked" />{{ aficion }}</label>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <input type="text" class="form-control" value="Sin Aficiones asignadas" />
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <h3>No hay Usuario para mostrar</h3>
+    {% endif %}
+
+    <a href="{{ path('usuarios_listar') }}" class="btn btn-info">Volver al listado de Usuarios</a>
+{% endblock %}

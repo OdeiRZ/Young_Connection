@@ -23,14 +23,9 @@
                 {% endif %}
                 <th>Nombre</th>
                 <th>F. Nacimiento</th>
-                <th>Sexo</th>
                 <th>Teléfono</th>
                 <th>Correo Electrónico</th>
                 <th>Fotografía</th>
-                <th>Administrador</th>
-                <th>Coordinador</th>
-                <th>Alumno</th>
-                <th>Activo</th>
                 <th></th>
             </tr>
             </thead>
@@ -42,24 +37,24 @@
                     {% endif %}
                     <td>{{ usuario.apellidos }} {{ usuario.nombre }}</td>
                     <td>{{ usuario.fechaNacimiento|date("d/m/Y") }}</td>
-                    <td>{{ (usuario.sexo == 'M' ? 'Masculino' : 'Femenino') }}</td>
                     <td>{{ usuario.telefono }}</td>
                     <td>{{ usuario.correoElectronico }}</td>
                     <td>
                         {% if usuario.getWebPath %}<img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}"
                                                         class="img-thumbnail" height="50" width="50" />{% endif %}
                     </td>
-                    <td>{{ usuario.esAdministrador ? 'Sí' : 'No' }}</td>
-                    <td>{{ usuario.esCoordinador ? 'Sí' : 'No' }}</td>
-                    <td>{{ usuario.esAlumno ? 'Sí' : 'No' }}</td>
-                    <td>{{ usuario.esActivo ? 'Sí' : 'No' }}</td>
                     <td>
-                        <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-pencil"></i>
+                        <a href="{{ path('usuario_consultar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-eye-open"></i>
                         </a>
-                        <a href="{{ path('usuario_eliminar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-trash"></i>
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+                            <a href="{{ path('usuario_eliminar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
