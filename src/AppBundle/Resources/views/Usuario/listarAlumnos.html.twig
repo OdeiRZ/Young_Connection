@@ -24,6 +24,7 @@
                 <th>Usuario</th>
                 <th>Curso</th>
                 <th>Problemas de Salud</th>
+                <th>País</th>
                 <th>Detalles Problemas de Salud</th>
                 <th>Fumador</th>
                 <th>Bebedor</th>
@@ -56,6 +57,7 @@
                             {{ usuario.curso }}
                         {% endif %}
                     </td>
+                    <td>{{ usuario.pais }}</td>
                     <td>{{ usuario.tieneProblemasSalud ? 'Sí' : 'No' }}</td>
                     <td>{{ usuario.detallesProblemasSalud }}</td>
                     <td>{{ usuario.esFumador ? 'Sí' : 'No' }}</td>

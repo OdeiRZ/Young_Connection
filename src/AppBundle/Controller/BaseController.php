@@ -32,8 +32,7 @@ abstract class BaseController extends Controller
                 $logos['sello']
             ),
             array(
-                $this->container->getParameter('centro') . ' - ' . $this->container->getParameter('localidad'),
-                $plantilla['proceso'],
+                $this->container->getParameter('centro'),
                 $plantilla['descripcion'],
                 $plantilla['revision']
             )
@@ -75,7 +74,7 @@ abstract class BaseController extends Controller
                     $adjunto = Swift_Attachment::newInstance($pdf->getPDFData(), 'I' . $intercambio->getId() . '.pdf', 'application/pdf')->setDisposition('inline');
                 }
                 $mensaje = $mailer->createMessage()
-                    ->setSubject($this->container->getParameter('prefijo_notificacion') . ' - Notificación de alta de Incercambio')
+                    ->setSubject($this->container->getParameter('prefijo_notificacion') . ' - Notificación de alta de Intercambio')
                     ->setFrom($this->container->getParameter('remite_notificacion'))
                     ->setTo(array($grupo->getCoordinador()->getCorreoElectronico() => $grupo->getCoordinador()->__toString()))
                     ->setBody('Los Coordinadores de los Grupos del Intercambio han sido notificados del documento adjunto inluido en el mensaje.')

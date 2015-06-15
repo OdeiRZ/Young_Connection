@@ -69,6 +69,10 @@ class UsuarioType extends AbstractType
         }
         if ($options['alumno'] and !$options['nuevo']) {
             $builder
+                ->add('pais', null, [
+                    'label' => 'País',
+                    'required' => true
+                ])
                 ->add('tieneProblemasSalud', null, [
                     'label' => 'Problemas de Salud',
                     'required' => false

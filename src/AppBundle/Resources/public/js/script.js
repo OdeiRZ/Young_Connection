@@ -13,28 +13,28 @@ jQuery(document).ready(function() {
     $('form').submit(function() {
         $("body").append(
             '<svg width="400" height="200" viewBox="0 0 400 200">'+
-                '<defs>'+
-                    '<filter id="goo">'+
-                        '<feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />'+
-                        '<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 17 -7" result="cm" />'+
-                        '<feComposite in="SourceGraphic" in2="cm" />'+
-                    '</filter>'+
-                    '<filter id="f2" x="-200%" y="-40%" width="400%" height="200%">'+
-                        '<feOffset in="SourceAlpha" dx="9" dy="3" />'+
-                        '<feGaussianBlur result="blurOut" in="offOut" stdDeviation="0.51" />'+
-                        '<feComponentTransfer>'+
-                            '<feFuncA type="linear" slope="0.05" />'+
-                        '</feComponentTransfer>'+
-                        '<feMerge>'+
-                            '<feMergeNode/>'+
-                            '<feMergeNode in="SourceGraphic" />'+
-                        '</feMerge>'+
-                    '</filter>'+
-                '</defs>'+
-                '<g filter="url(#goo)" style="fill:#FFFFFF">'+
-                    '<ellipse id="drop"  cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="purple" />'+
-                    '<ellipse id="drop2" cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="purple" />'+
-                '</g>'+
+            '<defs>'+
+            '<filter id="goo">'+
+            '<feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />'+
+            '<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 17 -7" result="cm" />'+
+            '<feComposite in="SourceGraphic" in2="cm" />'+
+            '</filter>'+
+            '<filter id="f2" x="-200%" y="-40%" width="400%" height="200%">'+
+            '<feOffset in="SourceAlpha" dx="9" dy="3" />'+
+            '<feGaussianBlur result="blurOut" in="offOut" stdDeviation="0.51" />'+
+            '<feComponentTransfer>'+
+            '<feFuncA type="linear" slope="0.05" />'+
+            '</feComponentTransfer>'+
+            '<feMerge>'+
+            '<feMergeNode/>'+
+            '<feMergeNode in="SourceGraphic" />'+
+            '</feMerge>'+
+            '</filter>'+
+            '</defs>'+
+            '<g filter="url(#goo)" style="fill:#FFFFFF">'+
+            '<ellipse id="drop"  cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="purple" />'+
+            '<ellipse id="drop2" cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="purple" />'+
+            '</g>'+
             '</svg>'
         );
         (function() {
@@ -73,25 +73,25 @@ jQuery(document).ready(function() {
                     ry: '+=10'
                 }, ease: Back.easeInOut.config(3)
             })
-            .to(drop2, 4, {
-                attr: {
-                    cx: 250
-                }, ease: Power1.easeInOut
-            }, '-=4')
-            .to(drop, 4, {
-                attr: {
-                    cx: 125,
-                    rx: '-=10',
-                    ry: '-=10'
-                }, ease: Back.easeInOut.config(3)
-            })
-            .to(drop2, 4, {
-                attr: {
-                    cx: 125,
-                    rx: '-=10',
-                    ry: '-=10'
-                }, ease: Power1.easeInOut
-            }, '-=4')
+                .to(drop2, 4, {
+                    attr: {
+                        cx: 250
+                    }, ease: Power1.easeInOut
+                }, '-=4')
+                .to(drop, 4, {
+                    attr: {
+                        cx: 125,
+                        rx: '-=10',
+                        ry: '-=10'
+                    }, ease: Back.easeInOut.config(3)
+                })
+                .to(drop2, 4, {
+                    attr: {
+                        cx: 125,
+                        rx: '-=10',
+                        ry: '-=10'
+                    }, ease: Power1.easeInOut
+                }, '-=4')
         })();
         return true;
     });
@@ -134,7 +134,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
     $collectionHolder.data('index', index + 1);
     var $newFormLi = $('<li></li>').append(newForm);
     $newFormLi.append('<a href="#" class="eliminar-coleccion" style="position: absolute; margin-top: -195px; margin-left: 0px;" >' +
-        '<i class="glyphicon glyphicon-minus"></i></a><hr />');
+    '<i class="glyphicon glyphicon-minus"></i></a><hr />');
     $newLinkLi.before($newFormLi);
     $('.eliminar-coleccion').click(function(e) {
         e.preventDefault();
@@ -147,7 +147,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
 
 function addTagFormDeleteLink($tagFormLi) {
     var $removeFormA = $('<a href="#" class="eliminar-coleccion" style="position: absolute; top: 10px; margin-left: -35px;">' +
-        '<i class="glyphicon glyphicon-trash"></i></a>');
+    '<i class="glyphicon glyphicon-trash"></i></a>');
     $tagFormLi.append($removeFormA);
     $removeFormA.on('click', function(e) {
         e.preventDefault();

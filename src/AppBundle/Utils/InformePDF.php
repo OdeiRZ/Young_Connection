@@ -67,27 +67,23 @@ class InformePDF extends \TCPDF
         $tbl = <<<EOD
 <table cellspacing="0" cellpadding="1" border="0.75" align="center">
     <tr>
-        <td rowspan="3" width="15%"></td>
-        <td colspan="3" width="70%">{$captions[0]}</td>
-        <td rowspan="3" width="15%"></td>
+        <td rowspan="2" width="10.5%" height="50px"></td>
+        <th colspan="3" width="80%" height="25px">{$captions[0]}</tdh>
+        <td rowspan="2" width="9.5%" height="50px"></td>
     </tr>
     <tr>
-        <td>{$captions[1]}</td>
-        <td colspan="2">{$captions[2]}</td>
-    </tr>
-    <tr>
-       <td>{$captions[3]}</td>
-       <td>{$pagenumtxt}</td>
+        <td height="25px"> &nbsp;  &nbsp;   &nbsp; {$pagenumtxt}</td>
+        <td colspan="2" height="25px">{$captions[1]}</td>
     </tr>
 </table>
 EOD;
         $this->writeHTML($tbl, true, false, false, false, '');
-        $this->x = $this->original_lMargin + 5;
+        $this->x = $this->original_lMargin + 0;
         $this->y = $this->header_margin + 3;
         $this->Image($logos[0], '', '', 18);
-        $this->x = $this->w - $this->rMargin - 23;
-        $this->y = $this->header_margin + 0.5;
-        $this->Image($logos[1], '', '', 20, 0, '', '', '', '', 300, '', false, false, 0, '');
+        $this->x = $this->w - $this->rMargin - 17;
+        $this->y = $this->header_margin + 0.4;
+        $this->Image($logos[1], '', '', 17, 0, '', '', '', '', 300, '', false, false, 0, '');
     }
 
     public function footer()
@@ -115,7 +111,7 @@ EOD;
         }
         $headerdata = $this->getExtendedHeaderData();
         $captions = $headerdata['header_texts'];
-        $pagenumtxt = $captions[3] . ' ';
+        $pagenumtxt = $captions[2] . ' ';
         $this->SetY($cur_y);
         if ($this->getRTL()) {
             $this->SetX($this->original_rMargin);

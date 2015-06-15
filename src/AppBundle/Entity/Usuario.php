@@ -129,6 +129,13 @@ class Usuario implements UserInterface
     protected $mensajes;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $pais;
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      *
      * @var boolean
@@ -1103,5 +1110,28 @@ class Usuario implements UserInterface
     public function getAlojamientos()
     {
         return $this->alojamientos;
+    }
+
+    /**
+     * Set pais
+     *
+     * @param boolean $pais
+     * @return Usuario
+     */
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    /**
+     * Get pais
+     *
+     * @return boolean 
+     */
+    public function getPais()
+    {
+        return $this->pais;
     }
 }

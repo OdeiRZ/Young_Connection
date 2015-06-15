@@ -24,16 +24,17 @@ class DefaultController extends Controller
                           $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
-        $paises = $em->createQueryBuilder('c')
-                     ->select('c.pais, c.id as total')  //->select('c.pais, c.alumnos as total')
-                     ->from('AppBundle:Centro', 'c')
-                     ->add('groupBy', 'c.pais')
-                     ->orderBy('c.pais', 'ASC')
+        $paises = $em->createQueryBuilder('u')
+                     ->select('u.pais, count(u.pais) as total')
+                     ->from('AppBundle:Usuario', 'u')
+                     ->where('u.esAlumno = 1')
+                     ->add('groupBy', 'u.pais')
+                     ->orderBy('u.pais', 'ASC')
                      ->getQuery()
                      ->getResult();
         $ob = new Highchart();
         $ob->chart->renderTo('piechart');
-        $ob->title->text('Alumnos registrados por país');
+        $ob->title->text('Alumnos registrados por País');
         $ob->plotOptions->pie(array(
             'allowPointSelect'  => true,
             'cursor'    => 'pointer',
@@ -42,7 +43,7 @@ class DefaultController extends Controller
         ));
         $data = array();
         foreach($paises as $i => $pais) {
-            $data[] = array($pais['pais'], $pais['total']);
+            $data[] = array($pais['pais'], intval($pais['total']));
         }
         $ob->series(array(array('type' => 'pie','name' => 'Total', 'data' => $data)));
         return $this->render('AppBundle:Default:inicio.html.twig', array(

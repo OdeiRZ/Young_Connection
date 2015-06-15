@@ -35,8 +35,7 @@ parameters:
     # Detalles sobre el modelo de intercambio
     intercambio:
                       revision: REV.1
-                      proceso: INTERCAMBIO
-                      descripcion: Intercambio de Alumnos
+                      descripcion: 'Notificación de Intercambio'
                       margen: 0
 
     # Prefijo de las notificaciones
