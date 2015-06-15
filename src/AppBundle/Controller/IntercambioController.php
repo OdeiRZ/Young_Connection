@@ -60,9 +60,6 @@ class IntercambioController extends BaseController
      */
     public function modificarAction(Intercambio $intercambio, Request $peticion)
     {
-        foreach($intercambio->getGrupos() as $grupo) {
-            $grupo->setIntercambio(null);
-        }
         $formulario = $this->createForm(new IntercambioType(), $intercambio);
         $formulario
             ->add('eliminar', 'submit', [
@@ -72,10 +69,10 @@ class IntercambioController extends BaseController
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            foreach($intercambio->getGrupos() as $grupo) {
+                $grupo->setIntercambio(null);
+            }
             if ($formulario->get('eliminar')->isClicked()) {
-                foreach($intercambio->getGrupos() as $grupo) {
-                    $grupo->setIntercambio(null);
-                }
                 $em->remove($intercambio);
             } else {
                 foreach($intercambio->getGrupos() as $grupo) {

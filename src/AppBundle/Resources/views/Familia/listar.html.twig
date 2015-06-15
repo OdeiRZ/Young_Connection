@@ -24,17 +24,8 @@
                 <th>Descripción</th>
                 <th>Alumno/s</th>
                 <th>Miembro/s</th>
-                <th>Dirección</th>
                 <th>Ciudad</th>
                 <th>Pais</th>
-                <th>Téléfono</th>
-                <th>Tiene Mascota/s</th>
-                <th>Detalles Mascota/s</th>
-                <th>Puede Acogimiento Múltiple</th>
-                <th>Puede Compartir Alumno</th>
-                <th>Detalles Compartir Alumno</th>
-                <th>Tiene Habitación Extra</th>
-                <th>Observaciones</th>
                 <th></th>
             </tr>
             </thead>
@@ -46,16 +37,14 @@
                     {% endif %}
                     <td>{{ familia.descripcion }}</td>
                     <td>
-                        <ul>
-                            {% for alumno in familia.alumnos %}
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <a href="{{ path('usuario_modificar', { 'usuario': alumno.id }) }}">{{ alumno }}</a>
-                                {% else %}
-                                    {{ alumno }}
-                                {% endif %}
-                                <hr/>
-                            {% endfor %}
-                        </ul>
+                        {% for alumno in familia.alumnos %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('usuario_modificar', { 'usuario': alumno.id }) }}">{{ alumno }}</a>
+                            {% else %}
+                                {{ alumno }}
+                            {% endif %}
+                            <hr/>
+                        {% endfor %}
                     </td>
                     <td>
                         <ul>
@@ -68,22 +57,16 @@
                             {% endfor %}
                         </ul>
                     </td>
-                    <td>{{ familia.direccion }}</td>
                     <td>{{ familia.ciudad }} ({{ familia.provincia }})</td>
                     <td>{{ familia.pais }}</td>
-                    <td>{{ familia.telefono }}</td>
-                    <td>{{ familia.tieneMascota ? 'Sí' : 'No' }}</td>
-                    <td>{{ familia.detallesMascota }}</td>
-                    <td>{{ familia.puedeMultiAlumno ? 'Sí' : 'No' }}</td>
-                    <td>{{ familia.puedeCompartirAlumno ? 'Sí' : 'No' }}</td>
-                    <td>{{ familia.detallesCompartirAlumno }}</td>
-                    <td>{{ familia.tieneHabitacionExtra ? 'Sí' : 'No' }}</td>
-                    <td>{{ familia.observaciones }}</td>
                     <td>
+                        <a href="{{ path('familia_consultar', { 'familia': familia.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-eye-open"></i>
+                        </a>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('familia_eliminar', { 'familia': familia.id }) }}" class="btn btn-default btn-xs">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
+                        <a href="{{ path('familia_eliminar', { 'familia': familia.id }) }}" class="btn btn-default btn-xs">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
                         {% endif %}
                     </td>
                 </tr>

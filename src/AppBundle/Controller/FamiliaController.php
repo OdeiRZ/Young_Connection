@@ -123,6 +123,17 @@ class FamiliaController extends Controller
     }
 
     /**
+     * @Route("/consultar/{familia}", name="familia_consultar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
+     */
+    public function consultarAction(Familia $familia, Request $peticion)
+    {
+        return $this->render('AppBundle:Familia:consultar.html.twig', [
+            'familia' => $familia
+        ]);
+    }
+
+    /**
      * @Route("/nuevo", name="familia_nuevo"), methods={'GET', 'POST'}
      * @Security(expression="has_role('ROLE_ALUMNO')")
      */

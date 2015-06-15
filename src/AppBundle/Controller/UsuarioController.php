@@ -23,7 +23,7 @@ class UsuarioController extends Controller
 {
     /**
      * @Route("/listar", name="usuarios_listar")
-     * @Security(expression="has_role('ROLE_ADMIN')")
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
      */
     public function listarAction(Request $peticion)
     {
@@ -153,6 +153,17 @@ class UsuarioController extends Controller
         return $this->render('AppBundle:Usuario:modificar.html.twig', [
             'usuario' => $usuario,
             'formulario' => $formulario->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/consultar/{usuario}", name="usuario_consultar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
+     */
+    public function consultarAction(Usuario $usuario, Request $peticion)
+    {
+        return $this->render('AppBundle:Usuario:consultar.html.twig', [
+            'usuario' => $usuario
         ]);
     }
 

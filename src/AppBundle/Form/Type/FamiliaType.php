@@ -34,7 +34,7 @@ class FamiliaType extends AbstractType
                 'required' => true
             ])
             ->add('pais', null, [
-                'label' => 'Pais*',
+                'label' => 'País*',
                 'required' => true
             ])
             ->add('telefono', null, [
@@ -74,7 +74,7 @@ class FamiliaType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('alumnos', null, [
-                'label' => 'Alumno/s Miembros*',
+                'label' => 'Alumno/s Miembro/s*',
                 'query_builder' => function(EntityRepository $er) use ($usuario) {
                     return $er->createQueryBuilder('a')
                               ->Where('a.esAlumno = 1')

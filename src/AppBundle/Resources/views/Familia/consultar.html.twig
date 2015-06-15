@@ -1,0 +1,165 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Consulta de Familia{% endblock %}
+
+{% block content %}
+    <h2 class="well">Consulta de Familia</h2>
+
+    {% if familia %}
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Descripción</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ familia.descripcion }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Dirección</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ familia.direccion }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Ciudad</label>
+                <div class="col-sm-10">
+                    <input type="text" class="date form-control" value="{{ familia.ciudad }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Provincia</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ familia.provincia }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">País</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ familia.pais }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Teléfono</label>
+                <div class="col-sm-10">
+                    <input type="text" class="date form-control" value="{{ familia.telefono }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" {{ familia.tieneMascota ? 'checked="checked"' : '' }} />Tiene Mascota</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Detalles Mascota/s</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control">{{ familia.detallesMascota }}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" {{ familia.puedeMultiAlumno ? 'checked="checked"' : '' }} />Posibilidad varios Alumnos</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" {{ familia.puedeCompartirAlumno ? 'checked="checked"' : '' }} />Puede compartir Alumno</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Detalles compartir Alumno</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control">{{ familia.detallesCompartirAlumno }}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" {{ familia.tieneHabitacionExtra ? 'checked="checked"' : '' }} />Habitación extra</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Miembro/s</label>
+                <div class="col-sm-10">
+                    {% if familia.miembros|length > 0 %}
+                        {% for miembro in familia.miembros %}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nombre</label>
+                                <div class="col-sm-10"><input type="text" class="form-control" value="{{ miembro.nombre }}"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Apellidos</label>
+                                <div class="col-sm-10"><input type="text" class="form-control" value="{{ miembro.apellidos }}"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fecha de Nacimiento</label>
+                                <div class="col-sm-10"><input type="text" class="form-control" value="{{ miembro.fechaNacimiento|date("d/m/Y") }}"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Teléfono</label>
+                                <div class="col-sm-10"><input type="text" class="form-control" value="{{ miembro.telefono }}"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Correo electrónico</label>
+                                <div class="col-sm-10"><input type="email" class="form-control" value="{{ miembro.correoElectronico }}"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Sexo</label>
+                                <div class="col-sm-10">
+                                    <div id="familia_sexo">
+                                        <div class="radio">
+                                            <label><input type="radio" {{ miembro.sexo == 'M' ? 'checked="checked"' : '' }} />Masculino</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label><input type="radio"  {{ miembro.sexo == 'F' ? 'checked="checked"' : '' }} />Femenino</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Tipo de Miembro</label>
+                                <div class="col-sm-10"><input type="text" class="form-control" value="{{ miembro.tipo }}"></div>
+                            </div>
+                            <hr/>
+                        {% endfor %}
+                    {% else %}
+                        <input type="text" class="form-control" value="Sin Miembros asignados">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Observaciones</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control">{{ familia.observaciones }}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Alumno/s Miembro/s</label>
+                <div class="col-sm-10">
+                    {% if familia.alumnos|length > 0 %}
+                        <select class="form-control" multiple="multiple">
+                            {% for alumno in familia.alumnos %}
+                                <option selected="selected">{{ alumno }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <input type="text" class="form-control" value="Sin Alumnos asignados">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h3>No hay Familia para mostrar</h3>
+    {% endif %}
+
+    <a href="{{ path('familias_listar') }}" class="btn btn-info">Volver al listado de familias</a>
+{% endblock %}
