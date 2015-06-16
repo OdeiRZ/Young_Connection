@@ -10,9 +10,11 @@ use AppBundle\Utils\Mensajes;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @Route("/intercambio")
@@ -89,6 +91,27 @@ class IntercambioController extends BaseController
             'intercambio' => $intercambio,
             'formulario' => $formulario->createView()
         ]);
+    }
+
+    /**
+     * @Route("/imprimir/{intercambio}", name="intercambio_imprimir"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
+     */
+    public function imprimirAction(Intercambio $intercambio, Request $peticion)
+    {
+        $plantilla = $this->container->getParameter('intercambio');
+        $logos = $this->container->getParameter('logos');
+        $pdf = $this->generarPdf('Intercambio #' . $intercambio->getId(), $logos, $plantilla, 0, 'I' . $intercambio->getId());
+        $html = $this->renderView('AppBundle:Intercambio:imprimir.html.twig',
+            array(
+                'intercambio' => $intercambio,
+                'usuario' => 'odei.riveiro@gmail.com',
+                'localidad' => $this->container->getParameter('localidad')
+            ));
+        $pdf->writeHTML($html);
+        return new RedirectResponse(
+            $pdf->Output("Intercambio_" . $intercambio->getId() .".pdf", 'D')
+        );
     }
 
     /**

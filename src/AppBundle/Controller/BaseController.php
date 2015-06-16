@@ -63,7 +63,7 @@ abstract class BaseController extends Controller
                 if (is_null($adjunto)) {
                     $plantilla = $this->container->getParameter('intercambio');
                     $logos = $this->container->getParameter('logos');
-                    $pdf = $this->generarPdf('Intercambio #' . $intercambio->getId(), $logos, $plantilla, 0, 'P' . $intercambio->getId());
+                    $pdf = $this->generarPdf('Intercambio #' . $intercambio->getId(), $logos, $plantilla, 0, 'I' . $intercambio->getId());
                     $html = $this->renderView('AppBundle:Intercambio:imprimir.html.twig',
                         array(
                             'intercambio' => $intercambio,
