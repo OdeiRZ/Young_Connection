@@ -22,6 +22,9 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
+    # Tiempo de autorefresco de pagina
+    refresco:          60
+
     # Datos generales del centro educativo
     centro:            'Young Connection'
     localidad:         Linares
