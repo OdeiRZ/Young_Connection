@@ -45,9 +45,9 @@
     {{ form_end(formulario) }}
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('usuarios_listar') }}" class="btn btn-info">Volver al listado de Usuarios</a>
+        <a href="{{ path('usuarios_listar') }}" class="btn volver">Volver al listado de Usuarios</a>
     {% else %}
-        <a href="{{ path('inicio') }}" class="btn btn-info">Volver al inicio</a>
+        <a href="{{ path('inicio') }}" class="btn volver">Volver al inicio</a>
     {% endif %}
 {% endblock %}
 

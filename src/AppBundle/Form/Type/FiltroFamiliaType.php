@@ -25,7 +25,7 @@ class FiltroFamiliaType extends AbstractType
             ])
             ->add('enviar', 'submit', [
                 'label' => 'Filtrar Cursos',
-                'attr' => ['class' => 'btn btn-info']
+                'attr' => ['class' => 'btn volver']
             ]);
     }
 

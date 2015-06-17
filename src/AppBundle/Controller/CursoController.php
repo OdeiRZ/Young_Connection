@@ -69,7 +69,7 @@ class CursoController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Curso',
-                'attr' => [ 'class' => 'btn btn-danger' ]
+                'attr' => [ 'class' => 'btn borrar' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {

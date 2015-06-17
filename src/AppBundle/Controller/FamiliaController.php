@@ -86,7 +86,7 @@ class FamiliaController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Familia',
-                'attr' => ['class' => 'btn btn-danger']
+                'attr' => ['class' => 'btn borrar']
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {

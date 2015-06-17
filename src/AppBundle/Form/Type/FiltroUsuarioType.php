@@ -26,7 +26,7 @@ class FiltroUsuarioType extends AbstractType
             ])
             ->add('enviar', 'submit', [
                 'label' => 'Filtrar Mensajes',
-                'attr' => ['class' => 'btn btn-info']
+                'attr' => ['class' => 'btn volver']
             ]);
     }
 

@@ -30,7 +30,7 @@ class FiltroCoordinadorType extends AbstractType
             ])
             ->add('enviar', 'submit', [
                 'label' => 'Filtrar Grupos',
-                'attr' => ['class' => 'btn btn-info']
+                'attr' => ['class' => 'btn volver']
             ]);
     }
 

@@ -71,11 +71,11 @@
         <h3>No hay Grupos para mostrar</h3>
     {% endif %}
 
-    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('inicio') }}" class="btn volver">Volver al Inicio</a>&nbsp;
     {% if grupos %}
-        <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Grupos seleccionados</button>
+        <button type="submit" class="btn precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Grupos seleccionados</button>
     {% endif %}
-    <a href="{{ path('grupo_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Grupo </a>
+    <a href="{{ path('grupo_nuevo') }}" class="btn crear"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Grupo </a>
     </form>
 {% endblock %}
 

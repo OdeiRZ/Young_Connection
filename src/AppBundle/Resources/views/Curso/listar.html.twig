@@ -63,12 +63,12 @@
         <h3>No hay Cursos para mostrar</h3>
     {% endif %}
 
-    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('inicio') }}" class="btn volver">Volver al Inicio</a>&nbsp;
     {% if is_granted('ROLE_ADMIN') %}
         {% if cursos %}
-            <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Cursos seleccionados</button>
+            <button type="submit" class="btn precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Cursos seleccionados</button>
         {% endif %}
-        <a href="{{ path('curso_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Curso</a>
+        <a href="{{ path('curso_nuevo') }}" class="btn crear"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Curso</a>
         </form>
     {% endif %}
 {% endblock %}

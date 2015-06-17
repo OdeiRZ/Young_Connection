@@ -64,13 +64,13 @@
         <h3>No hay Usuarios para mostrar</h3>
     {% endif %}
 
-    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('inicio') }}" class="btn volver">Volver al Inicio</a>&nbsp;
     {% if is_granted('ROLE_ADMIN') %}
         {% if usuarios %}
-            <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Usuarios seleccionados</button>
+            <button type="submit" class="btn precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Usuarios seleccionados</button>
         {% endif %}
     {% endif %}
-    <a href="{{ path('usuario_nuevo_admin') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Usuario </a>
+    <a href="{{ path('usuario_nuevo_admin') }}" class="btn crear"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Usuario </a>
     {% if is_granted('ROLE_ADMIN') %}
         </form>
     {% endif %}

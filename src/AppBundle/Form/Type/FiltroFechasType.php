@@ -33,7 +33,7 @@ class FiltroFechasType extends AbstractType
             ])
             ->add('enviar', 'submit', [
                 'label' => 'Filtrar Intercambios',
-                'attr' => ['class' => 'btn btn-info']
+                'attr' => ['class' => 'btn volver']
             ]);
     }
 

@@ -67,11 +67,11 @@
         <h3>No hay Intercambios para mostrar</h3>
     {% endif %}
 
-    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('inicio') }}" class="btn volver">Volver al Inicio</a>&nbsp;
     {% if intercambios %}
-        <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Intercambios seleccionados</button>
+        <button type="submit" class="btn precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Intercambios seleccionados</button>
     {% endif %}
-    <a href="{{ path('intercambio_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Intercambio </a>
+    <a href="{{ path('intercambio_nuevo') }}" class="btn crear"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Intercambio </a>
     </form>
 {% endblock %}
 

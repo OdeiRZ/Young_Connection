@@ -41,6 +41,11 @@ class DefaultController extends Controller
         $ob->credits->enabled(false);
         $ob->title->text('Alumnos registrados por País');
         $ob->title->style(array('font' => 'italic 17px "Helvetica Neue"'));
+        $ob->lang->printChart("Imprimir Gráfico");
+        $ob->lang->downloadJPEG("Descargar JPEG");
+        $ob->lang->downloadPDF("Descargar PDF");
+        $ob->lang->downloadPNG("Descargar PNG");
+        $ob->lang->downloadSVG("Descargar SVG");
         $ob->plotOptions->pie(array(
             'allowPointSelect'  => true,
             'cursor'            => 'pointer',

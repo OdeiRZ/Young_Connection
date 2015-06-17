@@ -58,7 +58,7 @@ class MensajeController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Mensaje',
-                'attr' => [ 'class' => 'btn btn-danger' ]
+                'attr' => [ 'class' => 'btn borrar' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {

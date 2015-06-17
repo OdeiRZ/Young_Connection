@@ -66,7 +66,7 @@ class IntercambioController extends BaseController
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Intercambio',
-                'attr' => [ 'class' => 'btn btn-danger' ]
+                'attr' => [ 'class' => 'btn borrar' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {

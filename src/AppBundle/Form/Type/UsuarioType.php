@@ -152,7 +152,7 @@ class UsuarioType extends AbstractType
             $builder
                 ->add('enviar', 'submit', array(
                     'label' => 'Guardar cambios',
-                    'attr' => array('class' => 'btn btn-success')
+                    'attr' => array('class' => 'btn crear')
                 ));
             if (!$options['admin']) {
                 $builder
@@ -191,7 +191,7 @@ class UsuarioType extends AbstractType
             ))
             ->add('cambiarPassword', 'submit', array(
                 'label' => (!$options['nuevo']) ? 'Guardar los cambios y cambiar la contraseña' : 'Guardar cambios',
-                'attr' => array('class' => 'btn btn-success'),
+                'attr' => array('class' => 'btn crear'),
                 'validation_groups' => array('Default', 'password')
             ));
     }

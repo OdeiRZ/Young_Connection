@@ -94,10 +94,83 @@ code {
 #tabla_wrapper {
     border-radius: 5px;
     background-color: #F5F5F5;
-    margin: 30px 0px;
+    margin: 20px 0px;
     padding: 5px 0px;
     border: 1px solid #E3E3E3;
 }
+
+
+.crear, .volver, .precaucion , .borrar {
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #fff;
+    border:0;
+    box-shadow:
+    inset 0 1px #4CAE4C,
+    inset 1px 0 #4CAE4C,
+    inset -1px 0 #4CAE4C,
+    inset 0 -1px #4CAE4C,
+    0 2px #4CAE4C,
+    0 3px #4CAE4C,
+    0 4px 2px rgba(0,0,0,0.0);
+    background: #5CB85C;
+    margin-bottom: 20px;
+}
+.volver {
+    box-shadow:
+    inset 0 1px #31B0D5,
+    inset 1px 0 #31B0D5,
+    inset -1px 0 #31B0D5,
+    inset 0 -1px #31B0D5,
+    0 2px #31B0D5,
+    0 3px #31B0D5;
+    background: #46B8DA;
+}
+.precaucion {
+    box-shadow:
+    inset 0 1px #EEA236,
+    inset 1px 0 #EEA236,
+    inset -1px 0 #EEA236,
+    inset 0 -1px #EEA236,
+    0 2px #EEA236,
+    0 3px #EEA236;
+    background: #F0AD4E;
+}
+.borrar {
+    box-shadow:
+    inset 0 1px #D43F3A,
+    inset 1px 0 #D43F3A,
+    inset -1px 0 #D43F3A,
+    inset 0 -1px #D43F3A,
+    0 2px #D43F3A,
+    0 3px #D43F3A;
+    background: #D9534F;
+}
+.crear:hover, .volver:hover, .precaucion:hover, .borrar:hover  {
+    opacity:0.9;
+    color: #fff;
+}
+.crear:active, .volver:active, .precaucion:active, .borrar:active {
+    top: 3px;
+    background: #5CB85C;
+    box-shadow: inset 0 1px 2px #4CAE4C;
+    color: #fff;
+}
+.volver:active {
+    background: #46B8DA;
+    box-shadow: inset 0 1px 2px #31B0D5;
+}
+.precaucion:active {
+    background: #F0AD4E;
+    box-shadow: inset 0 1px 2px #EEA236;
+}
+.borrar:active {
+    background: #D9534F;
+    box-shadow: inset 0 1px 2px #D43F3A;
+}
+
 
 @media (min-width: 768px) and (max-width: 1200px){
     .nav > li > a {

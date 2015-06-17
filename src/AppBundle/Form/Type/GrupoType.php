@@ -39,7 +39,7 @@ class GrupoType extends AbstractType
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',
                 'attr' => [
-                    'class' => 'btn btn-success'
+                    'class' => 'btn crear'
                 ]
             ]);
     }

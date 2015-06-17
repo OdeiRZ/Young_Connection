@@ -53,11 +53,11 @@
         <h3>No hay Aficiones para mostrar</h3>
     {% endif %}
 
-    <a href="{{ path('inicio') }}" class="btn btn-info">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('inicio') }}" class="btn volver">Volver al Inicio</a>&nbsp;
     {% if is_granted('ROLE_ADMIN') and aficiones %}
-        <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Eliminar Aficiones seleccionados</button>
+        <button type="submit" class="btn precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Aficiones seleccionadas</button>
     {% endif %}
-    <a href="{{ path('aficion_nuevo') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Afición</a>
+    <a class="btn crear" href="{{ path('aficion_nuevo') }}"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Afición</a>
     {% if is_granted('ROLE_ADMIN') and aficiones %}
         </form>
     {% endif %}
