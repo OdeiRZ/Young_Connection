@@ -34,18 +34,20 @@ class DefaultController extends Controller
                      ->getResult();
         $ob = new Highchart();
         $ob->chart->renderTo('piechart');
+        $ob->chart->backgroundColor('#F5F5F5');
         $ob->title->text('Alumnos registrados por País');
+        //$ob->title->style('font-family: "sans-serif"');
         $ob->plotOptions->pie(array(
             'allowPointSelect'  => true,
-            'cursor'    => 'pointer',
-            'dataLabels'    => array('enabled' => false),
-            'showInLegend'  => true
+            'cursor'            => 'pointer',
+            'dataLabels'        => array('enabled' => false),
+            'showInLegend'      => true,
         ));
         $data = array();
         foreach($paises as $i => $pais) {
             $data[] = array($pais['pais'], intval($pais['total']));
         }
-        $ob->series(array(array('type' => 'pie','name' => 'Total', 'data' => $data)));
+        $ob->series(array(array('type' => 'pie','name' => 'Total', 'data' => $data, 'color' => 'red')));
         return $this->render('AppBundle:Default:inicio.html.twig', array(
             'chart' => $ob
         ));

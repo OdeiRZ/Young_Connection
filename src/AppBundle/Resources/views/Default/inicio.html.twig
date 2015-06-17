@@ -13,4 +13,7 @@
     <script type="text/javascript">
         {{ chart(chart) }}
     </script>
+{% javascripts '@AppBundle/Resources/public/js/TweenMax.min.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 {% endblock %}

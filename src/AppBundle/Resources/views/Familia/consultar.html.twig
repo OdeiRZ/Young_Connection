@@ -163,3 +163,9 @@
 
     <a href="{{ path('familias_listar') }}" class="btn btn-info">Volver al listado de familias</a>
 {% endblock %}
+
+{% block javascripts %}
+{% javascripts '@AppBundle/Resources/public/js/TweenMax.min.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
