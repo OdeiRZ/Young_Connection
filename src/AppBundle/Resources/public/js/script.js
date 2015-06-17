@@ -32,8 +32,8 @@ jQuery(document).ready(function() {
             '</filter>'+
             '</defs>'+
             '<g filter="url(#goo)" style="fill:#FFFFFF">'+
-            '<ellipse id="drop"  cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="gray" />'+
-            '<ellipse id="drop2" cx="125" cy="90" rx="20" ry="20" fill-opacity="1" fill="gray" />'+
+            '<ellipse id="drop"  cx="125" cy="90" rx="20" ry="20" fill-opacity="0.6" fill="gray" />'+
+            '<ellipse id="drop2" cx="125" cy="90" rx="20" ry="20" fill-opacity="0.6" fill="gray" />'+
             '</g>'+
             '</svg>'
         );

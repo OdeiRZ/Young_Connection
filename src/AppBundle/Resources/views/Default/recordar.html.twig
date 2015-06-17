@@ -1,9 +1,10 @@
 {% extends '::layout.html.twig' %}
 
 {% block stylesheets %}
-    {% stylesheets '@AppBundle/Resources/public/css/*' filter='cssrewrite' %}
+    {% stylesheets '@AppBundle/Resources/public/css/*' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
+    {{ parent() }}
 {% endblock %}
 
 {% block title %}Recordar Usuario{% endblock %}
@@ -19,12 +20,12 @@
 {% endif %}
             <form method="post" action="{{ path('usuario_recordar') }}" class="form-login">
                 <div class="header">
-                    <a href="#" class="link-head-left">
-                        <!--<i class="glyphicon glyphicon-menu-left"></i>-->
+                    <a href="{{ path('inicio') }}" class="link-head-left recordar"  title="Volver">
+                        <i class="glyphicon glyphicon-home"></i>
                     </a>
                     <span>Regenerar Contraseña</span>
-                    <a href="{{ path('inicio') }}" class="link-head-right recordar"  title="Volver">
-                        <i class="glyphicon glyphicon-home"></i>
+                    <a href="#" class="link-head-right">
+                        <!--<i class="glyphicon glyphicon-home"></i>-->
                     </a>
                 </div>
                 <div class="avatar-login-regenerate">

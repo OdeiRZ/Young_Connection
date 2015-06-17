@@ -38,11 +38,10 @@
                         <ul>
                             {% for grupo in intercambio.grupos %}
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <a href="{{ path('grupo_modificar', { 'grupo': grupo.id }) }}">{{ grupo }}</a>
+                                    <li><a href="{{ path('grupo_modificar', { 'grupo': grupo.id }) }}">{{ grupo }}</a></li>
                                 {% else %}
-                                    {{ grupo }}
+                                    <li>{{ grupo }}</li>
                                 {% endif %}
-                                <hr/>
                             {% endfor %}
                         </ul>
                     </td>

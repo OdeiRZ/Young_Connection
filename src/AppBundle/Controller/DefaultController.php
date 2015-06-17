@@ -35,8 +35,12 @@ class DefaultController extends Controller
         $ob = new Highchart();
         $ob->chart->renderTo('piechart');
         $ob->chart->backgroundColor('#F5F5F5');
+        $ob->chart->borderWidth('1');
+        $ob->chart->borderColor('#E3E3E3');
+        $ob->chart->borderRadius('5');
+        $ob->credits->enabled(false);
         $ob->title->text('Alumnos registrados por País');
-        //$ob->title->style('font-family: "sans-serif"');
+        $ob->title->style(array('font' => 'italic 17px "Helvetica Neue"'));
         $ob->plotOptions->pie(array(
             'allowPointSelect'  => true,
             'cursor'            => 'pointer',

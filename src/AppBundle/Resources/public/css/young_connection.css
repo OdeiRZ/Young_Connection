@@ -15,7 +15,10 @@ body {
     height: 60px;
     background-color: #f5f5f5;
 }
-
+ul {
+    list-style: square;
+    margin-left: -15px;
+}
 
 body > .container {
     padding: 60px 15px 0;
@@ -71,10 +74,16 @@ code {
 .dropdown-menu {
     min-width: 130px;
 }
+.navbar-nav>li>a {
+    line-height: 22px !important;
+}
 
 
+#tabla_length, #tabla_filter {
+    padding: 5px;
+}
 #tabla_length {
-    padding-left: 10px;
+    padding-left: 15px;
 }
 #tabla tr:first-child th:first-child, #tabla tr:first-child td:first-child {
     /*visibility: hidden;*/
@@ -82,11 +91,18 @@ code {
 .seleccion, #multiple {
     text-align: center;
 }
+#tabla_wrapper {
+    border-radius: 5px;
+    background-color: #F5F5F5;
+    margin: 30px 0px;
+    padding: 5px 0px;
+    border: 1px solid #E3E3E3;
+}
 
 @media (min-width: 768px) and (max-width: 1200px){
-    /*.nav > li > a {
-        padding: 15px 8px;
-    }*/
+    .nav > li > a {
+        padding: 15px 10px;
+    }
 }
 @media (max-width: 992px){
     .navbar-header {

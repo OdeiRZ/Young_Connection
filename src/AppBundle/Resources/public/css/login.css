@@ -18,7 +18,7 @@ input:focus, a:focus, button:focus, button:focus {
     height:60px;
     background: #F8F8F8;;
     text-align:center;
-    font-size:16px;
+    font-size:15px;
     font-weight:bold;
     text-transform:uppercase;
     color:#b8b8b8;
@@ -26,7 +26,6 @@ input:focus, a:focus, button:focus, button:focus {
     border-top-right-radius: 10px;
 }
 .form-login .header span{
-    padding-top:20px;
     text-align:center;
     width:278px;
 }
@@ -35,14 +34,14 @@ input:focus, a:focus, button:focus, button:focus {
     float: left;
     height: 60px;
     width: 60px;
-    border-right: 1px solid #FFF;
+    border-right: 1px solid transparent;
 }
 .link-head-right {
     display:block;
     float:right;
     height:60px;
     width:60px;
-    border-left:1px solid #ffffff;
+    border-left:1px solid transparent;
 }
 /* avatar */
 .avatar-login, .avatar-login-regenerate {
@@ -75,7 +74,7 @@ input:focus, a:focus, button:focus, button:focus {
     height:45px;
     background:#efefef;
     color:#b8b8b8;
-    font-size:16px;
+    font-size:15px;
     margin-top:10px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;

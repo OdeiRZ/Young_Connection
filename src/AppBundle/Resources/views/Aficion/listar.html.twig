@@ -2,6 +2,11 @@
 
 {% block title %}Listar Aficiones{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+{% endblock %}
+
 {% block content %}
     <h2 class="well">Listado de Aficiones</h2>
 
@@ -9,7 +14,7 @@
         {% if is_granted('ROLE_ADMIN') %}
             <form method="post" action="{{ path('grupo_aficion_eliminar') }}">
         {% endif %}
-        <table class="table table-bordered table-condensed table-hover table-striped">
+        <table class="table table-bordered table-condensed table-hover table-striped" id="tabla">
             <thead>
             <tr>
                 {% if is_granted('ROLE_ADMIN') %}
