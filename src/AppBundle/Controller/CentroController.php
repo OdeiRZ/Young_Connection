@@ -70,7 +70,7 @@ class CentroController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Centro',
-                'attr' => [ 'class' => 'btn borrar' ]
+                'attr' => [ 'class' => 'btn borrar cbutton cbutton--effect-novak-borrar' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {

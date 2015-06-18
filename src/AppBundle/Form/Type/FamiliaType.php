@@ -91,7 +91,7 @@ class FamiliaType extends AbstractType
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',
                 'attr' => [
-                    'class' => 'btn crear'
+                    'class' => 'btn crear cbutton cbutton--effect-novak-crear'
                 ]
             ]);
     }

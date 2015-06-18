@@ -125,6 +125,10 @@ input:focus, a:focus, button:focus, button:focus {
 .recordar i {
     font-size: 1.3em;
 }
+.recordar:focus {
+    outline: none;
+    color: gray !important;
+}
 /* footer */
 .footer-login {
     margin-top:20px;

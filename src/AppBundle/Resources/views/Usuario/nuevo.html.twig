@@ -8,9 +8,9 @@
     {{ form(formulario) }}
 
     {% if app.user %}
-        <a href="{{ path('usuarios_listar') }}" class="btn volver">Volver al listado de Usuarios</a>
+        <a href="{{ path('usuarios_listar') }}" class="btn volver cbutton cbutton--effect-novak-volver">Volver al listado de Usuarios</a>
     {% else %}
-        <a href="{{ path('inicio') }}" class="btn volver">Volver al inicio</a>
+        <a href="{{ path('inicio') }}" class="btn volver cbutton cbutton--effect-novak-volver">Volver al inicio</a>
     {% endif %}
 {% endblock %}
 

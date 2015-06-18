@@ -24,7 +24,7 @@
                         <!--<i class="glyphicon glyphicon-home"></i>-->
                     </a>
                     <span>Acceso</span>
-                    <a href="{{ path('usuario_recordar') }}" class="link-head-right recordar" title="Regenerar Contraseña">
+                    <a href="{{ path('usuario_recordar') }}" class="link-head-right recordar cbutton cbutton--effect-novak-enlace" title="Regenerar Contraseña">
                         <i class="glyphicon glyphicon-exclamation-sign"></i>
                     </a>
                 </div>
@@ -39,7 +39,7 @@
                            {% if ultimo_usuario %}autofocus="1" {% endif %}>
                     <div class="clear"></div>
                     <div class="button-login">
-                        <button type="submit" >
+                        <button type="submit" class="btn crear cbutton cbutton--effect-novak-crear">
                             <i class="glyphicon glyphicon-log-in"></i> &nbsp; Conectarse
                         </button>
                     </div>

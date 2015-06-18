@@ -37,10 +37,10 @@
                     {% if is_granted('ROLE_ADMIN') %}
                         <td><i class="glyphicon glyphicon-{{ aficion.validada ? 'ok' : 'remove' }}"></i></td>
                         <td>
-                            <a href="{{ path('aficion_modificar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs">
+                            <a href="{{ path('aficion_modificar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
-                            <a href="{{ path('aficion_eliminar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs">
+                            <a href="{{ path('aficion_eliminar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>
                         </td>
@@ -53,11 +53,11 @@
         <h3>No hay Aficiones para mostrar</h3>
     {% endif %}
 
-    <a href="{{ path('inicio') }}" class="btn volver">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('inicio') }}" class="btn volver cbutton cbutton--effect-novak-volver">Volver al Inicio</a>&nbsp;
     {% if is_granted('ROLE_ADMIN') and aficiones %}
-        <button type="submit" class="btn precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Aficiones seleccionadas</button>
+        <button type="submit" class="btn precaucion cbutton cbutton--effect-novak-precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Aficiones seleccionadas</button>
     {% endif %}
-    <a class="btn crear" href="{{ path('aficion_nuevo') }}"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Afición</a>
+    <a class="btn crear cbutton cbutton--effect-novak-crear" href="{{ path('aficion_nuevo') }}"><i class="glyphicon glyphicon-plus"></i> Crear una nueva Afición</a>
     {% if is_granted('ROLE_ADMIN') and aficiones %}
         </form>
     {% endif %}

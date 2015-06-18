@@ -55,10 +55,10 @@
                     </td>
                     <td>
                         {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_COORDINADOR') and app.user.id == grupo.coordinador.id) %}
-                            <a href="{{ path('grupo_modificar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs">
+                            <a href="{{ path('grupo_modificar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
-                            <a href="{{ path('grupo_eliminar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs">
+                            <a href="{{ path('grupo_eliminar', { 'grupo': grupo.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>
                         {% endif %}
@@ -71,11 +71,11 @@
         <h3>No hay Grupos para mostrar</h3>
     {% endif %}
 
-    <a href="{{ path('inicio') }}" class="btn volver">Volver al Inicio</a>&nbsp;
+    <a href="{{ path('inicio') }}" class="btn volver cbutton cbutton--effect-novak-volver">Volver al Inicio</a>&nbsp;
     {% if grupos %}
-        <button type="submit" class="btn precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Grupos seleccionados</button>
+        <button type="submit" class="btn precaucion cbutton cbutton--effect-novak-precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Grupos seleccionados</button>
     {% endif %}
-    <a href="{{ path('grupo_nuevo') }}" class="btn crear"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Grupo </a>
+    <a href="{{ path('grupo_nuevo') }}" class="btn crear cbutton cbutton--effect-novak-crear"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Grupo </a>
     </form>
 {% endblock %}
 

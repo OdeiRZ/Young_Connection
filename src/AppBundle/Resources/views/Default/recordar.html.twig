@@ -20,7 +20,7 @@
 {% endif %}
             <form method="post" action="{{ path('usuario_recordar') }}" class="form-login">
                 <div class="header">
-                    <a href="{{ path('inicio') }}" class="link-head-left recordar"  title="Volver">
+                    <a href="{{ path('inicio') }}" class="link-head-left recordar cbutton cbutton--effect-novak-enlace"  title="Volver">
                         <i class="glyphicon glyphicon-home"></i>
                     </a>
                     <span>Regenerar Contraseña</span>
@@ -36,7 +36,7 @@
                            autofocus="1" autocorrect="off" autocapitalize="off">
                     <div class="clear"></div>
                     <div class="button-login">
-                        <button type="submit" >
+                        <button type="submit" class="cbutton cbutton--effect-novak-crear">
                             <i class="glyphicon glyphicon-exclamation-sign"></i> &nbsp; Regenerar
                         </button>
                     </div>

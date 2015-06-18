@@ -213,11 +213,11 @@
         <h3>No hay Usuario para mostrar</h3>
     {% endif %}
 
-    <a href="{{ path('usuarios_listar') }}" class="btn volver">Volver al listado de Usuarios</a>
+    <a href="{{ path('usuarios_listar') }}" class="btn volver cbutton cbutton--effect-novak-volver">Volver al listado de Usuarios</a>
 {% endblock %}
 
 {% block javascripts %}
-{% javascripts '@AppBundle/Resources/public/js/TweenMax.min.js' %}
+{% javascripts '@AppBundle/Resources/public/js/*' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 {% endblock %}

@@ -61,7 +61,7 @@ class GrupoController extends Controller
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Grupo',
-                'attr' => [ 'class' => 'btn borrar' ]
+                'attr' => [ 'class' => 'btn borrar cbutton cbutton--effect-novak-borrar' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {

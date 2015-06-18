@@ -66,7 +66,7 @@ class IntercambioController extends BaseController
         $formulario
             ->add('eliminar', 'submit', [
                 'label' => 'Eliminar Intercambio',
-                'attr' => [ 'class' => 'btn borrar' ]
+                'attr' => [ 'class' => 'btn borrar cbutton cbutton--effect-novak-borrar' ]
             ]);
         $formulario->handleRequest($peticion);
         if ($formulario->isSubmitted() && $formulario->isValid()) {

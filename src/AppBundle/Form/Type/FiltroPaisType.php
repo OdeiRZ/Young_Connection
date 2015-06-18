@@ -25,7 +25,7 @@ class FiltroPaisType extends AbstractType
             ])
             ->add('enviar', 'submit', [
                 'label' => ($options['centro']) ? 'Filtrar Centros' : 'Filtrar Familias',
-                'attr' => ['class' => 'btn volver']
+                'attr' => ['class' => 'btn volver cbutton cbutton--effect-novak-volver']
             ]);
     }
 

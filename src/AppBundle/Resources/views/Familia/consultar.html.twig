@@ -161,11 +161,11 @@
         <h3>No hay Familia para mostrar</h3>
     {% endif %}
 
-    <a href="{{ path('familias_listar') }}" class="btn volver">Volver al listado de familias</a>
+    <a href="{{ path('familias_listar') }}" class="btn volver cbutton cbutton--effect-novak-volver">Volver al listado de familias</a>
 {% endblock %}
 
 {% block javascripts %}
-{% javascripts '@AppBundle/Resources/public/js/TweenMax.min.js' %}
+{% javascripts '@AppBundle/Resources/public/js/*' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 {% endblock %}
