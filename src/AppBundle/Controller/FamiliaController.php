@@ -102,6 +102,7 @@ class FamiliaController extends Controller
                     foreach ($alumnos as $alumno) {     //$usuario = $this->get('security.token_storage')->getToken()->getUser();
                         $alumno->setFamilia(null);
                     }
+                    $this->addFlash('success', 'Familia eliminada correctamente');
                     $em->remove($familia);
                 }
             } else {
@@ -175,6 +176,7 @@ class FamiliaController extends Controller
             foreach ($familia->getAlumnos() as $alumno) {
                 $alumno->setFamilia(null);
             }
+            $this->addFlash('success', 'Familia eliminada correctamente');
             $em->remove($familia);
             $em->flush();
         }

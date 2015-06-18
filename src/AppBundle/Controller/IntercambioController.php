@@ -75,6 +75,7 @@ class IntercambioController extends BaseController
                 $grupo->setIntercambio(null);
             }
             if ($formulario->get('eliminar')->isClicked()) {
+                $this->addFlash('success', 'Intercambio eliminado correctamente');
                 $em->remove($intercambio);
             } else {
                 foreach($intercambio->getGrupos() as $grupo) {
@@ -158,6 +159,7 @@ class IntercambioController extends BaseController
         foreach($intercambio->getGrupos() as $grupo) {
             $grupo->setIntercambio(null);
         }
+        $this->addFlash('success', 'Intercambio eliminado correctamente');
         $em->remove($intercambio);
         $em->flush();
         return new RedirectResponse(

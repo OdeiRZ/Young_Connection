@@ -40,7 +40,7 @@ class DefaultController extends Controller
         $ob->chart->borderRadius('5');
         $ob->credits->enabled(false);
         $ob->title->text('Alumnos registrados por País');
-        $ob->title->style(array('font' => 'italic 17px "Helvetica Neue"'));
+        $ob->title->style(array('font' => 'italic 17px "Georgia"'));
         $ob->lang->printChart("Imprimir Gráfico");
         $ob->lang->downloadJPEG("Descargar JPEG");
         $ob->lang->downloadPDF("Descargar PDF");

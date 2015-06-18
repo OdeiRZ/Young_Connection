@@ -79,6 +79,7 @@ class CentroController extends Controller
                 if (sizeof($centro->getCursos())) {
                     $this->addFlash('error', 'No puedes eliminar un Centro con Usuarios asignados');
                 } else {
+                    $this->addFlash('success', 'Centro eliminado correctamente');
                     $em->remove($centro);
                 }
             } else {
@@ -129,7 +130,7 @@ class CentroController extends Controller
         if (sizeof($centro->getCursos())) {
             $this->addFlash('error', 'No puedes eliminar un Centro con Usuarios asignados');
         } else {
-            $this->addFlash('success', 'Centros eliminados correctamente');
+            $this->addFlash('success', 'Centro eliminado correctamente');
             $em->remove($centro);
             $em->flush();
         }

@@ -67,6 +67,7 @@ class GrupoController extends Controller
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
+                $this->addFlash('success', 'Grupo eliminado correctamente');
                 $em->remove($grupo);
             }
             $em->flush();
@@ -116,6 +117,7 @@ class GrupoController extends Controller
             return $this->createAccessDeniedException();
         }
         $em = $this->getDoctrine()->getManager();
+        $this->addFlash('success', 'Grupo eliminado correctamente');
         $em->remove($grupo);
         $em->flush();
         return new RedirectResponse(

@@ -64,6 +64,7 @@ class MensajeController extends Controller
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($formulario->get('eliminar')->isClicked()) {
+                $this->addFlash('success', 'Mensaje eliminado correctamente');
                 $em->remove($mensaje);
             }
             $em->flush();
@@ -111,6 +112,7 @@ class MensajeController extends Controller
     public function eliminarAction(Mensaje $mensaje, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
+        $this->addFlash('success', 'Mensaje eliminado correctamente');
         $em->remove($mensaje);
         $em->flush();
         return new RedirectResponse(

@@ -84,6 +84,10 @@ class FamiliaType extends AbstractType
                               ->setParameter('id_alumno', $usuario); },
                 'required' => false
             ])
+            ->add('alumnos', null, [
+                'label' => 'Alumno/s Hermano/s',
+                'required' => false
+            ])
             ->add('observaciones', 'textarea', [
                 'label' => 'Observaciones',
                 'required' => false

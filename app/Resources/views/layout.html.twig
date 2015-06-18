@@ -59,11 +59,10 @@
                                     <li><a href="{{ path('usuario_nuevo_admin') }}">Crear Usuario{% if ruta == 'usuario_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
                                 {% endif %}
                                 {% if is_granted('ROLE_ALUMNO') %}
-                                    {% if not (app.user.familia) %}
-                                        <li><a href="{{ path('familia_nuevo') }}">Crear Familia{% if ruta == 'familia_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
-                                    {% endif %}
                                     {% if app.user.familia %}
                                         <li><a href="{{ path('familia_modificar', { 'familia': app.user.familia.id }) }}">Listar Familia{% if ruta == 'familia_modificar' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
+                                    {% elseif ruta != 'familia_modificar' %}
+                                        <li><a href="{{ path('familia_nuevo') }}">Crear Familia{% if ruta == 'familia_nuevo' %} <span class="glyphicon glyphicon-ok"></span>{% endif %}</a></li>
                                     {% endif %}
                                 {% endif %}
                             </ul>

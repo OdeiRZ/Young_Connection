@@ -78,6 +78,7 @@ class CursoController extends Controller
                 if (sizeof($curso->getAlumnos())) {
                     $this->addFlash('error', 'No puedes eliminar un Curso con Usuarios asignados');
                 } else {
+                    $this->addFlash('success', 'Curso eliminado correctamente');
                     $em->remove($curso);
                     $em->flush();
                 }
@@ -129,6 +130,7 @@ class CursoController extends Controller
         if (sizeof($curso->getAlumnos())) {
             $this->addFlash('error', 'No puedes eliminar un Curso con Usuarios asignados');
         } else {
+            $this->addFlash('success', 'Curso eliminado correctamente');
             $em->remove($curso);
             $em->flush();
         }

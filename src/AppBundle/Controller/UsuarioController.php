@@ -212,6 +212,7 @@ class UsuarioController extends Controller
         } elseif (sizeof($usuario->getAlojamientos())) {
             $this->addFlash('error', 'No puedes eliminar un Usuario con Alojamientos asignados');
         } else {
+            $this->addFlash('success', 'Usuario eliminado correctamente');
             $em->remove($usuario);
             $em->flush();
         }
