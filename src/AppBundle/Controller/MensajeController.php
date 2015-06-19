@@ -35,7 +35,7 @@ class MensajeController extends Controller
             $qb = $em->getRepository('AppBundle:Mensaje')
                      ->createQueryBuilder('m')
                      ->where('m.usuarioDestino = :id AND m.usuarioOrigen = :usuario OR m.usuarioDestino = :usuario AND m.usuarioOrigen = :id')
-                     ->addOrderBy('m.fechaEnvio', 'DESC')
+                     ->addOrderBy('m.fechaEnvio', 'ASC')
                      ->setParameter('id', $miUsuario)
                      ->setParameter('usuario', $usuario);
             $mensajes = $qb
@@ -122,6 +122,7 @@ class MensajeController extends Controller
 
     /**
      * @Route("/eliminar/{mensaje}", name="mensaje_eliminar"), methods={'GET', 'POST'}
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function eliminarAction(Mensaje $mensaje, Request $peticion)
     {

@@ -15,32 +15,34 @@
         <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
             <tr>
+                <th>Fecha</th>
                 <th>Orígen</th>
-                <th>Fecha Envio</th>
-                <th>Recibido</th>
                 <th>Contenido</th>
+                <th>Recibido</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             {% for mensaje in mensajes %}
-                <tr>
-                    <td>{% if mensaje.usuarioOrigen.getWebPath %}
-                            <img src="{{ asset(mensaje.usuarioOrigen.getWebPath) }}" alt="{{ mensaje.usuarioOrigen.id }}" class="img-thumbnail" height="50" width="50" />
-                        {% endif %}
-                        {{ mensaje.usuarioOrigen }}
-                    </td>
+                <tr class="{% if mensaje.usuarioOrigen.id == app.user.id %}propios{% endif %}">
                     <td>{{ mensaje.fechaEnvio|date("d/m/Y H:i") }}</td>
-                    <td><i class="glyphicon glyphicon-{{ mensaje.estaRecibido ? 'ok' : 'remove' }}"></i></td>
+                    <td>{% if mensaje.usuarioOrigen.getWebPath %}
+                            <img src="{{ asset(mensaje.usuarioOrigen.getWebPath) }}" alt="{{ mensaje.usuarioOrigen.id }}" class="img-circle" height="20" width="20" />
+                        {% endif %}
+                        {{ mensaje.usuarioOrigen.apellidos }} {{ mensaje.usuarioOrigen.nombre }}
+                    </td>
                     <td>{{ mensaje.contenido }}</td>
+                    <td><i class="glyphicon glyphicon-{{ mensaje.estaRecibido ? 'ok' : 'remove' }}"></i></td>
                     <td>
                         {% if mensaje.usuarioOrigen.id == app.user.id %}
                             <a href="{{ path('mensaje_modificar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
-                            <a href="{{ path('mensaje_eliminar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('mensaje_eliminar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>

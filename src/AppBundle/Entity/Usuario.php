@@ -1073,9 +1073,9 @@ class Usuario implements UserInterface
      */
     public function __toString()
     {
-        $aux = ($this->getEsAlumno() or $this->getEsCoordinador()) ? ' - (' . $this->getCurso() . ')' : '';
-        return $this->getApellidos() . ' ' .
-               $this->getNombre() . $aux;
+        $aux = ($this->getEsAlumno() or $this->getEsCoordinador()) ? '(' . $this->getCurso() . ') - ' : '';
+        return $aux . $this->getApellidos() . ' ' .
+               $this->getNombre();
     }
 
     /**

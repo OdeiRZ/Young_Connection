@@ -39,7 +39,7 @@ class IntercambioController extends BaseController
                  ->orderBy('i.fechaInicio', 'DESC');
         if ($fechas['desde'] && $fechas['hasta']) {
             if(new \DateTime($fechas['desde']) <= new \DateTime($fechas['hasta'])) {
-                $qb->where('i.fechaInicio >= :desde')
+                 $qb->where('i.fechaInicio >= :desde')
                     ->andWhere('i.fechaFin <= :hasta')
                     ->setParameter('desde', $fechas['desde'])
                     ->setParameter('hasta', $fechas['hasta']);

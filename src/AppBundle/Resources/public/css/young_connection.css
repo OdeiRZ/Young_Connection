@@ -115,7 +115,9 @@ code {
 .seleccion, #multiple {
     text-align: center;
 }
-
+.propios {
+    color:green;
+}
 
 .crear, .volver, .precaucion , .borrar {
     outline: none;
