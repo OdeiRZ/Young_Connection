@@ -17,11 +17,15 @@ class AlojamientoType extends AbstractType
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('a')
                               ->Where('a.esAlumno = 1')
-                              ->andWhere('a.esActivo = 1'); },
+                              ->andWhere('a.esActivo = 1')
+                              ->andWhere('a.estaDisponible = 1'); },
                 'required' => true
             ])
             ->add('familia', null, [
                 'label' => 'Familia*',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('f')
+                              ->Where('f.estaDisponible = 1'); },
                 'required' => true
             ]);
     }

@@ -43,7 +43,7 @@ class Miembro
      * @Assert\Regex(
      *     pattern="/\d/",
      *     match=false,
-     *     message="Los apellidos no puede contener dígitos" )
+     *     message="Los apellidos no deben contener dígitos" )
      */
     protected $apellidos;
 

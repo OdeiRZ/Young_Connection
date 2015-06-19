@@ -131,6 +131,7 @@ class IntercambioController extends BaseController
                     $grupo->setIntercambio($intercambio);
                     foreach($grupo->getAlojamientos() as $alojamiento) {
                         $alojamiento->getFamilia()->setEstaDisponible(false);
+                        $alojamiento->getAlumno()->setEstaDisponible(false);
                     }
                 }
                 $em->persist($intercambio);
@@ -162,6 +163,7 @@ class IntercambioController extends BaseController
             $grupo->setIntercambio(null);
             foreach($grupo->getAlojamientos() as $alojamiento) {
                 $alojamiento->getFamilia()->setEstaDisponible(true);
+                $alojamiento->getAlumno()->setEstaDisponible(true);
             }
         }
         $this->addFlash('success', 'Intercambio eliminado correctamente');
@@ -189,6 +191,7 @@ class IntercambioController extends BaseController
                     $grupo->setIntercambio(null);
                     foreach($grupo->getAlojamientos() as $alojamiento) {
                         $alojamiento->getFamilia()->setEstaDisponible(true);
+                        $alojamiento->getAlumno()->setEstaDisponible(true);
                     }
                 }
                 $em->remove($intercambio);

@@ -173,7 +173,8 @@ class UsuarioController extends Controller
     {
         $usuario = new Usuario();
         $usuario->setEsActivo(true)
-                ->setRuta("user.png");
+                ->setRuta("user.png")
+                ->setEstaDisponible(true);
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'coordinador' => $this->isGranted('ROLE_COORDINADOR'),

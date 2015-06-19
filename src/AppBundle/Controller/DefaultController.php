@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\UsuarioType;
 use AppBundle\Utils\Aficiones;
-use AppBundle\Utils\Familias;
+use AppBundle\Utils\Intercambios;
 use AppBundle\Utils\Mensajes;
 use AppBundle\Utils\Notificaciones;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -33,7 +33,8 @@ class DefaultController extends Controller
                 ]);
         }
         if ($this->isGranted('ROLE_ADMIN') or $this->isGranted('ROLE_COORDINADOR')) {
-            Familias::actualizarFamiliasDisponibles($this, $this->container);
+            Intercambios::actualizarFamiliasDisponibles($this, $this->container);
+            Intercambios::actualizarAlumnosDisponibles($this, $this->container);
         }
         $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
                           $this->get('security.token_storage')->getToken()->getUser()));

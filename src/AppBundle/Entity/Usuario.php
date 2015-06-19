@@ -49,7 +49,7 @@ class Usuario implements UserInterface
      * @Assert\Regex(
      *     pattern="/\d/",
      *     match=false,
-     *     message="Los apellidos no puede contener dígitos" )
+     *     message="Los apellidos no deben contener dígitos" )
      */
     protected $apellidos;
 
@@ -237,6 +237,13 @@ class Usuario implements UserInterface
      * @var Aficion
      */
     protected $aficiones;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var boolean
+     */
+    protected $estaDisponible;
 
     /**
      * @ORM\ManyToOne(targetEntity="Familia", inversedBy="alumnos")
@@ -1153,5 +1160,28 @@ class Usuario implements UserInterface
     public function getPais()
     {
         return $this->pais;
+    }
+
+    /**
+     * Set estaDisponible
+     *
+     * @param boolean $estaDisponible
+     * @return Usuario
+     */
+    public function setEstaDisponible($estaDisponible)
+    {
+        $this->estaDisponible = $estaDisponible;
+
+        return $this;
+    }
+
+    /**
+     * Get estaDisponible
+     *
+     * @return boolean 
+     */
+    public function getEstaDisponible()
+    {
+        return $this->estaDisponible;
     }
 }

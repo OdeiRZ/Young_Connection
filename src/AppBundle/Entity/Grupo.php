@@ -63,12 +63,6 @@ class Grupo
      */
     public function __toString()
     {
-        /*$aux = '';
-        $alojamientos = $this->getAlojamientos();
-        foreach($alojamientos as $alojamiento) {
-            $aux .= $alojamiento . '<br/>';
-        }
-        return $aux;*/
         return $this->getDescripcion();
     }
 

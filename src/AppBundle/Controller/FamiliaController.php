@@ -142,7 +142,7 @@ class FamiliaController extends Controller
     public function nuevoAction(Request $peticion)
     {
         $familia = new Familia();
-        $familia->setEsDisponible(true);
+        $familia->setEstaDisponible(true);
         $formulario = $this->createForm(new FamiliaType(), $familia, ['usuario' => $this->get('security.token_storage')
                                                                                         ->getToken()->getUser()->getId()]);
         $formulario->handleRequest($peticion);
