@@ -67,8 +67,9 @@ class FamiliaController extends Controller
     public function modificarAction(Familia $familia, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
-        if (!$familia) {
-            throw $this->createNotFoundException('No hay familias disponibles '.$familia);
+        $usuarioActivo = $this->getUser();
+        if ($familia->getId() !== $usuarioActivo->getFamilia()->getId() && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->createAccessDeniedException();
         }
         $miembros = new ArrayCollection();
         foreach ($familia->getMiembros() as $miembro) {
