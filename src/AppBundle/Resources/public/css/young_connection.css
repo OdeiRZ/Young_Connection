@@ -201,53 +201,6 @@ code {
     background: #CCCCCC;
     box-shadow: inset 0 1px 2px #999999;
 }
-
-
-@media (min-width: 768px) and (max-width: 1200px){
-    .nav > li > a {
-        padding: 15px 10px;
-    }
-}
-@media (max-width: 992px){
-    .navbar-header {
-        float: none;
-    }
-    .navbar-left,.navbar-right {
-        float: none !important;
-    }
-    .navbar-toggle {
-        display: block;
-    }
-    .navbar-collapse {
-        border-top: 1px solid transparent;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-    }
-    .navbar-fixed-top {
-        top: 0;
-        border-width: 0 0 1px;
-    }
-    .navbar-collapse.collapse {
-        display: none!important;
-    }
-    .navbar-nav {
-        float: none!important;
-        margin-top: 7.5px;
-    }
-    .navbar-nav>li {
-        float: none;
-    }
-    .navbar-nav>li>a {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-    .collapse.in{
-        display:block !important;
-    }
-    .navbar-nav:last-child>li:last-child> a {
-        float: left;
-    }
-}
-
 .cbutton {
     position: relative;
     display: inline-block;
@@ -297,6 +250,8 @@ code {
     -webkit-animation: anim-effect-novak 0.5s forwards;
     animation: anim-effect-novak 0.5s forwards;
 }
+
+
 @-webkit-keyframes anim-effect-novak {
     0% {
         opacity: 1;
@@ -319,5 +274,49 @@ code {
         opacity: 0;
         -webkit-transform: scale3d(8, 8, 1);
         transform: scale3d(8, 8, 1);
+    }
+}
+@media (min-width: 768px) and (max-width: 1200px){
+    .nav > li > a {
+        padding: 15px 10px;
+    }
+}
+@media (max-width: 992px){
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin-top: 7.5px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+        display:block !important;
+    }
+    .navbar-nav:last-child>li:last-child> a {
+        float: left;
     }
 }

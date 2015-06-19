@@ -23,7 +23,7 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     # Tiempo de autorefresco de pagina
-    refresco:          60
+    refresco:          120
 
     # Datos generales del centro educativo
     centro:            'Young Connection'

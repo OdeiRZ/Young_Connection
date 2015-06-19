@@ -23,26 +23,37 @@ class MensajeController extends Controller
      */
     public function listarAction(Request $peticion)
     {
-        Mensajes::actualizarMensajesNoLeidos($this, $this->container, $this->get('security.token_storage')->getToken()->getUser());
+        $miUsuario = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
                           $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new FiltroUsuarioType())->handleRequest($peticion);
+        $mensajes = null;
         $usuario = ($form->isValid()) ? $_POST['filtroUsuarios']['usuario'] : null;
-        $qb = $em->getRepository('AppBundle:Mensaje')
-                 ->createQueryBuilder('m')
-                 ->addOrderBy('m.usuarioDestino', 'DESC')
-                 ->addOrderBy('m.fechaEnvio', 'ASC')
-                 ->where('m.usuarioOrigen = :id')
-                 ->setParameter('id', $this->get('security.token_storage')->getToken()->getUser());
         if ($usuario) {
-            $qb->andWhere('m.usuarioDestino = :usuario')
-                ->setParameter('usuario', $_POST['filtroUsuarios']['usuario']);
+            $qb = $em->getRepository('AppBundle:Mensaje')
+                     ->createQueryBuilder('m')
+                     ->where('m.usuarioDestino = :id AND m.usuarioOrigen = :usuario OR m.usuarioDestino = :usuario AND m.usuarioOrigen = :id')
+                     ->addOrderBy('m.fechaEnvio', 'DESC')
+                     ->setParameter('id', $miUsuario)
+                     ->setParameter('usuario', $usuario);
+            $mensajes = $qb
+                ->getQuery()
+                ->getResult();
+        } else {
+            $qb = $em->getRepository('AppBundle:Mensaje')
+                     ->createQueryBuilder('m')
+                     ->where('m.usuarioDestino = :id')
+                     ->andWhere('m.estaRecibido = false')
+                     ->addOrderBy('m.fechaEnvio', 'ASC')
+                     ->addOrderBy('m.usuarioDestino', 'DESC')
+                     ->setParameter('id', $miUsuario);
+            $mensajes = $qb
+                ->getQuery()
+                ->getResult();
         }
-        $mensajes = $qb
-            ->getQuery()
-            ->getResult();
+        Mensajes::actualizarMensajesNoLeidos($this, $this->container, $this->get('security.token_storage')->getToken()->getUser());
         return $this->render('AppBundle:Mensaje:listar.html.twig', [
             'formulario_usuarios' => $form->createView(),
             'mensajes' => $mensajes
@@ -54,6 +65,10 @@ class MensajeController extends Controller
      */
     public function modificarAction(Mensaje $mensaje, Request $peticion)
     {
+        $usuarioActivo = $this->getUser();
+        if ($mensaje->getUsuarioDestino()->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->createAccessDeniedException();
+        }
         $formulario = $this->createForm(new MensajeType(), $mensaje);
         $formulario
             ->add('eliminar', 'submit', [
@@ -107,10 +122,13 @@ class MensajeController extends Controller
 
     /**
      * @Route("/eliminar/{mensaje}", name="mensaje_eliminar"), methods={'GET', 'POST'}
-     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function eliminarAction(Mensaje $mensaje, Request $peticion)
     {
+        $usuarioActivo = $this->getUser();
+        if ($mensaje->getUsuarioDestino()->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         $this->addFlash('success', 'Mensaje eliminado correctamente');
         $em->remove($mensaje);

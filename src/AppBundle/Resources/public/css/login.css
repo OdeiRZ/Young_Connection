@@ -129,6 +129,9 @@ input:focus, a:focus, button:focus, button:focus {
     outline: none;
     color: gray !important;
 }
+.navbar-toggle {
+    display: none !important;
+}
 /* footer */
 .footer-login {
     margin-top:20px;

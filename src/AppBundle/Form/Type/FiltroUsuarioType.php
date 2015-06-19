@@ -2,9 +2,9 @@
 
 namespace AppBundle\Form\Type;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FiltroUsuarioType extends AbstractType
@@ -19,7 +19,7 @@ class FiltroUsuarioType extends AbstractType
             ->add('usuario', 'entity', [
                 'label' => 'Usuarios',
                 'required' => false,
-                'empty_value' => 'Todos',
+                'empty_value' => 'No leídos',
                 'class' => 'AppBundle\Entity\Usuario',
                 'attr' => ['class' => 'toggle',
                            'name' => 'usuario']
@@ -29,7 +29,6 @@ class FiltroUsuarioType extends AbstractType
                 'attr' => ['class' => 'btn volver cbutton cbutton--effect-novak-volver']
             ]);
     }
-
     /**
      * @param OptionsResolverInterface $resolver
      */
