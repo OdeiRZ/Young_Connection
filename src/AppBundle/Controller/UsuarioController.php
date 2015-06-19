@@ -30,20 +30,18 @@ class UsuarioController extends Controller
         $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
             $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
-        $em = $this->getDoctrine()->getManager();
-        $apellidosDefecto = null;
-        $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
-        $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
+        $em = $this->getDoctrine()->getManager(); //$apellidosDefecto = null;
+        $form = $this->createForm(new FiltroCursoType())->handleRequest($peticion);//$form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
+        $curso = ($form->isValid()) ? $_POST['filtroCursos']['curso'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
                  ->createQueryBuilder('u')
                  ->orderBy('u.esAdministrador', 'DESC')
                  ->addOrderBy('u.esCoordinador', 'DESC')
                  ->addOrderBy('u.apellidos', 'ASC')
                  ->addOrderBy('u.nombre', 'DESC');
-        if ($apellidos) {
-            $qb->where('u.apellidos LIKE :apellidos')
-               ->orWhere('u.nombre LIKE :apellidos')
-               ->setParameter('apellidos', '%'.$apellidos.'%');
+        if ($curso) {
+            $qb->andWhere('u.curso = :curso')//$qb->where('u.apellidos LIKE :apellidos')->orWhere('u.nombre LIKE :apellidos')
+                ->setParameter('curso', $curso);//->setParameter('apellidos', '%'.$apellidos.'%');
         }
         $usuarios = $qb
             ->getQuery()
@@ -73,7 +71,7 @@ class UsuarioController extends Controller
                  ->where('u.esAlumno = 1');
         if ($curso) {
             $qb->andWhere('u.curso = :curso')
-               ->setParameter('curso', $_POST['filtroCursos']['curso']);
+               ->setParameter('curso', $curso);
         }
         $usuarios = $qb
             ->getQuery()
