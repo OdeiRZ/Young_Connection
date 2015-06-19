@@ -20,6 +20,17 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $peticion)
     {
+        if (!$this->get('security.token_storage')->getToken()->getUser()->getEsActivo()) {
+            $this->get('security.token_storage')->setToken(null);
+            $this->get('request')->getSession()->invalidate();
+            $this->addFlash('error', 'Su usuario no está activo en este momento');
+            $helper = $this->get('security.authentication_utils');
+            return $this->render('AppBundle:Default:entrada.html.twig',
+                [
+                    'ultimo_usuario' => $helper->getLastUsername(),
+                    'error' => $helper->getLastAuthenticationError()
+                ]);
+        }
         $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
                           $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));

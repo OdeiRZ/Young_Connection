@@ -34,15 +34,13 @@
                     <td>{{ mensaje.contenido }}</td>
                     <td><i class="glyphicon glyphicon-{{ mensaje.estaRecibido ? 'ok' : 'remove' }}"></i></td>
                     <td>
-                        {% if mensaje.usuarioOrigen.id == app.user.id %}
+                        {% if mensaje.usuarioOrigen.id == app.user.id or is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('mensaje_modificar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('mensaje_eliminar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </a>
-                            {% endif %}
+                            <a href="{{ path('mensaje_eliminar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
                         {% endif %}
                     </td>
                 </tr>
