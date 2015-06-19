@@ -88,6 +88,14 @@
                 </div>
             </div>
             <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" {{ familia.estaDisponible ? 'checked="checked"' : '' }} />Está Disponible</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label">Miembro/s</label>
                 <div class="col-sm-10">
                     {% if familia.miembros|length > 0 %}

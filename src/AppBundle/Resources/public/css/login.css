@@ -62,7 +62,7 @@ input:focus, a:focus, button:focus, button:focus {
     transform: rotateY(360deg);
 }
 .avatar-login-regenerate img:hover {
-    transition: all 2s cubic-bezier(0, 1, 1, 1) 0s;
+    transition: all 2s cubic-bezier(1, 1.3, 1, 1) 0s;
     transform: rotate(360deg);
 }
 /* inputs */

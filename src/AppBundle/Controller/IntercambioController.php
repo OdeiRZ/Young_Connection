@@ -106,7 +106,6 @@ class IntercambioController extends BaseController
         $html = $this->renderView('AppBundle:Intercambio:imprimir.html.twig',
             array(
                 'intercambio' => $intercambio,
-                'usuario' => 'odei.riveiro@gmail.com',
                 'localidad' => $this->container->getParameter('localidad')
             ));
         $pdf->writeHTML($html);
@@ -130,6 +129,9 @@ class IntercambioController extends BaseController
                 $em = $this->getDoctrine()->getManager();
                 foreach($intercambio->getGrupos() as $grupo) {
                     $grupo->setIntercambio($intercambio);
+                    foreach($grupo->getAlojamientos() as $alojamiento) {
+                        $alojamiento->getFamilia()->setEstaDisponible(false);
+                    }
                 }
                 $em->persist($intercambio);
                 $em->flush();
@@ -158,6 +160,9 @@ class IntercambioController extends BaseController
         $em = $this->getDoctrine()->getManager();
         foreach($intercambio->getGrupos() as $grupo) {
             $grupo->setIntercambio(null);
+            foreach($grupo->getAlojamientos() as $alojamiento) {
+                $alojamiento->getFamilia()->setEstaDisponible(true);
+            }
         }
         $this->addFlash('success', 'Intercambio eliminado correctamente');
         $em->remove($intercambio);
@@ -182,6 +187,9 @@ class IntercambioController extends BaseController
             foreach($intercambios as $intercambio) {
                 foreach($intercambio->getGrupos() as $grupo) {
                     $grupo->setIntercambio(null);
+                    foreach($grupo->getAlojamientos() as $alojamiento) {
+                        $alojamiento->getFamilia()->setEstaDisponible(true);
+                    }
                 }
                 $em->remove($intercambio);
             }

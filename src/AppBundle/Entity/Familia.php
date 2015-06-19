@@ -143,6 +143,13 @@ class Familia
     protected $observaciones;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var boolean
+     */
+    protected $estaDisponible;
+
+    /**
      * @ORM\OneToMany(targetEntity="Usuario", mappedBy="familia")
      * @ORM\JoinColumn(nullable=false)
      *
@@ -592,5 +599,28 @@ class Familia
     public function getAlojamientos()
     {
         return $this->alojamientos;
+    }
+
+    /**
+     * Set estaDisponible
+     *
+     * @param boolean $estaDisponible
+     * @return Familia
+     */
+    public function setEstaDisponible($estaDisponible)
+    {
+        $this->estaDisponible = $estaDisponible;
+
+        return $this;
+    }
+
+    /**
+     * Get estaDisponible
+     *
+     * @return boolean 
+     */
+    public function getEstaDisponible()
+    {
+        return $this->estaDisponible;
     }
 }
