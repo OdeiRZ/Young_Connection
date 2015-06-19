@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -22,6 +23,7 @@ class Mensaje
      * @ORM\Column(type="datetime")
      *
      * @var \DateTime
+     * @Assert\DateTime()
      */
     protected $fechaEnvio;
 
@@ -36,6 +38,9 @@ class Mensaje
      * @ORM\Column(type="text")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 2,
+     *      minMessage = "El contenido debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $contenido;
 

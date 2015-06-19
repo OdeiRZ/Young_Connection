@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -19,9 +20,12 @@ class Aficion
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "La descripción debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $descripcion;
 

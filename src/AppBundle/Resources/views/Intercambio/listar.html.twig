@@ -47,14 +47,14 @@
                     </td>
                     <td>{{ intercambio.observaciones }}</td>
                     <td>
-                        <a href="{{ path('intercambio_imprimir', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace">
+                        <a href="{{ path('intercambio_imprimir', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Descargar detalles">
                             <i class="glyphicon glyphicon-download-alt"></i>
                         </a>
                         {#% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_COORDINADOR') and app.user.id in intercambio.coordinadores|keys ) %#}
-                            <a href="{{ path('intercambio_modificar', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace">
+                            <a href="{{ path('intercambio_modificar', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Modificar">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
-                            <a href="{{ path('intercambio_eliminar', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace">
+                            <a href="{{ path('intercambio_eliminar', { 'intercambio': intercambio.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Borrar">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>
                         {#% endif %#}

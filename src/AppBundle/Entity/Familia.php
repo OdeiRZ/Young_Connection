@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -24,6 +25,9 @@ class Familia
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "La descripción debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $descripcion;
 
@@ -31,6 +35,9 @@ class Familia
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "La dirección debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $direccion;
 
@@ -38,6 +45,13 @@ class Familia
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "La ciudad debe contener {{ limit }} caracteres como mínimo" )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="La ciudad no puede contener dígitos" )
      */
     protected $ciudad;
 
@@ -45,6 +59,13 @@ class Familia
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "La provincia debe contener {{ limit }} caracteres como mínimo" )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="La provincia no puede contener dígitos" )
      */
     protected $provincia;
 
@@ -52,6 +73,13 @@ class Familia
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "El pais debe contener {{ limit }} caracteres como mínimo" )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="El país no puede contener dígitos" )
      */
     protected $pais;
 
@@ -59,6 +87,9 @@ class Familia
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "El teléfono debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $telefono;
 

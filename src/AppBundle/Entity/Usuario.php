@@ -29,6 +29,13 @@ class Usuario implements UserInterface
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "El nombre debe contener {{ limit }} caracteres como mínimo" )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="El nombre no puede contener dígitos" )
      */
     protected $nombre;
 
@@ -36,6 +43,13 @@ class Usuario implements UserInterface
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Los apellidos deben contener {{ limit }} caracteres como mínimo" )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Los apellidos no puede contener dígitos" )
      */
     protected $apellidos;
 
@@ -43,6 +57,7 @@ class Usuario implements UserInterface
      * @ORM\Column(type="date")
      *
      * @var \DateTime
+     * @Assert\DateTime()
      */
     protected $fechaNacimiento;
 
@@ -71,6 +86,9 @@ class Usuario implements UserInterface
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "El teléfono debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $telefono;
 
@@ -132,6 +150,9 @@ class Usuario implements UserInterface
      * @ORM\Column(type="string", nullable=true)
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "El país debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $pais;
 

@@ -37,10 +37,10 @@
                     {% if is_granted('ROLE_ADMIN') %}
                         <td><i class="glyphicon glyphicon-{{ aficion.validada ? 'ok' : 'remove' }}"></i></td>
                         <td>
-                            <a href="{{ path('aficion_modificar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace">
+                            <a href="{{ path('aficion_modificar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Modificar">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
-                            <a href="{{ path('aficion_eliminar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace">
+                            <a href="{{ path('aficion_eliminar', { 'aficion': aficion.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Borrar">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>
                         </td>

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -24,6 +25,9 @@ class Grupo
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "La descripción debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $descripcion;
 

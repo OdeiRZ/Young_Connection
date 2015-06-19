@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -22,6 +23,13 @@ class Miembro
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "El nombre debe contener {{ limit }} caracteres como mínimo" )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="El nombre no puede contener dígitos" )
      */
     protected $nombre;
 
@@ -29,6 +37,13 @@ class Miembro
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Los apellidos deben contener {{ limit }} caracteres como mínimo" )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Los apellidos no puede contener dígitos" )
      */
     protected $apellidos;
 
@@ -36,6 +51,7 @@ class Miembro
      * @ORM\Column(type="date", nullable=true)
      *
      * @var \DateTime
+     * @Assert\DateTime()
      */
     protected $fechaNacimiento;
 
@@ -50,6 +66,9 @@ class Miembro
      * @ORM\Column(type="string", nullable=true)
      *
      * @var string
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage = "El teléfono debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $telefono;
 
@@ -64,6 +83,9 @@ class Miembro
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "El tipo de miembro debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $tipo;
 
