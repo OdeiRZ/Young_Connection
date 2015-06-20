@@ -26,9 +26,8 @@
             {% for mensaje in mensajes %}
                 <tr class="{% if mensaje.usuarioOrigen.id == app.user.id %}propios{% endif %}">
                     <td>{{ mensaje.fechaEnvio|date("d/m/Y H:i") }}</td>
-                    <td>{% if mensaje.usuarioOrigen.getWebPath %}
-                            <img src="{{ asset(mensaje.usuarioOrigen.getWebPath) }}" alt="{{ mensaje.usuarioOrigen.id }}" class="img-circle" height="20" width="20" />
-                        {% endif %}
+                    <td>
+                        {% if mensaje.usuarioOrigen.getWebPath %}<img src="{{ asset(mensaje.usuarioOrigen.getWebPath) }}" alt="{{ mensaje.usuarioOrigen.id }}" class="img-circle" height="20" width="20" />{% endif %}
                         {{ mensaje.usuarioOrigen.apellidos }} {{ mensaje.usuarioOrigen.nombre }}
                     </td>
                     <td>{{ mensaje.contenido }}</td>

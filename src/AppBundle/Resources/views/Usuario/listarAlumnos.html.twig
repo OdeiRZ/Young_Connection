@@ -36,11 +36,8 @@
                         <td class="seleccion"><input type="checkbox" value="{{ usuario.id }}" name="grupoUsuarios[]"/></td>
                     {% endif %}
                     <td>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}">{{ usuario }}</a>
-                        {% else %}
-                            {{ usuario }}
-                        {% endif %}
+                        {% if usuario.getWebPath %}<img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}" class="img-thumbnail" height="40" width="40" />{% endif %}
+                        {{ usuario.apellidos }} {{ usuario.nombre }}
                     </td>
                     <td>
                         {% if is_granted('ROLE_ADMIN') %}

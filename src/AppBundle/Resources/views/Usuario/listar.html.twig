@@ -25,7 +25,6 @@
                 <th>F. Nacimiento</th>
                 <th>Teléfono</th>
                 <th>Correo Electrónico</th>
-                <th>Fotografía</th>
                 <th></th>
             </tr>
             </thead>
@@ -35,14 +34,13 @@
                     {% if is_granted('ROLE_ADMIN') %}
                         <td class="seleccion"><input type="checkbox" value="{{ usuario.id }}" name="grupoUsuarios[]"/></td>
                     {% endif %}
-                    <td>{{ usuario.apellidos }} {{ usuario.nombre }}</td>
+                    <td>
+                        {% if usuario.getWebPath %}<img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}" class="img-thumbnail" height="40" width="40" />{% endif %}
+                        {{ usuario.apellidos }} {{ usuario.nombre }}
+                    </td>
                     <td>{{ usuario.fechaNacimiento|date("d/m/Y") }}</td>
                     <td>{{ usuario.telefono }}</td>
                     <td>{{ usuario.correoElectronico }}</td>
-                    <td>
-                        {% if usuario.getWebPath %}<img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}"
-                                                        class="img-thumbnail" height="40" width="40" />{% endif %}
-                    </td>
                     <td>
                         <a href="{{ path('usuario_consultar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Consultar">
                             <i class="glyphicon glyphicon-eye-open"></i>
