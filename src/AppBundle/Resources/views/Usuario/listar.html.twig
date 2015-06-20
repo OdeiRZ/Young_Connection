@@ -51,9 +51,11 @@
                             <a href="{{ path('usuario_modificar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Modificar">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
-                            <a href="{{ path('usuario_eliminar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Borrar">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
+                            {% if app.user.id != usuario.id %}
+                                <a href="{{ path('usuario_eliminar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Borrar">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>
