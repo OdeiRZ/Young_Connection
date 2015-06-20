@@ -75,7 +75,7 @@
     {% endif %}
 
     <a href="{{ path('inicio') }}" class="btn volver cbutton cbutton--effect-novak-volver">Volver al Inicio</a>&nbsp;
-    {% if grupos %}
+    {% if grupos and is_granted('ROLE_ADMIN') %}
         <button type="submit" class="btn precaucion cbutton cbutton--effect-novak-precaucion"><i class="glyphicon glyphicon-trash"></i> Eliminar Grupos seleccionados</button>
     {% endif %}
     <a href="{{ path('grupo_nuevo') }}" class="btn crear cbutton cbutton--effect-novak-crear"><i class="glyphicon glyphicon-plus"></i> Crear un nuevo Grupo </a>

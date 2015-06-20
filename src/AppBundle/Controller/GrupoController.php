@@ -127,7 +127,7 @@ class GrupoController extends Controller
 
     /**
      * @Route("/eliminarGrupo", name="grupo_grupo_eliminar"), methods={'GET', 'POST'}
-     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function eliminarGrupoAction(Request $peticion)
     {

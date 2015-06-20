@@ -19,8 +19,11 @@ class Intercambios extends Controller
         foreach($familias as $familia) {
             $sw = true;
             foreach($familia->getAlojamientos() as $alojamiento) {
-                $fechaFinIntercambio = $alojamiento->getGrupo()->getIntercambio()->getFechaFin();//->format("d/m/Y");
-                $sw = ($fechaFinIntercambio > $fechaActual) ? false : true;
+                $fechaFinIntercambio = $alojamiento->getGrupo()->getIntercambio()->getFechaFin();
+                if ($fechaFinIntercambio > $fechaActual) {
+                    $sw = false;
+                    break;
+                }
             }
             if ($sw) {
                 $familia->setEstaDisponible(true);
@@ -44,7 +47,10 @@ class Intercambios extends Controller
             $sw = true;
             foreach($alumno->getAlojamientos() as $alojamiento) {
                 $fechaFinIntercambio = $alojamiento->getGrupo()->getIntercambio()->getFechaFin();
-                $sw = ($fechaFinIntercambio > $fechaActual) ? false : true;
+                if ($fechaFinIntercambio > $fechaActual) {
+                    $sw = false;
+                    break;
+                }
             }
             if ($sw) {
                 $alumno->setEstaDisponible(true);

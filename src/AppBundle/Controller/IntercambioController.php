@@ -62,6 +62,17 @@ class IntercambioController extends BaseController
      */
     public function modificarAction(Intercambio $intercambio, Request $peticion)
     {
+        $sw = false;
+        $usuarioActivo = $this->getUser();
+        foreach($intercambio->getGrupos() as $grupo) {
+            if ($grupo->getCoordinador()->getId() == $usuarioActivo->getId()) {
+                $sw = true;
+                break;
+            }
+        }
+        if (!$sw && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->createAccessDeniedException();
+        }
         $formulario = $this->createForm(new IntercambioType(), $intercambio);
         $formulario
             ->add('eliminar', 'submit', [
@@ -158,6 +169,17 @@ class IntercambioController extends BaseController
      */
     public function eliminarAction(Intercambio $intercambio, Request $peticion)
     {
+        $sw = false;
+        $usuarioActivo = $this->getUser();
+        foreach($intercambio->getGrupos() as $grupo) {
+            if ($grupo->getCoordinador()->getId() == $usuarioActivo->getId()) {
+                $sw = true;
+                break;
+            }
+        }
+        if (!$sw && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         foreach($intercambio->getGrupos() as $grupo) {
             $grupo->setIntercambio(null);
@@ -176,7 +198,7 @@ class IntercambioController extends BaseController
 
     /**
      * @Route("/eliminarGrupo", name="grupo_intercambio_eliminar"), methods={'GET', 'POST'}
-     * @Security(expression="has_role('ROLE_ADMIN') or has_role('ROLE_COORDINADOR')")
+     * @Security(expression="has_role('ROLE_ADMIN')")
      */
     public function eliminarGrupoAction(Request $peticion)
     {
