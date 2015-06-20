@@ -24,7 +24,7 @@ class Idioma
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "La descripción debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $descripcion;
@@ -33,6 +33,9 @@ class Idioma
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 1,
+     *      minMessage = "El reading debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $reading;
 
@@ -40,6 +43,9 @@ class Idioma
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 1,
+     *      minMessage = "El writing debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $writing;
 
@@ -47,6 +53,9 @@ class Idioma
      * @ORM\Column(type="string")
      *
      * @var string
+     * @Assert\Length(
+     *      min = 1,
+     *      minMessage = "El speaking debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $speaking;
 

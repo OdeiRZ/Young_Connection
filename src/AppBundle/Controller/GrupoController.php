@@ -6,6 +6,7 @@ use AppBundle\Entity\Grupo;
 use AppBundle\Form\Type\GrupoType;
 use AppBundle\Form\Type\FiltroCoordinadorType;
 use AppBundle\Utils\Aficiones;
+use AppBundle\Utils\Intercambios;
 use AppBundle\Utils\Mensajes;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -57,6 +58,8 @@ class GrupoController extends Controller
         if ($grupo->getCoordinador()->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
             return $this->createAccessDeniedException();
         }
+        Intercambios::actualizarFamiliasDisponibles($this, $this->container);
+        Intercambios::actualizarAlumnosDisponibles($this, $this->container);
         $formulario = $this->createForm(new GrupoType(), $grupo);
         $formulario
             ->add('eliminar', 'submit', [
@@ -69,9 +72,10 @@ class GrupoController extends Controller
             if ($formulario->get('eliminar')->isClicked()) {
                 $this->addFlash('success', 'Grupo eliminado correctamente');
                 $em->remove($grupo);
+            } else {
+                $this->addFlash('success', 'Datos guardados correctamente');
             }
             $em->flush();
-            $this->addFlash('success', 'Datos guardados correctamente');
             return new RedirectResponse(
                 $this->generateUrl('grupos_listar')
             );
@@ -88,6 +92,8 @@ class GrupoController extends Controller
      */
     public function nuevoAction(Request $peticion)
     {
+        Intercambios::actualizarFamiliasDisponibles($this, $this->container);
+        Intercambios::actualizarAlumnosDisponibles($this, $this->container);
         $grupo = new Grupo();
         $formulario = $this->createForm(new GrupoType(), $grupo);
         $formulario->handleRequest($peticion);

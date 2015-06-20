@@ -17,25 +17,30 @@ class MiembroType extends AbstractType
         $builder
             ->add('nombre', null, [
                 'label' => 'Nombre*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])
             ->add('apellidos', null, [
                 'label' => 'Apellidos*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])
             ->add('fechaNacimiento', 'date', [
                 'label' => 'Fecha de Nacimiento',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'attr' => array('class' => 'date'),
+                'attr' => [ 'title' => 'Seleccione la fecha correspondiente',
+                            'class' => 'date' ],
                 'required' => false
             ])
             ->add('telefono', null, [
                 'label' => 'Teléfono',
+                'attr' => [ 'title' => 'Debe contener 5 caracteres como mínimo' ],
                 'required' => false
             ])
             ->add('correoElectronico', 'email', [
                 'label' => 'Correo electrónico',
+                'attr' => [ 'title' => 'Debe tener formato de correo electrónico' ],
                 'required' => false
             ])
             ->add('sexo', 'choice', [
@@ -43,10 +48,12 @@ class MiembroType extends AbstractType
                 'label' => 'Sexo*',
                 'expanded' => true,
                 'multiple' => false,
+                'attr' => [ 'title' => 'Seleccione alguna opción' ],
                 'required' => true, //'data' => 'valor por defecto'
             ])
             ->add('tipo', null, [
                 'label' => 'Tipo de Miembro*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo' ],
                 'required' => true
             ]);
     }

@@ -24,7 +24,7 @@ class Centro
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "El nombre debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $nombre;
@@ -34,7 +34,7 @@ class Centro
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "La ciudad debe contener {{ limit }} caracteres como mínimo" )
      * @Assert\Regex(
      *     pattern="/\d/",
@@ -48,7 +48,7 @@ class Centro
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "La provincia debe contener {{ limit }} caracteres como mínimo" )
      * @Assert\Regex(
      *     pattern="/\d/",
@@ -62,7 +62,7 @@ class Centro
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "El pais debe contener {{ limit }} caracteres como mínimo" )
      * @Assert\Regex(
      *     pattern="/\d/",

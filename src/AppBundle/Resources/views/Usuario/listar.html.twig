@@ -41,7 +41,7 @@
                     <td>{{ usuario.correoElectronico }}</td>
                     <td>
                         {% if usuario.getWebPath %}<img src="{{ asset(usuario.getWebPath) }}" alt="{{ usuario.id }}"
-                                                        class="img-thumbnail" height="50" width="50" />{% endif %}
+                                                        class="img-thumbnail" height="40" width="40" />{% endif %}
                     </td>
                     <td>
                         <a href="{{ path('usuario_consultar', { 'usuario': usuario.id }) }}" class="btn btn-default btn-xs cbutton cbutton--effect-novak-enlace" title="Consultar">

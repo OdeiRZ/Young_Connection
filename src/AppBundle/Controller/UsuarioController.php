@@ -7,6 +7,7 @@ use AppBundle\Form\Type\FiltroApellidoType;
 use AppBundle\Form\Type\FiltroCursoType;
 use AppBundle\Form\Type\UsuarioType;
 use AppBundle\Utils\Aficiones;
+use AppBundle\Utils\Intercambios;
 use AppBundle\Utils\Mensajes;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,6 +28,8 @@ class UsuarioController extends Controller
      */
     public function listarAction(Request $peticion)
     {
+        Intercambios::actualizarFamiliasDisponibles($this, $this->container);
+        Intercambios::actualizarAlumnosDisponibles($this, $this->container);
         $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
             $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
@@ -58,6 +61,8 @@ class UsuarioController extends Controller
      */
     public function listarAlumnosAction(Request $peticion)
     {
+        Intercambios::actualizarFamiliasDisponibles($this, $this->container);
+        Intercambios::actualizarAlumnosDisponibles($this, $this->container);
         $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
             $this->get('security.token_storage')->getToken()->getUser()));
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
@@ -206,10 +211,12 @@ class UsuarioController extends Controller
     public function eliminarAction(Usuario $usuario, Request $peticion)
     {
         $em = $this->getDoctrine()->getManager();
-        if (sizeof($usuario->getFamilia())) {
-            $this->addFlash('error', 'No puedes eliminar un Usuario con Familia asignada');
+        if ($usuario->getFamilia()) {
+            $this->addFlash('error', 'No puedes eliminar un Alumno con Familia asignada');
         } elseif (sizeof($usuario->getAlojamientos())) {
-            $this->addFlash('error', 'No puedes eliminar un Usuario con Alojamientos asignados');
+            $this->addFlash('error', 'No puedes eliminar un Alumno con Alojamientos asignados');
+        } elseif ($usuario->getMensajes()) {
+            $this->addFlash('error', 'No puedes eliminar un Usuario con Mensajes asignados');
         } else {
             $this->addFlash('success', 'Usuario eliminado correctamente');
             $em->remove($usuario);
@@ -234,7 +241,7 @@ class UsuarioController extends Controller
                 $usuarios->add($em->getRepository('AppBundle:Usuario')->findOneBy( array('id' => $usuario)));
             }
             foreach($usuarios as $usuario) {
-                if (sizeof($usuario->getFamilia()) or sizeof($usuario->getAlojamientos())) {
+                if ($usuario->getFamilia() or sizeof($usuario->getAlojamientos()) or $usuario->getMensajes()) {
                     $sw = true;
                 } else {
                     $em->remove($usuario);

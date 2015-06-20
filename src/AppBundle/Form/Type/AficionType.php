@@ -17,6 +17,7 @@ class AficionType extends AbstractType
         $builder
             ->add('descripcion', null, [
                 'label' => 'Descripción*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo' ],
                 'required' => true
             ]);
         if ($options['admin']) {
@@ -29,9 +30,7 @@ class AficionType extends AbstractType
         $builder
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',
-                'attr' => [
-                    'class' => 'btn crear cbutton cbutton--effect-novak-crear'
-                ]
+                'attr' => [ 'class' => 'btn crear cbutton cbutton--effect-novak-crear' ]
             ]);
     }
 

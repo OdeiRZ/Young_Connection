@@ -25,17 +25,20 @@ class UsuarioType extends AbstractType
         $builder
             ->add('nombre', null, [
                 'label' => 'Nombre*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])
             ->add('apellidos', null, [
                 'label' => 'Apellidos*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])
             ->add('fechaNacimiento', 'date', [
                 'label' => 'Fecha de Nacimiento*',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'attr' => array('class' => 'date'),
+                'attr' => [ 'title' => 'Seleccione la fecha correspondiente',
+                            'class' => 'date' ],
                 'required' => true
             ])
             ->add('sexo', 'choice', [
@@ -43,20 +46,24 @@ class UsuarioType extends AbstractType
                 'label' => 'Sexo*',
                 'expanded' => true,
                 'multiple' => false,
+                'attr' => [ 'title' => 'Seleccione alguna opción' ],
                 'required' => true, //'data' => 'valor por defecto'
             ])
             ->add('telefono', null, [
                 'label' => 'Teléfono*',
+                'attr' => [ 'title' => 'Debe contener 5 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('correoElectronico', 'email', [
                 'label' => 'Correo electrónico*',
+                'attr' => [ 'title' => 'Debe tener formato de correo electrónico' ],
                 'required' => true,
                 //'attr' => array('disabled' => ($options['nuevo']) ? false : true)
             ])
             ->add('imagen', 'file', [
                 'label' => 'Fotografía',
                 'data_class' => null,
+                'attr' => [ 'title' => 'Seleccione o no una imágen en formato .jpeg, .gif, .png o .tiff de 2 Mb. máximo' ],
                 'required' => false,
                 //'required' => ($options['nuevo']) ? true : false
             ]);
@@ -64,6 +71,7 @@ class UsuarioType extends AbstractType
             $builder
                 ->add('curso', null, [
                     'label' => 'Curso',
+                    'attr' => [ 'title' => 'Seleccione o no un elemento de la lista' ],
                     'required' => false
                 ]);
         }
@@ -71,6 +79,7 @@ class UsuarioType extends AbstractType
             $builder
                 ->add('pais', null, [
                     'label' => 'País',
+                    'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                     'required' => true
                 ])
                 ->add('tieneProblemasSalud', null, [
@@ -103,6 +112,7 @@ class UsuarioType extends AbstractType
                         return $er->createQueryBuilder('u')
                                   ->Where('u.esAlumno = 1')
                                   ->andWhere('u.esActivo = 1'); },
+                    'attr' => [ 'title' => 'Seleccione o no algún/os elemento/s de la lista' ],
                     'required' => false
                 ])
                 ->add('descripcion', 'textarea', [
@@ -123,7 +133,7 @@ class UsuarioType extends AbstractType
                     'expanded' => true,
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('a')
-                            ->Where('a.validada = true'); },
+                                  ->Where('a.validada = true'); },
                     'attr' => [
                         'class' => 'toggle'
                     ]
@@ -160,6 +170,7 @@ class UsuarioType extends AbstractType
                         'label' => 'Contraseña antigua*',
                         'required' => false,
                         'mapped' => false,
+                        'attr' => [ 'title' => 'Introduce tu contraseña actual' ],
                         'constraints' => new UserPassword(array(
                             'groups' => array('password')
                         ))
@@ -174,6 +185,7 @@ class UsuarioType extends AbstractType
                 'invalid_message' => 'password.no_match',
                 'first_options' => array(
                     'label' => 'Nueva contraseña*',
+                    'attr' => [ 'title' => 'Introduce tu nueva contraseña' ],
                     'constraints' => array(
                         new Length(array(
                             'min' => 6,
@@ -186,7 +198,8 @@ class UsuarioType extends AbstractType
                     )
                 ),
                 'second_options' => array(
-                    'label' => 'Repita nueva contraseña*'
+                    'label' => 'Repita nueva contraseña*',
+                    'attr' => [ 'title' => 'Repite tu nueva contraseña' ]
                 )
             ))
             ->add('cambiarPassword', 'submit', array(

@@ -20,14 +20,16 @@ class IntercambioType extends AbstractType
                 'label' => 'Fecha de Inicio*',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'attr' => array('class' => 'date'),
+                'attr' => [ 'title' => 'Seleccione la fecha correspondiente',
+                            'class' => 'date' ],
                 'required' => true
             ])
             ->add('fechaFin', 'date', [
                 'label' => 'Fecha de Fin*',
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'attr' => array('class' => 'date'),
+                'attr' => [ 'title' => 'Seleccione la fecha correspondiente',
+                            'class' => 'date' ],
                 'required' => true
             ])
             ->add('grupos', null, [
@@ -35,6 +37,7 @@ class IntercambioType extends AbstractType
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('g')
                               ->Where('g.intercambio IS NULL'); },    //Deshabilitamos opcion para permitir deseleccionar elementos
+                'attr' => [ 'title' => 'Seleccione algún/os elemento/s de la lista' ],
                 'required' => true
             ])
             ->add('observaciones', null, [

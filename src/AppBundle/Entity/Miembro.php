@@ -24,7 +24,7 @@ class Miembro
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "El nombre debe contener {{ limit }} caracteres como mínimo" )
      * @Assert\Regex(
      *     pattern="/\d/",
@@ -38,7 +38,7 @@ class Miembro
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "Los apellidos deben contener {{ limit }} caracteres como mínimo" )
      * @Assert\Regex(
      *     pattern="/\d/",
@@ -84,7 +84,7 @@ class Miembro
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "El tipo de miembro debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $tipo;

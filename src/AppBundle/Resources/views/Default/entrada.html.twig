@@ -34,9 +34,9 @@
                 <div class="inputs">
                     <input name="_username" required placeholder="Correo electrónico" type="text"
                            {% if not ultimo_usuario %}autofocus="1" {% endif %} autocorrect="off"
-                           autocapitalize="off" value="{{ ultimo_usuario }}">
+                           autocapitalize="off" value="{{ ultimo_usuario }}" title="Introduce tu correo electrónico">
                     <input name="_password" required placeholder="Contraseña de acceso" type="password"
-                           {% if ultimo_usuario %}autofocus="1" {% endif %}>
+                           {% if ultimo_usuario %}autofocus="1" {% endif %} title="Introduce tu contraseña">
                     <div class="clear"></div>
                     <div class="button-login">
                         <button type="submit" class="btn crear cbutton cbutton--effect-novak-crear">

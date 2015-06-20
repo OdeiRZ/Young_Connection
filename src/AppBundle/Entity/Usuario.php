@@ -30,7 +30,7 @@ class Usuario implements UserInterface
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "El nombre debe contener {{ limit }} caracteres como mínimo" )
      * @Assert\Regex(
      *     pattern="/\d/",
@@ -44,7 +44,7 @@ class Usuario implements UserInterface
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "Los apellidos deben contener {{ limit }} caracteres como mínimo" )
      * @Assert\Regex(
      *     pattern="/\d/",
@@ -139,7 +139,7 @@ class Usuario implements UserInterface
     protected $esAlumno;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mensaje", mappedBy="usuarioOrigen", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Mensaje", mappedBy="usuarioOrigen" )
      * @ORM\JoinColumn(nullable=false)
      *
      * @var Mensaje
@@ -151,8 +151,12 @@ class Usuario implements UserInterface
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "El país debe contener {{ limit }} caracteres como mínimo" )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message = "El país no puede contener dígitos" )
      */
     protected $pais;
 
@@ -649,7 +653,8 @@ class Usuario implements UserInterface
     public function removeUpload()
     {
         if ($imagen = $this->getAbsolutePath()) {
-            unlink($imagen);
+            //$this->setRuta("user.png");//
+            //unlink($imagen);
         }
     }
 
@@ -1048,52 +1053,6 @@ class Usuario implements UserInterface
     public function getFamilia()
     {
         return $this->familia;
-    }
-
-    /**
-     * Add grupos
-     *
-     * @param \AppBundle\Entity\Grupo $grupos
-     * @return Usuario
-     */
-    public function addGrupo(\AppBundle\Entity\Grupo $grupos)
-    {
-        $this->grupos[] = $grupos;
-
-        return $this;
-    }
-
-    /**
-     * Remove grupos
-     *
-     * @param \AppBundle\Entity\Grupo $grupos
-     */
-    public function removeGrupo(\AppBundle\Entity\Grupo $grupos)
-    {
-        $this->grupos->removeElement($grupos);
-    }
-
-    /**
-     * Get grupos
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getGrupos()
-    {
-        return $this->grupos;
-    }
-
-    /**
-     * Set grupos
-     *
-     * @param \AppBundle\Entity\Grupo $grupos
-     * @return Usuario
-     */
-    public function setGrupos(\AppBundle\Entity\Grupo $grupos = null)
-    {
-        $this->grupos = $grupos;
-
-        return $this;
     }
 
     /**

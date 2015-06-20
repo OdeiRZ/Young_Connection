@@ -12,26 +12,32 @@ class CentroType extends AbstractType
         $builder
             ->add('nombre', null, [
                 'label' => 'Nombre*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('ciudad', null, [
                 'label' => 'Ciudad*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])
             ->add('provincia', null, [
                 'label' => 'Provincia',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => false
             ])
             ->add('pais', null, [
                 'label' => 'Pais*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])
             ->add('direccion', null, [
                 'label' => 'Dirección*',
+                'attr' => [ 'title' => 'Debe contener 5 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('telefono', null, [
                 'label' => 'Teléfono*',
+                'attr' => [ 'title' => 'Debe contener 5 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('enviar', 'submit', [

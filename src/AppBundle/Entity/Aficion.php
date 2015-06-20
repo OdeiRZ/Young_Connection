@@ -24,7 +24,7 @@ class Aficion
      *
      * @var string
      * @Assert\Length(
-     *      min = 3,
+     *      min = 2,
      *      minMessage = "La descripción debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $descripcion;

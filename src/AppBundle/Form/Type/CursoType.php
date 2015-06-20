@@ -12,14 +12,17 @@ class CursoType extends AbstractType
         $builder
             ->add('centro', null, [
                 'label' => 'Centro*',
+                'attr' => [ 'title' => 'Seleccione un elemento de la lista' ],
                 'required' => true
             ])
             ->add('descripcion', null, [
                 'label' => 'Descripción*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('familia', null, [
                 'label' => 'Familia*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('enviar', 'submit', [

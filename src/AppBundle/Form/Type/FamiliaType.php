@@ -19,26 +19,32 @@ class FamiliaType extends AbstractType
         $builder
             ->add('descripcion', null, [
                 'label' => 'Descripción*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('direccion', null, [
                 'label' => 'Dirección*',
+                'attr' => [ 'title' => 'Debe contener 5 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('ciudad', null, [
                 'label' => 'Ciudad*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])
             ->add('provincia', null, [
                 'label' => 'Provincia*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])
             ->add('pais', null, [
                 'label' => 'País*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])
             ->add('telefono', null, [
                 'label' => 'Teléfono*',
+                'attr' => [ 'title' => 'Debe contener 5 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('tieneMascota', null, [
@@ -74,18 +80,15 @@ class FamiliaType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('alumnos', null, [
-                'label' => 'Alumno/s Miembro/s*',
+                'label' => 'Alumno/s Hermano/s',
                 'query_builder' => function(EntityRepository $er) use ($usuario) {
                     return $er->createQueryBuilder('a')
-                              ->Where('a.esAlumno = 1')
-                              ->andWhere('a.esActivo = 1')
-                              //->andWhere('a.familia IS NULL') //deshabilitado este filtro para poder deseleccionar alumnos
-                              ->andWhere('a.id != :id_alumno')
-                              ->setParameter('id_alumno', $usuario); },
-                'required' => false
-            ])
-            ->add('alumnos', null, [
-                'label' => 'Alumno/s Hermano/s',
+                        ->Where('a.id != :id_alumno')
+                        ->andWhere('a.esAlumno = 1')
+                        ->andWhere('a.esActivo = 1')
+                        //->andWhere('a.familia IS NULL') //deshabilitado este filtro para poder deseleccionar alumnos
+                        ->setParameter('id_alumno', $usuario); },
+                'attr' => [ 'title' => 'Seleccione si es el caso algún/os elemento/s de la lista' ],
                 'required' => false
             ])
             ->add('observaciones', 'textarea', [

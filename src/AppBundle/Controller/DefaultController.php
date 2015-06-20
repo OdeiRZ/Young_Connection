@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\UsuarioType;
 use AppBundle\Utils\Aficiones;
-use AppBundle\Utils\Intercambios;
 use AppBundle\Utils\Mensajes;
 use AppBundle\Utils\Notificaciones;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,10 +30,6 @@ class DefaultController extends Controller
                     'ultimo_usuario' => $helper->getLastUsername(),
                     'error' => $helper->getLastAuthenticationError()
                 ]);
-        }
-        if ($this->isGranted('ROLE_ADMIN') or $this->isGranted('ROLE_COORDINADOR')) {
-            Intercambios::actualizarFamiliasDisponibles($this, $this->container);
-            Intercambios::actualizarAlumnosDisponibles($this, $this->container);
         }
         $peticion->getSession()->set('mensajes_no_leidos', Mensajes::obtenerMensajesNoLeidos($this, $this->container,
                           $this->get('security.token_storage')->getToken()->getUser()));
@@ -100,8 +95,10 @@ class DefaultController extends Controller
         $usuario
             ->setRuta("user.png")
             ->setEsActivo(true)
+            ->setEsAlumno(false)
             ->setEsAdministrador(false)
-            ->setEsCoordinador(false);
+            ->setEsCoordinador(false)
+            ->setEstaDisponible(true);
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
             'admin' => false,
             'coordinador' => false,

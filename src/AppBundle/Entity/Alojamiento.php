@@ -69,7 +69,7 @@ class Alojamiento
      * @param \AppBundle\Entity\Familia $familia
      * @return Alojamiento
      */
-    public function setFamilia(\AppBundle\Entity\Familia $familia)
+    public function setFamilia(\AppBundle\Entity\Familia $familia = null)
     {
         $this->familia = $familia;
 

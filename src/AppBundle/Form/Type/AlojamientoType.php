@@ -19,6 +19,7 @@ class AlojamientoType extends AbstractType
                               ->Where('a.esAlumno = 1')
                               ->andWhere('a.esActivo = 1')
                               ->andWhere('a.estaDisponible = 1'); },
+                'attr' => [ 'title' => 'Seleccione un elemento de la lista' ],
                 'required' => true
             ])
             ->add('familia', null, [
@@ -26,6 +27,7 @@ class AlojamientoType extends AbstractType
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('f')
                               ->Where('f.estaDisponible = 1'); },
+                'attr' => [ 'title' => 'Seleccione un elemento de la lista' ],
                 'required' => true
             ]);
     }

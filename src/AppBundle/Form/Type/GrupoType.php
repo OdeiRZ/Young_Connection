@@ -18,6 +18,7 @@ class GrupoType extends AbstractType
         $builder
             ->add('descripcion', null, [
                 'label' => 'Descripción*',
+                'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo' ],
                 'required' => true
             ])
             ->add('coordinador', null, [
@@ -26,6 +27,7 @@ class GrupoType extends AbstractType
                     return $er->createQueryBuilder('u')
                               ->Where('u.esCoordinador = 1')
                               ->andWhere('u.esActivo = 1'); },
+                'attr' => [ 'title' => 'Seleccione un elemento de la lista' ],
                 'required' => true,
             ])
             ->add('alojamientos', 'collection', [

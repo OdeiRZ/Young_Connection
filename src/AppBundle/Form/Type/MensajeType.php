@@ -16,11 +16,13 @@ class MensajeType extends AbstractType
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                               ->Where('u.esActivo = 1'); },
+                'attr' => [ 'title' => 'Seleccione un elemento de la lista' ],
                 'required' => true
             ])
             ->add('contenido', 'textarea', [
                 'label' => 'Mensaje*',
-                'attr' => ['rows' => '8'],
+                'attr' => [ 'title' => 'Debe contener 1 carácter como mínimo',
+                            'rows' => '8'],
                 'required' => true
             ])
             ->add('enviar', 'submit', [

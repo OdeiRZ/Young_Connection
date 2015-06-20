@@ -39,7 +39,7 @@ class Mensaje
      *
      * @var string
      * @Assert\Length(
-     *      min = 2,
+     *      min = 1,
      *      minMessage = "El contenido debe contener {{ limit }} caracteres como mínimo" )
      */
     protected $contenido;
