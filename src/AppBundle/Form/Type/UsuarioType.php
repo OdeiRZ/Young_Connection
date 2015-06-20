@@ -50,9 +50,9 @@ class UsuarioType extends AbstractType
                 'required' => true, //'data' => 'valor por defecto'
             ])
             ->add('telefono', null, [
-                'label' => 'Teléfono*',
+                'label' => 'Teléfono',
                 'attr' => [ 'title' => 'Debe contener 5 caracteres como mínimo' ],
-                'required' => true
+                'required' => false
             ])
             ->add('correoElectronico', 'email', [
                 'label' => 'Correo electrónico*',
@@ -141,6 +141,11 @@ class UsuarioType extends AbstractType
         }
         if ($options['admin']) {
             $builder
+                ->add('pais', null, [
+                    'label' => 'País',
+                    'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
+                    'required' => true
+                ])
                 ->add('esActivo', null, [
                     'label' => 'Está Activo',
                     'required' => false,

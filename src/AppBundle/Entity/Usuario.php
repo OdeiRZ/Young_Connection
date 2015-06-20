@@ -83,7 +83,7 @@ class Usuario implements UserInterface
     protected $password;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      * @Assert\Length(
@@ -147,7 +147,7 @@ class Usuario implements UserInterface
     protected $mensajes;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=false)
      *
      * @var string
      * @Assert\Length(
@@ -715,7 +715,7 @@ class Usuario implements UserInterface
      */
     public function setImagen(UploadedFile $imagen = null)
     {
-        $this->imagen = $imagen;
+        $this->imagen = null;//$this->imagen = $imagen;
     }
 
     /**

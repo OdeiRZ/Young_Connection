@@ -33,7 +33,7 @@ class FamiliaType extends AbstractType
                 'required' => true
             ])
             ->add('provincia', null, [
-                'label' => 'Provincia*',
+                'label' => 'Provincia/Estado*',
                 'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                 'required' => true
             ])

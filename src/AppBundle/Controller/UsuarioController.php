@@ -215,7 +215,7 @@ class UsuarioController extends Controller
             $this->addFlash('error', 'No puedes eliminar un Alumno con Familia asignada');
         } elseif (sizeof($usuario->getAlojamientos())) {
             $this->addFlash('error', 'No puedes eliminar un Alumno con Alojamientos asignados');
-        } elseif ($usuario->getMensajes()) {
+        } elseif (sizeof($usuario->getMensajes())) {
             $this->addFlash('error', 'No puedes eliminar un Usuario con Mensajes asignados');
         } else {
             $this->addFlash('success', 'Usuario eliminado correctamente');
@@ -241,7 +241,7 @@ class UsuarioController extends Controller
                 $usuarios->add($em->getRepository('AppBundle:Usuario')->findOneBy( array('id' => $usuario)));
             }
             foreach($usuarios as $usuario) {
-                if ($usuario->getFamilia() or sizeof($usuario->getAlojamientos()) or $usuario->getMensajes()) {
+                if ($usuario->getFamilia() or sizeof($usuario->getAlojamientos()) or sizeof($usuario->getMensajes())) {
                     $sw = true;
                 } else {
                     $em->remove($usuario);
