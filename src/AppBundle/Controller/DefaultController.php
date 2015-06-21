@@ -98,7 +98,8 @@ class DefaultController extends Controller
             ->setEsAlumno(false)
             ->setEsAdministrador(false)
             ->setEsCoordinador(false)
-            ->setEstaDisponible(true);
+            ->setEstaDisponible(true)
+            ->setPais("España");
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
             'admin' => false,
             'coordinador' => false,

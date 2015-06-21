@@ -139,13 +139,16 @@ class UsuarioType extends AbstractType
                     ]
                 ]);
         }
-        if ($options['admin']) {
+        if ($options['admin'] or $options['coordinador']) {
             $builder
                 ->add('pais', null, [
                     'label' => 'País',
                     'attr' => [ 'title' => 'Debe contener 2 caracteres como mínimo sin dígitos' ],
                     'required' => true
-                ])
+                ]);
+        }
+        if ($options['admin']) {
+            $builder
                 ->add('esActivo', null, [
                     'label' => 'Está Activo',
                     'required' => false,
