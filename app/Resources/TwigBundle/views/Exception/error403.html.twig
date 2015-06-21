@@ -3,9 +3,11 @@
 {% block title %}Error 403{% endblock %}
 
 {% block content %}
+
     <h2 class="well">¡No tienes permitido el acceso a ésta sección!</h2>
     <div class="alert alert-warning alert-dismissable" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
         <p>Se ha producido un error 403, pulse aquí para volver al <a href="{{ path('inicio') }}">Inicio</a>.</p>
     </div>
+
 {% endblock %}

@@ -36,14 +36,16 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $usuario->setCorreoElectronico('admin@admin.com')
             ->setPassword($encoder->encodePassword($usuario, 'admin@admin.com'))
             ->setNombre('Admin')
-            ->setApellidos('1')
+            ->setApellidos('Uno')
             ->setFechaNacimiento(new \DateTime('1980-05-01'))
             ->setSexo('M')
             ->setTelefono('666666666')
+            ->setPais('España')
             ->setEsActivo(true)
             ->setEsAdministrador(true)
             ->setEsCoordinador(false)
-            ->setEsAlumno(false);
+            ->setEsAlumno(false)
+            ->setEstaDisponible(false);
         $manager->persist($usuario);
         $manager->flush();
     }
