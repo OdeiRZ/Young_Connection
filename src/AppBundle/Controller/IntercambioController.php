@@ -141,6 +141,9 @@ class IntercambioController extends BaseController
                     foreach($grupo->getAlojamientos() as $alojamiento) {
                         $alojamiento->getFamilia()->setEstaDisponible(false);
                         $alojamiento->getAlumno()->setEstaDisponible(false);
+                        if ($alojamiento->getFamilia()->getPais() != $alojamiento->getAlumno()->getPais()) {
+                            $alojamiento->getAlumno()->setHaViajadoExtranjero(true);
+                        }
                     }
                 }
                 $em->persist($intercambio);

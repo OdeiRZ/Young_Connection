@@ -717,7 +717,8 @@ class Usuario implements UserInterface
      */
     public function setImagen(UploadedFile $imagen = null)
     {
-        $this->imagen = null;//$this->imagen = $imagen;
+        //$this->imagen = null;
+        $this->imagen = $imagen;
     }
 
     /**

@@ -2,7 +2,7 @@ Young Connection 0.9
 ================================
 
 Aplicación web para la gestión de la grupos de Intercambios de Alumnos entre centros educativos
-(aún en fase beta, no está lista para producción). Desplegada en fase de pruebas unicamente en 
+(aún en modo beta, no está lista para producción). Desplegada en fase de pruebas unicamente en 
 un equipo local.
 
 Desde ella se podrán gestionar Intercambios de grupos de alumnos pertenecientes a diferentes centros 

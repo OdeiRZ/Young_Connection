@@ -20,7 +20,7 @@
                     <th class="seleccion" id="multiple"><i class="glyphicon glyphicon-check"></i></th>
                 {% endif %}
                 <th>Descripción</th>
-                <th>Coordinador/es</th>
+                <th>Coordinador/a</th>
                 <th>Alojamiento/s</th>
                 <th></th>
             </tr>
@@ -44,7 +44,7 @@
                         {% for alojamiento in grupo.alojamientos %}
                             {% if is_granted('ROLE_ADMIN') %}
                                 <li><a href="{{ path('usuario_modificar', { 'usuario': alojamiento.alumno.id }) }}">{{ alojamiento.alumno }}</a></li>
-                                <li>{{ alojamiento.familia }}</li>
+                                <li><a href="{{ path('familia_consultar', { 'familia': alojamiento.familia.id }) }}">{{ alojamiento.familia }}</a></li>
                             {% else %}
                                 <li>{{ alojamiento.alumno }}</li>
                                 <li>{{ alojamiento.familia }}</li>
