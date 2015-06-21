@@ -44,7 +44,7 @@ class FamiliaType extends AbstractType
             ])
             ->add('telefono', null, [
                 'label' => 'Teléfono*',
-                'attr' => [ 'title' => 'Debe contener 5 caracteres como mínimo' ],
+                'attr' => [ 'title' => 'Debe contener 5 caracteres como mínimo y 30 como máximo' ],
                 'required' => true
             ])
             ->add('tieneMascota', null, [

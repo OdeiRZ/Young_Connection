@@ -68,7 +68,9 @@ class Miembro
      * @var string
      * @Assert\Length(
      *      min = 5,
-     *      minMessage = "El teléfono debe contener {{ limit }} caracteres como mínimo" )
+     *      minMessage = "El teléfono debe contener {{ limit }} caracteres como mínimo",
+     *      max = 30,
+     *      maxMessage = "El teléfono debe contener menos de {{ limit }} caracteres" )
      */
     protected $telefono;
 
