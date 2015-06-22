@@ -148,8 +148,8 @@ class IntercambioController extends BaseController
                 }
                 $em->persist($intercambio);
                 $em->flush();
-                $this->notificarIntercambio($intercambio->getGrupos(), $intercambio);
                 $this->addFlash('success', 'Intercambio creado correctamente');
+                $this->notificarIntercambio($intercambio->getGrupos(), $intercambio);
             } else {
                 $ruta = 'intercambio_nuevo';
                 $this->addFlash('error', 'La Fecha de Inicio debe ser inferior a la Fecha Final');
