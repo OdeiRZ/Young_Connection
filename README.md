@@ -37,10 +37,10 @@ Para poder ejecutar la aplicación en un entorno de desarrollo basta con tener [
 y ejecutar el comando `vagrant up`. La aplicación será accesible desde la dirección http://192.168.33.10/
 
 ## Licencia
-Esta aplicación se ofrece bajo licencia [AGPL versión 3].
+Esta aplicación se ofrece bajo licencia [GPL versión 3].
 
 [Vagrant]: https://www.vagrantup.com/
 [VirtualBox]: https://www.virtualbox.org
 [Symfony2]: http://symfony.com/
 [Composer]: http://getcomposer.org
-[AGPL versión 3]: http://www.gnu.org/licenses/agpl.html
+[GPL versión 3]: https://www.gnu.org/licenses/gpl-3.0.en.html
