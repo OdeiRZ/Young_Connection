@@ -1,11 +1,11 @@
 Young Connection 0.9
 ================================
 
-Aplicación web para la gestión de la grupos de Intercambios de Alumnos entre centros educativos
-(aún en modo beta, no está lista para producción). Desplegada en fase de pruebas unicamente en 
+Aplicación web para la gestión de la grupos de intercambios de alumnos entre centros educativos
+(aún en modo beta, no está lista para producción). Desplegada en fase de pruebas únicamente en 
 un equipo local.
 
-Desde ella se podrán gestionar Intercambios de grupos de alumnos pertenecientes a diferentes centros 
+Desde ella se podrán gestionar intercambios de grupos de alumnos pertenecientes a diferentes centros 
 además de llevar un control de las familias asociadas a los mismos, simplificando así las tareas de 
 los coordinadores de grupos de intercambios de diferentes centros educativos.
 
@@ -15,7 +15,6 @@ Para facilitar el desarrollo se proporciona un entorno [Vagrant] con todas las d
 instaladas.
 
 ## Requisitos
-
 - PHP 5.3.7 o superior
 - Navegador Web [Chrome], [Firefox], [Opera], [Microsoft Edge], etc..
 - Servidor web Apache2 (podría funcionar con nginx, pero no se ha probado)
@@ -23,7 +22,6 @@ instaladas.
 - PHP [Composer]
 
 ## Instalación
-
 - Ejecutar `composer install` desde la carpeta del proyecto.
 - Configurar el sitio de Apache2 para que el `DocumentRoot` sea la carpeta `web/`
 - Modificar el fichero `parameters.yml` con los datos de acceso al sistema gestor de bases de datos.
@@ -33,7 +31,6 @@ instaladas.
 - Para insertar los datos iniciales: `app/console doctrine:fixtures:load`.
 
 ## Entorno de desarrollo
-
 Para poder ejecutar la aplicación en un entorno de desarrollo basta con tener [Vagrant] instalado junto con [VirtualBox]
 y ejecutar el comando `vagrant up`. La aplicación será accesible desde la dirección http://192.168.33.10/
 
