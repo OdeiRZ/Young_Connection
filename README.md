@@ -1,15 +1,16 @@
 Young Connection 0.9
 ================================
 
-Aplicación web para la gestión de la grupos de intercambios de alumnos entre centros educativos
+Aplicación web para la gestión de grupos de intercambios de alumnos entre centros educativos
 (aún en modo beta, no está lista para producción). Desplegada en fase de pruebas únicamente en 
-un equipo local.
+equipos en local.
 
-Desde ella se podrán gestionar intercambios de grupos de alumnos pertenecientes a diferentes centros 
+Desde ella se podrán gestionar intercambios de grupos de alumnos pertenecientes a diferentes centros, 
 además de llevar un control de las familias asociadas a los mismos, simplificando así las tareas de 
-los coordinadores de grupos de intercambios de diferentes centros educativos.
+los coordinadores de grupos de intercambios de los diferentes centros educativos.
 
-Este proyecto utiliza [Symfony2] y otros muchos componentes que se instalan usando [Composer]
+Este proyecto utiliza [Symfony2] y otros muchos componentes que se instalan usando [Composer]. La mayor
+parte de la programación se ha llevado a cabo mediante PHP a través de un patrón MVC.
 
 Para facilitar el desarrollo se proporciona un entorno [Vagrant] con todas las dependencias ya
 instaladas.
