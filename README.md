@@ -10,7 +10,7 @@ además de llevar un control de las familias asociadas a los mismos, simplifican
 los coordinadores de grupos de intercambios de los diferentes centros educativos.
 
 Este proyecto utiliza [Symfony2] y otros muchos componentes que se instalan usando [Composer]. La mayor
-parte de la programación se ha llevado a cabo mediante PHP a través de un patrón MVC.
+parte de la programación se ha llevado a cabo mediante PHP haciendo uso de patrones MVC.
 
 Para facilitar el desarrollo se proporciona un entorno [Vagrant] con todas las dependencias ya
 instaladas.
