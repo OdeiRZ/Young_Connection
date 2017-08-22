@@ -49,7 +49,9 @@
         ]
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+		"disable-tls": true,
+        "secure-http": false
     },
     "extra": {
         "symfony-app-dir": "app",
