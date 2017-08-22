@@ -36,7 +36,7 @@ Para poder ejecutar la aplicación en un entorno de desarrollo basta con tener [
 y ejecutar el comando `vagrant up`. La aplicación será accesible desde la dirección http://192.168.33.10/
 
 ## Licencia
-Esta aplicación se ofrece bajo licencia [GPL versión 3].
+Esta aplicación se ofrece bajo licencia [AGPL versión 3].
 
 [Vagrant]: https://www.vagrantup.com/
 [VirtualBox]: https://www.virtualbox.org
@@ -46,4 +46,4 @@ Esta aplicación se ofrece bajo licencia [GPL versión 3].
 [Firefox]: https://www.mozilla.org/es-ES/firefox/new/
 [Opera]: http://www.opera.com/es
 [Microsoft Edge]: https://www.microsoft.com/es-es/windows/microsoft-edge
-[GPL versión 3]: https://www.gnu.org/licenses/gpl-3.0.en.html
+[AGPL versión 3]: https://www.gnu.org/licenses/agpl-3.0.html
