@@ -14,6 +14,7 @@
         {{ form(formulario_paises) }}
         {% if is_granted('ROLE_ADMIN') %}
             <form method="post" action="{{ path('grupo_familia_eliminar') }}">
+                <input type="hidden" name="token" value="{{ csrf_token('grupo_familia_eliminar') }}">
         {% endif %}
         <table class="table table-bordered table-condensed table-hover table-striped display" id="tabla">
             <thead>
@@ -64,7 +65,7 @@
                             <i class="glyphicon glyphicon-eye-open"></i>
                         </a>
                         {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('familia_eliminar', { 'familia': familia.id }) }}" class="btn btn-default btn-xs">
+                        <a href="{{ path('familia_eliminar', { 'familia': familia.id, 'token': csrf_token('familia_eliminar' ~ familia.id) }) }}" class="btn btn-default btn-xs">
                             <i class="glyphicon glyphicon-trash"></i>
                         </a>
                         {% endif %}

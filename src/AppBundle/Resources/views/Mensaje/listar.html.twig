@@ -37,7 +37,7 @@
                             <a href="{{ path('mensaje_modificar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </a>
-                            <a href="{{ path('mensaje_eliminar', { 'mensaje': mensaje.id }) }}" class="btn btn-default btn-xs">
+                            <a href="{{ path('mensaje_eliminar', { 'mensaje': mensaje.id, 'token': csrf_token('mensaje_eliminar' ~ mensaje.id) }) }}" class="btn btn-default btn-xs">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>
                         {% endif %}

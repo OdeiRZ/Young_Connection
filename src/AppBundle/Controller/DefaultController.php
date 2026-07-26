@@ -142,9 +142,10 @@ class DefaultController extends Controller
                           ->getOneOrNullResult();
             if ($usuario != null) {
                 $nuevaClave = "";
-                $cadena = "abcdefghijklmnopqrstuvwxyz1234567890";
-                for($i=0;$i<6;$i++) {
-                    $nuevaClave .= substr($cadena, rand(0, strlen($cadena)),1);
+                $cadena = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                $bytesAleatorios = openssl_random_pseudo_bytes(12);
+                for($i=0;$i<12;$i++) {
+                    $nuevaClave .= $cadena[ord($bytesAleatorios[$i]) % strlen($cadena)];
                 }
                 $helper = $password = $this->container->get('security.password_encoder');
                 $usuario->setPassword($helper->encodePassword($usuario, $nuevaClave));

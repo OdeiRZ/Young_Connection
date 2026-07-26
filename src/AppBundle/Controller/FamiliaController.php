@@ -44,12 +44,12 @@ class FamiliaController extends Controller
             'paises' => $paises,
             'familia' => true
         ])->handleRequest($peticion);
-        $pais = ($form->isValid()) ? $_POST['filtroPaises']['pais'] : null;
+        $pais = ($form->isValid()) ? $peticion->request->get('filtroPaises')['pais'] : null;
         $qb = $em->getRepository('AppBundle:Familia')
                  ->createQueryBuilder('f');
         if ($pais) {
             $qb->where('f.pais = :pais')
-               ->setParameter('pais', $_POST['filtroPaises']['pais']);
+               ->setParameter('pais', $pais);
         }
         $familias = $qb
             ->getQuery()
@@ -69,7 +69,7 @@ class FamiliaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $usuarioActivo = $this->getUser();
         if ($familia->getId() !== $usuarioActivo->getFamilia()->getId() && !$this->isGranted('ROLE_ADMIN')) {
-            return $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $miembros = new ArrayCollection();
         foreach ($familia->getMiembros() as $miembro) {
@@ -171,6 +171,9 @@ class FamiliaController extends Controller
      */
     public function eliminarAction(Familia $familia, Request $peticion)
     {
+        if (!$this->isCsrfTokenValid('familia_eliminar' . $familia->getId(), $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         if (sizeof($familia->getAlojamientos())) {
             $this->addFlash('error', 'No puedes eliminar una Familia con Alojamientos asignados');
@@ -193,11 +196,15 @@ class FamiliaController extends Controller
      */
     public function eliminarGrupoAction(Request $peticion)
     {
-        if (isset($_POST['grupoFamilias']) && sizeof($_POST['grupoFamilias'])) {
+        if (!$this->isCsrfTokenValid('grupo_familia_eliminar', $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
+        $grupoFamilias = $peticion->request->get('grupoFamilias');
+        if ($grupoFamilias && sizeof($grupoFamilias)) {
             $sw = false;
             $em = $this->getDoctrine()->getManager();
             $familias = new ArrayCollection();
-            foreach($_POST['grupoFamilias'] as $familia) {
+            foreach($grupoFamilias as $familia) {
                 $familias->add($em->getRepository('AppBundle:Familia')->findOneBy( array('id' => $familia)));
             }
             foreach($familias as $familia) {

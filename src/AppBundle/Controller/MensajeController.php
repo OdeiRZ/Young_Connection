@@ -30,7 +30,7 @@ class MensajeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new FiltroUsuarioType())->handleRequest($peticion);
         $mensajes = null;
-        $usuario = ($form->isValid()) ? $_POST['filtroUsuarios']['usuario'] : null;
+        $usuario = ($form->isValid()) ? $peticion->request->get('filtroUsuarios')['usuario'] : null;
         if ($usuario) {
             $qb = $em->getRepository('AppBundle:Mensaje')
                      ->createQueryBuilder('m')
@@ -67,7 +67,7 @@ class MensajeController extends Controller
     {
         $usuarioActivo = $this->getUser();
         if ($mensaje->getUsuarioDestino()->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
-            return $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $formulario = $this->createForm(new MensajeType(), $mensaje);
         $formulario
@@ -126,9 +126,12 @@ class MensajeController extends Controller
      */
     public function eliminarAction(Mensaje $mensaje, Request $peticion)
     {
+        if (!$this->isCsrfTokenValid('mensaje_eliminar' . $mensaje->getId(), $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
         $usuarioActivo = $this->getUser();
         if ($mensaje->getUsuarioDestino()->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
-            return $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $em = $this->getDoctrine()->getManager();
         $this->addFlash('success', 'Mensaje eliminado correctamente');

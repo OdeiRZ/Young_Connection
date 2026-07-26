@@ -40,7 +40,7 @@ class CursoController extends Controller
             $familias[$auxFamilias[$i]['familia']] = $auxFamilias[$i]['familia'];
         }
         $form = $this->createForm(new FiltroFamiliaType(), $familias, [ 'familias' => $familias ])->handleRequest($peticion);
-        $familia = ($form->isValid()) ? $_POST['filtroFamilias']['familia'] : null;
+        $familia = ($form->isValid()) ? $peticion->request->get('filtroFamilias')['familia'] : null;
         $qb = $em->getRepository('AppBundle:Curso')
                  ->createQueryBuilder('c')
                  ->orderBy('c.centro', 'DESC')
@@ -48,7 +48,7 @@ class CursoController extends Controller
                  ->AddOrderBy('c.descripcion', 'ASC');
         if ($familia) {
             $qb->where('c.familia = :familia')
-               ->setParameter('familia', $_POST['filtroFamilias']['familia']);
+               ->setParameter('familia', $familia);
         }
         $cursos = $qb
             ->getQuery()
@@ -126,6 +126,9 @@ class CursoController extends Controller
      */
     public function eliminarAction(Curso $curso, Request $peticion)
     {
+        if (!$this->isCsrfTokenValid('curso_eliminar' . $curso->getId(), $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         if (sizeof($curso->getAlumnos())) {
             $this->addFlash('error', 'No puedes eliminar un Curso con Usuarios asignados');
@@ -145,11 +148,15 @@ class CursoController extends Controller
      */
     public function eliminarGrupoAction(Request $peticion)
     {
-        if (isset($_POST['grupoCursos']) && sizeof($_POST['grupoCursos'])) {
+        if (!$this->isCsrfTokenValid('grupo_curso_eliminar', $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
+        $grupoCursos = $peticion->request->get('grupoCursos');
+        if ($grupoCursos && sizeof($grupoCursos)) {
             $sw = false;
             $em = $this->getDoctrine()->getManager();
             $cursos = new ArrayCollection();
-            foreach($_POST['grupoCursos'] as $curso) {
+            foreach($grupoCursos as $curso) {
                 $cursos->add($em->getRepository('AppBundle:Curso')->findOneBy( array('id' => $curso)));
             }
             foreach($cursos as $curso) {

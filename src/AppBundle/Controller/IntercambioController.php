@@ -31,7 +31,7 @@ class IntercambioController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $fechasPorDefecto = array('desde' => null, 'hasta' => null);
         $form = $this->createForm(new FiltroFechasType(), $fechasPorDefecto)->handleRequest($peticion);
-        $fechas = ($form->isValid()) ? ['desde' => $_POST['filtroFechas']['desde'], 'hasta' => $_POST['filtroFechas']['hasta']] : $fechasPorDefecto;
+        $fechas = ($form->isValid()) ? ['desde' => $peticion->request->get('filtroFechas')['desde'], 'hasta' => $peticion->request->get('filtroFechas')['hasta']] : $fechasPorDefecto;
         $qb = $em->getRepository('AppBundle:Intercambio')
                  ->createQueryBuilder('i')
                  ->orderBy('i.fechaInicio', 'DESC');
@@ -69,7 +69,7 @@ class IntercambioController extends BaseController
             }
         }
         if (!$sw && !$this->isGranted('ROLE_ADMIN')) {
-            return $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $formulario = $this->createForm(new IntercambioType(), $intercambio);
         $formulario
@@ -170,6 +170,9 @@ class IntercambioController extends BaseController
      */
     public function eliminarAction(Intercambio $intercambio, Request $peticion)
     {
+        if (!$this->isCsrfTokenValid('intercambio_eliminar' . $intercambio->getId(), $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
         $sw = false;
         $usuarioActivo = $this->getUser();
         foreach($intercambio->getGrupos() as $grupo) {
@@ -179,7 +182,7 @@ class IntercambioController extends BaseController
             }
         }
         if (!$sw && !$this->isGranted('ROLE_ADMIN')) {
-            return $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $em = $this->getDoctrine()->getManager();
         foreach($intercambio->getGrupos() as $grupo) {
@@ -203,10 +206,14 @@ class IntercambioController extends BaseController
      */
     public function eliminarGrupoAction(Request $peticion)
     {
-        if (isset($_POST['grupoIntercambios']) && sizeof($_POST['grupoIntercambios'])) {
+        if (!$this->isCsrfTokenValid('grupo_intercambio_eliminar', $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
+        $grupoIntercambios = $peticion->request->get('grupoIntercambios');
+        if ($grupoIntercambios && sizeof($grupoIntercambios)) {
             $em = $this->getDoctrine()->getManager();
             $intercambios = new ArrayCollection();
-            foreach($_POST['grupoIntercambios'] as $intercambio) {
+            foreach($grupoIntercambios as $intercambio) {
                 $intercambios->add($em->getRepository('AppBundle:Intercambio')->findOneBy( array('id' => $intercambio)));
             }
             foreach($intercambios as $intercambio) {

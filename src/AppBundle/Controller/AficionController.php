@@ -103,6 +103,9 @@ class AficionController extends Controller
      */
     public function eliminarAction(Aficion $aficion, Request $peticion)
     {
+        if (!$this->isCsrfTokenValid('aficion_eliminar' . $aficion->getId(), $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         if (sizeof($aficion->getAlumnos())) {
             $this->addFlash('error', 'No puedes eliminar una Afición con Usuarios asignados');
@@ -122,11 +125,15 @@ class AficionController extends Controller
      */
     public function eliminarGrupoAction(Request $peticion)
     {
-        if (isset($_POST['grupoAficiones']) && sizeof($_POST['grupoAficiones'])) {
+        if (!$this->isCsrfTokenValid('grupo_aficion_eliminar', $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
+        $grupoAficiones = $peticion->request->get('grupoAficiones');
+        if ($grupoAficiones && sizeof($grupoAficiones)) {
             $sw = false;
             $em = $this->getDoctrine()->getManager();
             $aficiones = new ArrayCollection();
-            foreach($_POST['grupoAficiones'] as $aficion) {
+            foreach($grupoAficiones as $aficion) {
                 $aficiones->add($em->getRepository('AppBundle:Aficion')->findOneBy( array('id' => $aficion)));
             }
             foreach($aficiones as $aficion) {

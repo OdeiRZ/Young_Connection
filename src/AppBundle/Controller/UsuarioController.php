@@ -35,7 +35,7 @@ class UsuarioController extends Controller
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager(); //$apellidosDefecto = null;
         $form = $this->createForm(new FiltroCursoType())->handleRequest($peticion);//$form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
-        $curso = ($form->isValid()) ? $_POST['filtroCursos']['curso'] : null;
+        $curso = ($form->isValid()) ? $peticion->request->get('filtroCursos')['curso'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
                  ->createQueryBuilder('u')
                  ->orderBy('u.esAdministrador', 'DESC')
@@ -68,7 +68,7 @@ class UsuarioController extends Controller
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new FiltroCursoType())->handleRequest($peticion);
-        $curso = ($form->isValid()) ? $_POST['filtroCursos']['curso'] : null;
+        $curso = ($form->isValid()) ? $peticion->request->get('filtroCursos')['curso'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
                  ->createQueryBuilder('u')
                  ->orderBy('u.apellidos', 'ASC')
@@ -99,7 +99,7 @@ class UsuarioController extends Controller
         $em = $this->getDoctrine()->getManager();
         $apellidosDefecto = null;
         $form = $this->createForm(new FiltroApellidoType(), $apellidosDefecto)->handleRequest($peticion);
-        $apellidos = ($form->isValid()) ? $_POST['filtroApellidos']['apellidos'] : null;
+        $apellidos = ($form->isValid()) ? $peticion->request->get('filtroApellidos')['apellidos'] : null;
         $qb = $em->getRepository('AppBundle:Usuario')
             ->createQueryBuilder('u')
             ->orderBy('u.apellidos', 'ASC')
@@ -126,7 +126,7 @@ class UsuarioController extends Controller
     {
         $usuarioActivo = $this->getUser();
         if ($usuario->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
-            return $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $formulario = $this->createForm(new UsuarioType(), $usuario, [
             'admin' => $this->isGranted('ROLE_ADMIN'),
@@ -211,6 +211,9 @@ class UsuarioController extends Controller
      */
     public function eliminarAction(Usuario $usuario, Request $peticion)
     {
+        if (!$this->isCsrfTokenValid('usuario_eliminar' . $usuario->getId(), $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         if ($usuario->getFamilia()) {
             $this->addFlash('error', 'No puedes eliminar un Alumno con Familia asignada');
@@ -234,11 +237,15 @@ class UsuarioController extends Controller
      */
     public function eliminarGrupoAction(Request $peticion)
     {
-        if (isset($_POST['grupoUsuarios']) && sizeof($_POST['grupoUsuarios'])) {
+        if (!$this->isCsrfTokenValid('grupo_usuarios_eliminar', $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
+        $grupoUsuarios = $peticion->request->get('grupoUsuarios');
+        if ($grupoUsuarios && sizeof($grupoUsuarios)) {
             $sw = false;
             $em = $this->getDoctrine()->getManager();
             $usuarios = new ArrayCollection();
-            foreach($_POST['grupoUsuarios'] as $usuario) {
+            foreach($grupoUsuarios as $usuario) {
                 $usuarios->add($em->getRepository('AppBundle:Usuario')->findOneBy( array('id' => $usuario)));
             }
             foreach($usuarios as $usuario) {

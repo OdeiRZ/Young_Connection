@@ -43,13 +43,13 @@ class CentroController extends Controller
             'paises' => $paises,
             'centro' => true
         ])->handleRequest($peticion);
-        $pais = ($form->isValid()) ? $_POST['filtroPaises']['pais'] : null;
+        $pais = ($form->isValid()) ? $peticion->request->get('filtroPaises')['pais'] : null;
         $qb = $em->getRepository('AppBundle:Centro')
                  ->createQueryBuilder('c')
                  ->orderBy('c.nombre', 'ASC');
         if ($pais) {
             $qb->where('c.pais = :pais')
-               ->setParameter('pais', $_POST['filtroPaises']['pais']);
+               ->setParameter('pais', $pais);
         }
         $centros = $qb
             ->getQuery()
@@ -126,6 +126,9 @@ class CentroController extends Controller
      */
     public function eliminarAction(Centro $centro, Request $peticion)
     {
+        if (!$this->isCsrfTokenValid('centro_eliminar' . $centro->getId(), $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         if (sizeof($centro->getCursos())) {
             $this->addFlash('error', 'No puedes eliminar un Centro con Usuarios asignados');
@@ -145,11 +148,15 @@ class CentroController extends Controller
      */
     public function eliminarGrupoAction(Request $peticion)
     {
-        if (isset($_POST['grupoCentros']) && sizeof($_POST['grupoCentros'])) {
+        if (!$this->isCsrfTokenValid('grupo_centro_eliminar', $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
+        $grupoCentros = $peticion->request->get('grupoCentros');
+        if ($grupoCentros && sizeof($grupoCentros)) {
             $sw = false;
             $em = $this->getDoctrine()->getManager();
             $centros = new ArrayCollection();
-            foreach($_POST['grupoCentros'] as $centro) {
+            foreach($grupoCentros as $centro) {
                 $centros->add($em->getRepository('AppBundle:Centro')->findOneBy( array('id' => $centro)));
             }
             foreach($centros as $centro) {

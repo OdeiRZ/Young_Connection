@@ -31,13 +31,13 @@ class GrupoController extends Controller
         $peticion->getSession()->set('aficiones_no_validadas', Aficiones::obtenerAficionesNoValidadas($this, $this->container));
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new FiltroCoordinadorType())->handleRequest($peticion);
-        $curso = ($form->isValid()) ? $_POST['filtroCoordinadores']['coordinador'] : null;
+        $curso = ($form->isValid()) ? $peticion->request->get('filtroCoordinadores')['coordinador'] : null;
         $qb = $em->getRepository('AppBundle:Grupo')
                  ->createQueryBuilder('g')
                  ->orderBy('g.descripcion', 'ASC');
         if ($curso) {
             $qb->where('g.coordinador = :coordinador')
-               ->setParameter('coordinador', $_POST['filtroCoordinadores']['coordinador']);
+               ->setParameter('coordinador', $curso);
         }
         $grupos = $qb
             ->getQuery()
@@ -56,7 +56,7 @@ class GrupoController extends Controller
     {
         $usuarioActivo = $this->getUser();
         if ($grupo->getCoordinador()->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
-            return $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         Intercambios::actualizarFamiliasDisponibles($this, $this->container);
         Intercambios::actualizarAlumnosDisponibles($this, $this->container);
@@ -118,9 +118,12 @@ class GrupoController extends Controller
      */
     public function eliminarAction(Grupo $grupo, Request $peticion)
     {
+        if (!$this->isCsrfTokenValid('grupo_eliminar' . $grupo->getId(), $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
         $usuarioActivo = $this->getUser();
         if ($grupo->getCoordinador()->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
-            return $this->createAccessDeniedException();
+            throw $this->createAccessDeniedException();
         }
         $em = $this->getDoctrine()->getManager();
         $this->addFlash('success', 'Grupo eliminado correctamente');
@@ -137,10 +140,14 @@ class GrupoController extends Controller
      */
     public function eliminarGrupoAction(Request $peticion)
     {
-        if (isset($_POST['grupoGrupos']) && sizeof($_POST['grupoGrupos'])) {
+        if (!$this->isCsrfTokenValid('grupo_grupo_eliminar', $peticion->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
+        $grupoGrupos = $peticion->request->get('grupoGrupos');
+        if ($grupoGrupos && sizeof($grupoGrupos)) {
             $em = $this->getDoctrine()->getManager();
             $grupos = new ArrayCollection();
-            foreach($_POST['grupoGrupos'] as $grupo) {
+            foreach($grupoGrupos as $grupo) {
                 $grupos->add($em->getRepository('AppBundle:Grupo')->findOneBy( array('id' => $grupo)));
             }
             foreach($grupos as $grupo) {
