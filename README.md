@@ -1,49 +1,60 @@
-Young Connection 0.9
-================================
+# Young Connection
 
-Aplicación web para la gestión de grupos de intercambios de alumnos entre centros educativos
-(aún en modo beta, no está lista para producción). Desplegada en fase de pruebas únicamente en 
-equipos en local.
+Aplicación web en Symfony 2 para gestionar intercambios de alumnos entre centros educativos: grupos, familias de acogida, alojamientos y comunicación entre los participantes.
 
-Desde ella se podrán gestionar intercambios de grupos de alumnos pertenecientes a diferentes centros, 
-además de llevar un control de las familias asociadas a los mismos, simplificando así las tareas de 
-los coordinadores de grupos de intercambios de los diferentes centros educativos.
+## Características
 
-Este proyecto utiliza [Symfony2] y otros muchos componentes que se instalan usando [Composer]. La mayor
-parte de la programación se ha llevado a cabo mediante PHP haciendo uso de patrones MVC.
+- Modelo de datos completo con Doctrine ORM: `Intercambio`, `Grupo`, `Centro`, `Curso`, `Usuario`, `Familia`, `Alojamiento`, `Miembro`, `Aficion`, `Idioma` y `Mensaje`.
+- CRUD completo (listar, crear, consultar, modificar) para usuarios, centros, cursos, grupos, familias, aficiones e intercambios, con formularios Symfony (`Form/Type`) y filtros de búsqueda dedicados (por apellido, país, curso, fechas, coordinador, etc.).
+- Gestión de familias de acogida y su alojamiento asociado a cada alumno de intercambio.
+- Sistema de mensajería interna entre usuarios de la plataforma (`MensajeController`, entidad `Mensaje`).
+- Notificaciones por correo electrónico (Swiftmailer) al registrar un usuario y al regenerar su contraseña (`Utils/Notificaciones.php`).
+- Generación de informes en PDF (`Utils/InformePDF.php`, extendiendo TCPDF) para exportar listados como el de un intercambio (`Intercambio/imprimir.html.twig`).
+- Datos de ejemplo (fixtures de Doctrine) para usuarios y aficiones, listos para cargar tras instalar.
+- Interfaz con tablas interactivas (DataTables), efectos con TweenMax y traducciones al español (`Resources/translations`).
+- Entorno de desarrollo reproducible con Vagrant.
 
-Para facilitar el desarrollo se proporciona un entorno [Vagrant] con todas las dependencias ya
-instaladas.
+**Nota:** el propio autor describe el proyecto como en fase beta, probado solo en entornos locales.
 
-## Requisitos
-- PHP 5.3.7 o superior
-- Navegador Web [Chrome], [Firefox], [Opera], [Microsoft Edge], etc..
-- Servidor web Apache2 (podría funcionar con nginx, pero no se ha probado)
-- Cualquier sistema gestor de bases de datos que funcione bajo Doctrine (p.ej. MySQL, MariaDB, PosgreSQL, SQLite, etc.)
-- PHP [Composer]
+## Tecnologías
 
-## Instalación
-- Ejecutar `composer install` desde la carpeta del proyecto.
-- Configurar el sitio de Apache2 para que el `DocumentRoot` sea la carpeta `web/`
-- Modificar el fichero `parameters.yml` con los datos de acceso al sistema gestor de bases de datos.
-- Ejecutar `app/console assets:install` para completar la instalación de los recursos en la carpeta `web/`.
-- Para crear la base de datos: `app/console doctrine:database:create`.
-- Para crear las tablas: `app/console doctrine:schema:create`.
-- Para insertar los datos iniciales: `app/console doctrine:fixtures:load`.
+- PHP >= 5.4 / Symfony 2.6
+- Doctrine ORM + Doctrine Fixtures Bundle
+- Twig
+- Swiftmailer (notificaciones por email)
+- TCPDF (`whiteoctober/tcpdf-bundle`) para informes en PDF
+- Highcharts (`ob/highcharts-bundle`) para gráficas
+- jQuery DataTables, TweenMax (frontend)
+- Vagrant + VirtualBox (entorno de desarrollo)
 
-## Entorno de desarrollo
-Para poder ejecutar la aplicación en un entorno de desarrollo basta con tener [Vagrant] instalado junto con [VirtualBox]
-y ejecutar el comando `vagrant up`. La aplicación será accesible desde la dirección http://192.168.33.10/
+## Instalación / Cómo ejecutarlo
+
+1. Instala las dependencias con Composer:
+   ```
+   composer install
+   ```
+2. Configura el sitio de Apache para que el `DocumentRoot` sea la carpeta `web/`.
+3. Copia `app/config/parameters.yml.dist` a `app/config/parameters.yml` y configura la conexión a base de datos.
+4. Instala los recursos públicos:
+   ```
+   php app/console assets:install
+   ```
+5. Crea la base de datos y las tablas:
+   ```
+   php app/console doctrine:database:create
+   php app/console doctrine:schema:create
+   ```
+6. Carga los datos iniciales de ejemplo:
+   ```
+   php app/console doctrine:fixtures:load
+   ```
+
+**Con Vagrant:**
+1. Instala [Vagrant](https://www.vagrantup.com/) y [VirtualBox](https://www.virtualbox.org).
+2. Desde la raíz del proyecto ejecuta `vagrant up` y accede a `http://192.168.33.10/`.
+
+Requiere PHP 5.3.7 o superior (recomendado >= 5.4).
 
 ## Licencia
-Esta aplicación se ofrece bajo licencia [AGPL versión 3].
 
-[Vagrant]: https://www.vagrantup.com/
-[VirtualBox]: https://www.virtualbox.org
-[Symfony2]: http://symfony.com/
-[Composer]: http://getcomposer.org
-[Chrome]: https://www.google.es/chrome/browser/desktop/index.html
-[Firefox]: https://www.mozilla.org/es-ES/firefox/new/
-[Opera]: http://www.opera.com/es
-[Microsoft Edge]: https://www.microsoft.com/es-es/windows/microsoft-edge
-[AGPL versión 3]: https://www.gnu.org/licenses/agpl-3.0.html
+AGPL versión 3 (ver archivo [LICENSE](LICENSE)).
