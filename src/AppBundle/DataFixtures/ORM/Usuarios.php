@@ -34,7 +34,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $encoder = $this->container->get('security.password_encoder');
         $usuario = new Usuario();
         $usuario->setCorreoElectronico('admin@admin.com')
-            ->setPassword($encoder->encodePassword($usuario, 'admin@admin.com'))
+            ->setPassword($encoder->encodePassword($usuario, 'Adm1n-Fixture-2016'))
             ->setNombre('Admin')
             ->setApellidos('Uno')
             ->setFechaNacimiento(new \DateTime('1980-05-01'))
