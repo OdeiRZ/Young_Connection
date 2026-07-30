@@ -55,6 +55,10 @@ Aplicación web en Symfony 2 para gestionar intercambios de alumnos entre centro
 
 Requiere PHP 5.3.7 o superior (recomendado >= 5.4).
 
+## Seguridad
+
+Actualizado `symfony/symfony` a la v2.6.13 para corregir CVE-2015-2308 y CVE-2015-4050. Corregido además un control de acceso roto (comprobaciones de rol ausentes en varias acciones) y añadida protección CSRF en las operaciones de borrado, y sustituida la contraseña predecible del usuario admin de las fixtures de ejemplo.
+
 ## Licencia
 
 AGPL versión 3 (ver archivo [LICENSE](LICENSE)).
